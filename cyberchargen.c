@@ -16,13 +16,13 @@ int rollDie()
 
 int rollStat()
 {
-//rolls for one stat
+//rolls number of statDice, then totals it up
 	int statDice = 2;
 	int rollNum = 0;
 	srand(time(0));
 	int total = 0;
 	for( rollNum = 0; rollNum < statDice; rollNum++){
-	
+//	rolls dice and adds them up
 		int dieRoll = rollDie();
 		printf("die roll: %d\n", dieRoll);
 		total += dieRoll; // issue was here. was redeclaring total
@@ -30,10 +30,11 @@ int rollStat()
 
 		}
 	printf("final: %d\n", total);
+//	prints grand total 
 }
 
 int main() {
-	
+// rolls for stat	
 
 	int stat = rollStat();
 	printf("stat is: %d\n", stat);
