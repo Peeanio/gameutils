@@ -7,26 +7,34 @@
 
 int rollDie()
 {
-//	srand(time(0));
+//rolls a six sided die
 	int die = rand() % (6 - 1 + 1) + 1;
 //	printf("%d\n", die);
 	return die;
 
 }
 
-int main()
+int rollStat()
 {
-int statDice = 3;
-int rollNum = 0;
-srand(time(0));
-int result = 0;
-for( rollNum = 0; rollNum < statDice; rollNum++){
+//rolls for one stat
+	int statDice = 2;
+	int rollNum = 0;
+	srand(time(0));
+	int total = 0;
+	for( rollNum = 0; rollNum < statDice; rollNum++){
 	
-	int die = rollDie();
-	printf("die roll: %d\n", die);
-	int result = result + die; // issue here. not sure why it cycles back to 0?
-	printf("result: %d\n", result);
+		int dieRoll = rollDie();
+		printf("die roll: %d\n", dieRoll);
+		total += dieRoll; // issue was here. was redeclaring total
+		printf("total: %d\n", total);
 
-	}
-//printf("%d\n", result);
+		}
+	printf("final: %d\n", total);
+}
+
+int main() {
+	
+
+	int stat = rollStat();
+	printf("stat is: %d\n", stat);
 }
