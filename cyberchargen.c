@@ -46,5 +46,6 @@ int main() {
 	int statEmp = rollStat();
 	printf("Int is: %d\n", statInt);
 	printf("Ref is: %d\n", statRef);
-
+//issue that srand time seed does not change fast enough, once per second (epoch time) to 
+// each roll unique. either wait 1 sec between rolls, or get a new seed every roll?
 }
