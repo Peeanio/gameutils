@@ -19,12 +19,13 @@ int rollStat()
 //rolls number of statDice, then totals it up
 	int statDice = 2;
 	int rollNum = 0;
-	srand(time(0));
+	srand(time(NULL));
 	long total = 0;
 	for( rollNum = 0; rollNum < statDice; rollNum++){
 //	rolls dice and adds them up
 		int dieRoll = rollDie();
-//		printf("die roll: %d\n", dieRoll);
+//		printf("die roll: %d/n", dieRoll);
+		unsigned time = time;
 		total += dieRoll; 
 //		printf("total: %d\n", total);
 		}
@@ -36,6 +37,7 @@ int rollStat()
 int main() {
 // rolls for stat	
 	int statInt = rollStat();
+	srand(time(NULL));
 	int statRef = rollStat();
 	int statTech = rollStat();
 	int statCool = rollStat();
