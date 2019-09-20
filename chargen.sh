@@ -53,10 +53,13 @@ RollSkills () {
 #each role has 10 skills that points are divided between. generates
 #points per skill
 #likely not working because of string vs int
+
+#progress. the variables were not being set, called or operated correctly
 	TOTALPOINTS=40
-	SKILLPOINTS=(Roll 10)
-	POINTSLEFT=(40-$(SKILLPOINTS))
-	echo $POINTSLEFT
+	SKILLPOINTS=$(Roll 10)
+	echo $SKILLPOINTS
+	echo $(expr $TOTALPOINTS-$SKILLPOINTS)
+	
 
 }
 
