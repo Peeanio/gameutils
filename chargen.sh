@@ -57,8 +57,12 @@ RollSkills () {
 #progress. the variables were not being set, called or operated correctly
 	TOTALPOINTS=40
 	SKILLPOINTS=$(Roll 10)
-	echo $SKILLPOINTS
-	echo $(expr $TOTALPOINTS-$SKILLPOINTS)
+#	echo $SKILLPOINTS
+#works> 	echo `expr $TOTALPOINTS - $SKILLPOINTS`
+	ROLLNUMBER=0
+	if [ $ROLLNUMBER == 0 ]; then
+		$ROLLNUMBER += 1
+		
 	
 
 }
