@@ -5,7 +5,7 @@
 
 
 Roll () {
-#rolls a single die up to number passed to function	
+#rolls a single die up to number passed to function
 	echo $((RANDOM%$1+1))
 }
 
@@ -49,22 +49,83 @@ RollClass () {
 	echo "Class is "$CLASSNAME
 }
 
-RollSkills () {
+
+
+RollOneToTen () {
+#allows for one function to do multiple generations
+	$(( $1=$(Roll 10) ))
+	if [ $1 == 1 ]; then
+		RESULT=$2
+	elif [ $1 == 2 ]; then
+		RESULT=$3
+	elif [ $1 == 3 ]; then
+		RESULT=$4
+	elif [ $1 == 4 ]; then
+		RESULT=$5
+	elif [ $1 == 5 ]; then
+		RESULT=$6
+	elif [ $1 == 6 ]; then
+		RESULT=$7
+	elif [ $1 == 7 ]; then
+		RESULT=$8
+	elif [ $1 == 8 ]; then
+		RESULT=$9
+	elif [ $1 == 9 ]; then
+		RESULT=$10
+	elif [ $1 == 10 ]; then
+		RESULT=$11
+	else
+		RESULT="WTF"
+	fi
+	echo $1" is: "$RESULT
+}
+
+#RollSkills () {
 #each role has 10 skills that points are divided between. generates
 #points per skill
 #likely not working because of string vs int
 
 #progress. the variables were not being set, called or operated correctly
-	TOTALPOINTS=40
-	SKILLPOINTS=$(Roll 10)
+#still a work in progress
+#	TOTALPOINTS=40
+#	SKILLPOINTS=$(Roll 10)
 #	echo $SKILLPOINTS
 #works> 	echo `expr $TOTALPOINTS - $SKILLPOINTS`
-	ROLLNUMBER=0
-	if [ $ROLLNUMBER == 0 ]; then
-		$ROLLNUMBER += 1
-		
+#	ROLLNUMBER=0
+#	for  ((i = 0 ; i < 10 ; i++)); do
+#		i=$(Roll 6)
+#	fi
 	
 
+#}
+
+RollCosemetic () {
+#cyberpunk looks, randomised from book
+	CLOTHES=$(Roll 10)
+	if [ $CLOTHES == 1 ]; then
+		RESULT="Biker leathes"
+	elif [ $CLOTHES == 2 ]; then
+		RESULT="Blue jeans"
+	elif [ $CLOTHES == 3 ]; then
+		RESULT="Corporate Suits"
+	elif [ $CLOTHES == 4 ]; then
+		RESULT="Jumpsuits"
+	elif [ $CLOTHES == 5 ]; then
+		RESULT="Miniskirts"
+	elif [ $CLOTHES == 6 ]; then
+		RESULT="High fasion"
+	elif [ $CLOTHES == 7 ]; then
+		RESULT="Cammos"
+	elif [ $CLOTHES == 8 ]; then
+		RESULT="Normal clothes"
+	elif [ $CLOTHES == 9 ]; then
+		RESULT="Nude"
+	elif [ $CLOTHES == 10 ]; then
+		RESULT="Bag Lady Chic"
+	else
+		RESULT="WTF"
+	fi
+	echo "Clothes are "$RESULT
 }
 
 RollStat INT 
@@ -75,5 +136,8 @@ RollStat LK
 RollStat ATT
 RollStat MA
 RollStat EMP
-RollClass
-RollSkills
+#RollClass
+#RollSkills
+RollOneToTen Class Solo Rocker Netrunner Media Nomad Fixer Cop Corp Techie\
+	Medtechie
+RollCosemetic
