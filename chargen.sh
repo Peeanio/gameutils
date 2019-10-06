@@ -53,27 +53,29 @@ RollClass () {
 
 RollOneToTen () {
 #allows for one function to do multiple generations
-	$(( $1=$(Roll 10) ))
-	if [ $1 == 1 ]; then
+	Rolled=$(Roll 10)
+#	$(( $1=$(Roll 10) ))
+#	echo $Rolled
+	if [ $Rolled == 1 ]; then
 		RESULT=$2
-	elif [ $1 == 2 ]; then
+	elif [ $Rolled == 2 ]; then
 		RESULT=$3
-	elif [ $1 == 3 ]; then
+	elif [ $Rolled == 3 ]; then
 		RESULT=$4
-	elif [ $1 == 4 ]; then
+	elif [ $Rolled == 4 ]; then
 		RESULT=$5
-	elif [ $1 == 5 ]; then
+	elif [ $Rolled == 5 ]; then
 		RESULT=$6
-	elif [ $1 == 6 ]; then
+	elif [ $Rolled == 6 ]; then
 		RESULT=$7
-	elif [ $1 == 7 ]; then
+	elif [ $Rolled == 7 ]; then
 		RESULT=$8
-	elif [ $1 == 8 ]; then
+	elif [ $Rolled == 8 ]; then
 		RESULT=$9
-	elif [ $1 == 9 ]; then
-		RESULT=$10
-	elif [ $1 == 10 ]; then
-		RESULT=$11
+	elif [ $Rolled == 9 ]; then
+		RESULT=${10}
+	elif [ $Rolled == 10 ]; then
+		RESULT=${11}
 	else
 		RESULT="WTF"
 	fi
