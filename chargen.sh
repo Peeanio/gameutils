@@ -3,7 +3,6 @@
 #character generator for pen and paper rpgs
 #work in progress
 
-
 Roll () {
 #rolls a single die up to number passed to function
 	echo $((RANDOM%$1+1))
@@ -20,43 +19,11 @@ RollStat () {
 	
 ##$(Roll 10)+$(Roll 10)
 }
-RollClass () {
-#rolls for one of the classes in game
-	CLASS=$(Roll 10)
-	if [ $CLASS == 1 ]; then
-		CLASSNAME="Rockerboy"
-	elif [ $CLASS == 2 ]; then
-		CLASSNAME="Solo"
-	elif [ $CLASS == 3 ]; then
-		CLASSNAME="Netrunner"
-	elif [ $CLASS == 4 ]; then
-		CLASSNAME="Techie"
-	elif [ $CLASS == 5 ]; then
-		CLASSNAME="Medtech"
-	elif [ $CLASS == 6 ]; then
-		CLASSNAME="Media"
-	elif [ $CLASS == 7 ]; then
-		CLASSNAME="Cop"
-	elif [ $CLASS == 8 ]; then
-		CLASSNAME="Corporate"
-	elif [ $CLASS == 9 ]; then
-		CLASSNAME="Fixer"
-	elif [ $CLASS == 10 ]; then
-		CLASSNAME="Nomad"
-	else
-		CLASSNAME="WTF"
-	fi
-	echo "Class is "$CLASSNAME
-}
-
-
-
 RollOneToTen () {
-#allows for one function to do multiple generations
+#allows for one function to do multiple 1-10 roll generations. WTF 
+# result is error somewhere, likely number is not matched
 	Rolled=$(Roll 10)
-#	$(( $1=$(Roll 10) ))
-#	echo $Rolled
-	if [ $Rolled == 1 ]; then
+		if [ $Rolled == 1 ]; then
 		RESULT=$2
 	elif [ $Rolled == 2 ]; then
 		RESULT=$3
@@ -79,14 +46,13 @@ RollOneToTen () {
 	else
 		RESULT="WTF"
 	fi
-	echo $1" is: "$RESULT
+	echo $1" : "$RESULT
 }
 
 #RollSkills () {
 #each role has 10 skills that points are divided between. generates
 #points per skill
 #likely not working because of string vs int
-
 #progress. the variables were not being set, called or operated correctly
 #still a work in progress
 #	TOTALPOINTS=40
@@ -101,35 +67,6 @@ RollOneToTen () {
 
 #}
 
-RollCosemetic () {
-#cyberpunk looks, randomised from book
-	CLOTHES=$(Roll 10)
-	if [ $CLOTHES == 1 ]; then
-		RESULT="Biker leathes"
-	elif [ $CLOTHES == 2 ]; then
-		RESULT="Blue jeans"
-	elif [ $CLOTHES == 3 ]; then
-		RESULT="Corporate Suits"
-	elif [ $CLOTHES == 4 ]; then
-		RESULT="Jumpsuits"
-	elif [ $CLOTHES == 5 ]; then
-		RESULT="Miniskirts"
-	elif [ $CLOTHES == 6 ]; then
-		RESULT="High fasion"
-	elif [ $CLOTHES == 7 ]; then
-		RESULT="Cammos"
-	elif [ $CLOTHES == 8 ]; then
-		RESULT="Normal clothes"
-	elif [ $CLOTHES == 9 ]; then
-		RESULT="Nude"
-	elif [ $CLOTHES == 10 ]; then
-		RESULT="Bag Lady Chic"
-	else
-		RESULT="WTF"
-	fi
-	echo "Clothes are "$RESULT
-}
-
 RollStat INT 
 RollStat REF
 RollStat CL
@@ -142,4 +79,10 @@ RollStat EMP
 #RollSkills
 RollOneToTen Class Solo Rocker Netrunner Media Nomad Fixer Cop Corp Techie\
 	Medtechie
-RollCosemetic
+RollOneToTen Clothes "Biker Leathers" "Blue Jeans" "Corporate Suits" \
+	"Jumpsuits" "Miniskirts" "High Fashion" "Cammos" "Normal Clothes" \
+	"Nude" "Bag Lady Chic"
+RollOneToTen Ethnicity "Anglo-American" "African" "Japanese/Korean" \
+	"Central European/Soviet" "Pacific Islander" \
+	"Chinese/Southeast Asian" "Black American" "Hispanic American" \
+	"Central/South American" "European"
