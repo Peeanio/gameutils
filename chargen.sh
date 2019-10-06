@@ -2,6 +2,7 @@
 
 #character generator for pen and paper rpgs
 #work in progress
+#By Peeanio, on github
 
 Roll () {
 #rolls a single die up to number passed to function
@@ -86,3 +87,7 @@ RollOneToTen Ethnicity "Anglo-American" "African" "Japanese/Korean" \
 	"Central European/Soviet" "Pacific Islander" \
 	"Chinese/Southeast Asian" "Black American" "Hispanic American" \
 	"Central/South American" "European"
+	RollOneToTen Parents "Corporate Executive" "Corporate Manager" \
+		"Corporate Technician" "Nomad Pack" "Pirate Fleet" \
+		"Gang Family" "Crime Lord" "Combat Zone Poor" "Urban Homeless" \
+		"Arcology Family"
