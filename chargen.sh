@@ -11,11 +11,13 @@ Roll () {
 
 RollStat () {
 #take argument name of stat
-	STAT=$(($(Roll 6)+$(Roll 6)))
-#not ready for 11+ reroll yet, likely because of string instead of int
-#	if [ $STAT >= 11 ]; then
-#		STAT=$(($(Roll 6)+$(Roll 6)))
-#	fi
+	local STAT=$(($(Roll 6)+$(Roll 6)))
+
+	if [ "$STAT" == "11" ]; then
+		STAT=10
+	elif [ "$STAT" == "12" ]; then
+		STAT=10
+	fi
 	echo $1 is: $STAT
 	
 ##$(Roll 10)+$(Roll 10)
@@ -68,14 +70,15 @@ RollOneToTen () {
 
 #}
 
-RollStat INT 
+RollStat INT
 RollStat REF
-RollStat CL
 RollStat TECH
-RollStat LK
+RollStat COOL
+RollStat LUCK
 RollStat ATT
 RollStat MA
 RollStat EMP
+RollStat BODY
 #RollClass
 #RollSkills
 RollOneToTen Class Solo Rocker Netrunner Media Nomad Fixer Cop Corp Techie\
