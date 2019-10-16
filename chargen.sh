@@ -7,15 +7,17 @@
 Roll () {
 #rolls a single die up to number passed to function
 	echo $((RANDOM%$1+1))
+#	echo $(( ($(date +%N)+1)%$1 ))
+
 }
 
 RollStat () {
 #take argument name of stat
 	local STAT=$(($(Roll 6)+$(Roll 6)))
 
-	if [ "$STAT" == "11" ]; then
+	if [ "$STAT" = "11" ]; then
 		STAT=10
-	elif [ "$STAT" == "12" ]; then
+	elif [ "$STAT" = "12" ]; then
 		STAT=10
 	fi
 	echo $1 is: $STAT
@@ -26,25 +28,25 @@ RollOneToTen () {
 #allows for one function to do multiple 1-10 roll generations. WTF 
 # result is error somewhere, likely number is not matched
 	Rolled=$(Roll 10)
-		if [ $Rolled == 1 ]; then
+	if [ $Rolled = 1 ]; then
 		RESULT=$2
-	elif [ $Rolled == 2 ]; then
+	elif [ $Rolled = 2 ]; then
 		RESULT=$3
-	elif [ $Rolled == 3 ]; then
+	elif [ $Rolled = 3 ]; then
 		RESULT=$4
-	elif [ $Rolled == 4 ]; then
+	elif [ $Rolled = 4 ]; then
 		RESULT=$5
-	elif [ $Rolled == 5 ]; then
+	elif [ $Rolled = 5 ]; then
 		RESULT=$6
-	elif [ $Rolled == 6 ]; then
+	elif [ $Rolled = 6 ]; then
 		RESULT=$7
-	elif [ $Rolled == 7 ]; then
+	elif [ $Rolled = 7 ]; then
 		RESULT=$8
-	elif [ $Rolled == 8 ]; then
+	elif [ $Rolled = 8 ]; then
 		RESULT=$9
-	elif [ $Rolled == 9 ]; then
+	elif [ $Rolled = 9 ]; then
 		RESULT=${10}
-	elif [ $Rolled == 10 ]; then
+	elif [ $Rolled = 10 ]; then
 		RESULT=${11}
 	else
 		RESULT="WTF"
