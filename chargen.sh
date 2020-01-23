@@ -57,7 +57,7 @@ RollOneToTen () {
 #RollSkills () {
 #each role has 10 skills that points are divided between. generates
 #points per skill
-#likely not working because of string vs int
+#likely not working because of string vs int (not a thing in sh)
 #progress. the variables were not being set, called or operated correctly
 #still a work in progress
 #	TOTALPOINTS=40
@@ -81,7 +81,6 @@ RollStat ATT
 RollStat MA
 RollStat EMP
 RollStat BODY
-#RollClass
 #RollSkills
 RollOneToTen Class Solo Rocker Netrunner Media Nomad Fixer Cop Corp Techie\
 	Medtechie
@@ -92,7 +91,7 @@ RollOneToTen Ethnicity "Anglo-American" "African" "Japanese/Korean" \
 	"Central European/Soviet" "Pacific Islander" \
 	"Chinese/Southeast Asian" "Black American" "Hispanic American" \
 	"Central/South American" "European"
-	RollOneToTen Parents "Corporate Executive" "Corporate Manager" \
-		"Corporate Technician" "Nomad Pack" "Pirate Fleet" \
-		"Gang Family" "Crime Lord" "Combat Zone Poor" "Urban Homeless" \
-		"Arcology Family"
+RollOneToTen Parents "Corporate Executive" "Corporate Manager" \
+	"Corporate Technician" "Nomad Pack" "Pirate Fleet" \
+	"Gang Family" "Crime Lord" "Combat Zone Poor" "Urban Homeless" \
+	"Arcology Family"

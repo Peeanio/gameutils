@@ -4,6 +4,8 @@
 import random
 #libary for random number generation
 
+########################################################################
+#functions
 def rollDx(x):
 #returns a number between one and x
 	rollresult = random.randint(1,x)
@@ -12,8 +14,10 @@ def rollDx(x):
 
 def rollStat(stat):
 #creates a text output of a score for a stat
-	statscore = (rollDx(6) + rollDx(6))
-	print(stat + " is: " + str((rollDx(6) + rollDx(6))))
+	statScore = (rollDx(10))
+	while statScore == 1:
+			statScore = (rollDx(10))
+	print(stat + " is: " + str(statScore))
 	
 def rollBackstory():
 	playerClass = arrayClasses[rollDx(9)]
@@ -23,8 +27,14 @@ def rollBackstory():
 	print("Class is: " + str(playerClass))
 	print("Clothes are: " + str(playerClothes))
 	print("Ethnicity is: " + str(playerEthnicity))
-	print("Parents are/were: " + str(playerParents))	
-
+	print("Parents are/were: " + str(playerParents))
+	
+def genCharacter():
+	for x in range(0,len(statsValues)):
+		statsValues[x] = rollStat(statsLongNames[x])
+	rollBackstory()
+	
+########################################################################
 #declare arrays
 arrayClasses=["Solo", "Rocker", "Netrunner", "Media", "Nomad", "Fixer",\
  "Cop", "Corporate", "Techie", "Medtechie"]
@@ -44,7 +54,7 @@ statsShortNames=["int", "ref", "tech", "cool", "luck", "att", "ma", \
 "emp", "body"]
 statsValues=[0 for x in range(9)]
 
-#main 
-for x in range(0,len(statsValues)):
-	statsValues[x] = rollStat(statsLongNames[x])
-rollBackstory()
+########################################################################
+#main
+genCharacter()
+
