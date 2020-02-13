@@ -10,7 +10,6 @@ def rollDx(x):
 #returns a number between one and x
 	rollresult = random.randint(1,x)
 	return rollresult
-#	print (rollDx)
 
 def rollToX(x):
 #returns a number between 0 and x
@@ -23,7 +22,7 @@ def rollStat(stat):
 	while statScore == 1:
 			statScore = (rollDx(10))
 	print(stat + " is: " + str(statScore))
-	
+
 def rollBackstory():
 #generates the player class and some fluff to make more interesting
 	global playerClass #this makes it available outside the functions
@@ -39,26 +38,30 @@ def rollBackstory():
 def rollCyberWare():
 #rolls for cybernetics for character
 	rolledCyberware = [0 for x in range(5)]
+	characterCyberware = [0 for x in range(10)]
 	if str(playerClass) == str("Solo"):
-		#diceCyberWare = [ 0 for x in range(5) ]
 		for x in range(5):
-			rolledCyberware[x] = rollToX(10)
+			rolledCyberware[x] = rollDx(10)
 			print("Cyberware is: " + str(rolledCyberware[x]))
-
+			#need to have this roll decide what to then subroll,
+			#and put result into print statement
 	else:
-		#diceCyberWare = [ 0 for x in range(2) ]
 		for x in range(2):
-			rolledCyberware[x] = rollToX(10)
+			rolledCyberware[x] = rollDx(10)
 			print("Cyberware is: " + str(rolledCyberware[x]))
-	playerCyberWareRolls = rolledCyberware
-	print(str(rolledCyberware))
+		for x in rolledCyberware:
+			characterCyberware[x] = arrayCyberWare[int(rolledCyberware[x])]
+			print(arrayCyberWare[int(rolledCyberware[x])])
+		for x in characterCyberware:
+			print(str(characterCyberware[x]))
+	#rolledCyberware
 	#need to break this part up into individual rolls, and append to character
 def genCharacter():
 	for x in range(0,len(statsValues)):
 		statsValues[x] = rollStat(statsLongNames[x])
 	rollBackstory()
 	rollCyberWare()
-	
+
 ########################################################################
 #declare arrays
 arrayClasses=["Solo", "Rocker", "Netrunner", "Media", "Nomad", "Fixer",\
@@ -78,7 +81,7 @@ statsLongNames=["Intelligence", "Reflex", "Technology", "Cool", "Luck",\
 statsShortNames=["int", "ref", "tech", "cool", "luck", "att", "ma", \
 "emp", "body"]
 statsValues=[0 for x in range(9)]
-arrayCyberWare=["Cyberoptics", "Cyberarm with gun", "Cyberaudio",\
+arrayCyberWare=["Blank", "Cyberoptics", "Cyberarm with gun", "Cyberaudio",\
  "Big Nucks", "Rippers", "Vampires", "Slice n' Dice",\
  "Reflex Boost (Kerenzikov)", "Reflex Boost (Sandevistan)", "Nothing"]
 arrayCyberoptics=["Infrared", "Lowlight", "Camera", "Dartgun",\
