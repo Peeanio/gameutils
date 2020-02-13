@@ -12,6 +12,11 @@ def rollDx(x):
 	return rollresult
 #	print (rollDx)
 
+def rollToX(x):
+#returns a number between 0 and x
+	rollresult = random.randint(0,x)
+	return rollresult
+
 def rollStat(stat):
 #creates a text output of a score for a stat
 	statScore = (rollDx(10))
@@ -22,28 +27,28 @@ def rollStat(stat):
 def rollBackstory():
 #generates the player class and some fluff to make more interesting
 	global playerClass #this makes it available outside the functions
-	playerClass = arrayClasses[rollDx(9)]
-	playerClothes = arrayClothes[rollDx(9)]
-	playerEthnicity = arrayEthnicity[rollDx(9)]
-	playerParents = arrayParents[rollDx(9)]		
+	playerClass = arrayClasses[rollToX(9)]
+	playerClothes = arrayClothes[rollToX(9)]
+	playerEthnicity = arrayEthnicity[rollToX(9)]
+	playerParents = arrayParents[rollToX(9)]
 	print("Class is: " + str(playerClass))
 	print("Clothes are: " + str(playerClothes))
 	print("Ethnicity is: " + str(playerEthnicity))
 	print("Parents are/were: " + str(playerParents))
-	
+
 def rollCyberWare():
 #rolls for cybernetics for character
 	rolledCyberware = [0 for x in range(5)]
 	if str(playerClass) == str("Solo"):
 		#diceCyberWare = [ 0 for x in range(5) ]
 		for x in range(5):
-			rolledCyberware[x] = rollDx(10)
-			Print("Cyberware is: " + str(rolledCyberware[x]))
-		
+			rolledCyberware[x] = rollToX(10)
+			print("Cyberware is: " + str(rolledCyberware[x]))
+
 	else:
 		#diceCyberWare = [ 0 for x in range(2) ]
 		for x in range(2):
-			rolledCyberware[x] = rollDx(10)
+			rolledCyberware[x] = rollToX(10)
 			print("Cyberware is: " + str(rolledCyberware[x]))
 	playerCyberWareRolls = rolledCyberware
 	print(str(rolledCyberware))
@@ -53,9 +58,6 @@ def genCharacter():
 		statsValues[x] = rollStat(statsLongNames[x])
 	rollBackstory()
 	rollCyberWare()
-	
-	
-	
 	
 ########################################################################
 #declare arrays
@@ -95,4 +97,3 @@ arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol"\
 ########################################################################
 #main
 genCharacter()
-
