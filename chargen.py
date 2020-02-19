@@ -40,24 +40,45 @@ def rollCyberWare():
 	global characterCyberWare
 	if str(playerClass) == str("Solo"):
 	#solo has more rolls
-		rolledCyberware = [0 for x in range(5)]
-
-		characterCyberWare = [0 for x in range(5)]
-		for x in range(5):
+		rolledCyberware = [0 for x in range(6)]
+		characterCyberWare = [0 for x in range(6)]
+		for x in range(6):
 			rolledCyberware[x] = rollDx(10)
-			#stores the number in a list for later
 			characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
+#			print(rolledCyberware[x])
 		for x in rolledCyberware:
-		#takes the roll, then prints based on value
-			print("Cyberware is: " + str(arrayCyberWare[x]))
+#			print(x)
+			if x == 1:
+				cyberOptics = str(arrayCyberoptics[rollToX(5)])
+				print("Cyberoptics are: " + cyberOptics)
+			elif x == 2:
+				cyberArm = str(arrayCyberarm[rollToX(5)])
+				print("Cyberarm is: " + cyberArm)
+			elif x == 3:
+				cyberAudio = str(arrayCyberaudio[rollToX(5)])
+				print("Cyberaudio is: " + cyberAudio)
+			else:
+				print("Cyberware is: " + str(arrayCyberWare[x]))
 	else:
-		rolledCyberware = [0 for x in range(2)]
-		characterCyberWare = [0 for x in range(2)]
-		for x in range(2):
+		rolledCyberware = [0 for x in range(3)]
+		characterCyberWare = [0 for x in range(3)]
+		for x in range(3):
 			rolledCyberware[x] = rollDx(10)
 			characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
+#			print(rolledCyberware[x])
 		for x in rolledCyberware:
-			print("Cyberware is: " + str(arrayCyberWare[x]))
+#			print(x)
+			if x == 1:
+				cyberOptics = str(arrayCyberoptics[rollToX(5)])
+				print("Cyberoptics are: " + cyberOptics)
+			elif x == 2:
+				cyberArm = str(arrayCyberarm[rollToX(5)])
+				print("Cyberarm is: " + cyberArm)
+			elif x == 3:
+				cyberAudio = str(arrayCyberaudio[rollToX(5)])
+				print("Cyberaudio is: " + cyberAudio)
+			else:
+				print("Cyberware is: " + str(arrayCyberWare[x]))
 def rollWeapons():
 #generates a weapon and armour based on class
 	global characterArmor
