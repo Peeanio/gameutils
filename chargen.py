@@ -37,25 +37,28 @@ def rollBackstory():
 
 def rollCyberWare():
 #rolls for cybernetics for character
-	rolledCyberware = [0 for x in range(5)]
-	characterCyberware = [0 for x in range(10)]
+	global characterCyberWare
 	if str(playerClass) == str("Solo"):
+	#solo has more rolls
+		rolledCyberware = [0 for x in range(5)]
+
+		characterCyberWare = [0 for x in range(5)]
 		for x in range(5):
 			rolledCyberware[x] = rollDx(10)
-			print("Cyberware is: " + str(rolledCyberware[x]))
-			#need to have this roll decide what to then subroll,
-			#and put result into print statement
+			#stores the number in a list for later
+			characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
+		for x in rolledCyberware:
+		#takes the roll, then prints based on value
+			print("Cyberware is: " + str(arrayCyberWare[x]))
 	else:
+		rolledCyberware = [0 for x in range(2)]
+		characterCyberWare = [0 for x in range(2)]
 		for x in range(2):
 			rolledCyberware[x] = rollDx(10)
-			print("Cyberware is: " + str(rolledCyberware[x]))
+			characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
 		for x in rolledCyberware:
-			characterCyberware[x] = arrayCyberWare[int(rolledCyberware[x])]
-			print(arrayCyberWare[int(rolledCyberware[x])])
-		for x in characterCyberware:
-			print(str(characterCyberware[x]))
-	#rolledCyberware
-	#need to break this part up into individual rolls, and append to character
+			print("Cyberware is: " + str(arrayCyberWare[x]))
+
 def genCharacter():
 	for x in range(0,len(statsValues)):
 		statsValues[x] = rollStat(statsLongNames[x])
