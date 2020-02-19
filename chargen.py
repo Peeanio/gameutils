@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 #python version of chargens script
+#Author: Max Russell
 
 import random
 #libary for random number generation
@@ -49,7 +50,7 @@ def rollCyberwareSub(y):
 #one place
 	rolledCyberware = [0 for x in range(y)]
 	characterCyberWare = [0 for x in range(y)]
-	for x in range(3):
+	for x in range(y):
 		rolledCyberware[x] = rollDx(10)
 		characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
 	for x in rolledCyberware:
