@@ -58,12 +58,26 @@ def rollCyberWare():
 			characterCyberWare[x] = arrayCyberWare[rolledCyberware[x]]
 		for x in rolledCyberware:
 			print("Cyberware is: " + str(arrayCyberWare[x]))
+def rollWeapons():
+#generates a weapon and armour based on class
+	global characterArmor
+	global characterWeapon
+	wepArm = rollToX(9)
+	if str(playerClass) == str("Nomad") or str(playerClass) == str("Cop"):
+		wepArm += 2
+	elif str(playerClass) == str("Solo"):
+		wepArm += 3
+	while wepArm >= 10:
+		wepArm = 9
+	print("Armor is: " + arrayArmor[wepArm])
+	print("Weapon is: " + arrayWeapons[wepArm])
 
 def genCharacter():
 	for x in range(0,len(statsValues)):
 		statsValues[x] = rollStat(statsLongNames[x])
 	rollBackstory()
 	rollCyberWare()
+	rollWeapons()
 
 ########################################################################
 #declare arrays
@@ -95,10 +109,11 @@ arrayCyberaudio=["Wearman", "Radio Splice", "Phone link",\
  "Amplified Hearing", "Sound Editing", "Digital Recording Link"]
 arrayArmor=["Heavy Leather", "Armor Vest", "Light Armor Jacket",\
  "Light Armor Jacket", "Med Armor Jacket", "Med Armor Jacket",\
- "Heavy Armor Jacket", "Heavy Armor Jacket", "Metalgear"]
-arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol"\
+ "Med Armour Jacket", "Heavy Armor Jacket", "Heavy Armor Jacket",\
+ "Metalgear"]
+arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol",\
  "Heavy Pistol", "Light SMG", "Lt. Assault Rifle", "Med Assault Rifle",\
-  "Hvy. Assault rifle", "Heavy Assault Rifle"]
+  "Hvy. Assault rifle", "Hvy. Assault Rifle"]
 
 ########################################################################
 #main
