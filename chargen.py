@@ -6,6 +6,16 @@ import random
 #libary for random number generation
 import sys
 #file opening
+from optparse import OptionParser
+#for option parsing
+
+########################################################################
+# option parsing setup
+
+parser = OptionParser()
+parser.add_option("-c", "--2020", action="store_true", dest="cyberpunk",\
+	help="generate Cyberpunk 2020V2 character")
+(options, args) = parser.parse_args()
 
 ########################################################################
 #functions
@@ -147,4 +157,5 @@ arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol",\
 
 ########################################################################
 #main
-genCharacter()
+if options.cyberpunk == True:
+	genCharacter()
