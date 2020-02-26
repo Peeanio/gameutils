@@ -159,3 +159,5 @@ arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol",\
 #main
 if options.cyberpunk == True:
 	genCharacter()
+else:
+	parser.print_help()
