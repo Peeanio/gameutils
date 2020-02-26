@@ -4,6 +4,8 @@
 
 import random
 #libary for random number generation
+import sys
+#file opening
 
 ########################################################################
 #functions
@@ -81,11 +83,31 @@ def rollWeapons():
 	print("Weapon is: " + arrayWeapons[wepArm])
 
 def genCharacter():
+	print ("Name is: " +getname("firstnames.txt") + " " + getname("surnames.txt"))
 	for x in range(0,len(statsValues)):
 		statsValues[x] = rollStat(statsLongNames[x])
 	rollBackstory()
 	rollCyberWare()
 	rollWeapons()
+
+
+def file_len(fname):
+#open file, count the lines, return
+        with open(fname) as f:
+                for i, l in enumerate(f):
+                        pass
+        return i + 1
+
+def getname(filename):
+#function to make repeatable
+        #get the number of lines, then get a random number between 0 and it
+        numoflines = file_len(filename)
+        randomnum = random.randint(0,numoflines)
+
+        #open the file, read it, print only the generated line number
+        file = open(filename)
+        all_lines = file.readlines()
+        return str(all_lines[randomnum].strip())
 
 ########################################################################
 #declare arrays

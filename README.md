@@ -5,3 +5,5 @@ There are several versions, as I have been working on the same project in multip
 languages to see it how it goes. I will be pursuing the python version for now,
 and hope to have more features such as equipment and name generation, 
 perhaps a gui version.
+
+The sh and c versions are depreciated. The python version is the main, and should be kept with the two name txt files. These are used for name generation. Apart from that, the script is portable and can be used to dump to files easily. 
