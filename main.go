@@ -1,4 +1,4 @@
-// Frostgrave character creator
+// Frostgrave warband creator
 
 // Max Russell
 
@@ -25,7 +25,7 @@ import (
 //enchanter
 //  +2 wit sigil ele
 //  +4 nec ill sum sooth tha
-// chrono
+//  +6 chrono
 
 //illusionist
 //  +2 sooth sigil tha
@@ -72,22 +72,6 @@ import (
 // 6 w-2 w-2 10 w-2 w-4
 // 6 +0 -2 10 +2 10
 
-//war hound 10gc
-//thug 20gc
-//thief 20gc
-//archer 50gc
-//crossbowman 50gc
-//infantryman 50gc
-//tracker 80gc
-//man-at-arms 80gc
-//treasure hunter 80gc
-//knight 100gc
-//templar 100gc
-//ranger 100gc
-//barbarian 100gc
-//apothecary 100gc
-//marksman 100gc
-
 func rollDx(x int) int {
 //rolls a die up to the number specified
 	min := 1
@@ -102,11 +86,57 @@ func rollTox(x int) int {
 }
 
 func main() {
-//	fmt.Println("Hello world")
 	rand.Seed(time.Now().UnixNano())
-//	fmt.Println(time.Now().UnixNano())
-//	rand.Seed(42)
-//	number := rand.Intn(10)
-	//numstring := strconv.Itoa(number)
-	fmt.Println(rollTox(10))
+	fmt.Println(rollDx(10))
+	startingGold := 500
+
+	type Soldiers struct {
+		name string
+		cost int
+	
+	}
+
+	type Wizards struct {
+		school string
+		
+	}
+	soldiersCostMap := map[string]int{
+		"War Hound": 20,
+		"Thug": 20,
+		"Archer": 50,
+		"Crossbowman": 50,
+		"Infantryman": 50,
+		"Tracker": 80,
+		"Man-at-Arms": 80,
+		"Treasure Hunter": 80,
+		"Knight": 100,
+		"Templar": 100,
+		"Ranger": 100,
+		"Barbarian": 100,
+		"Apothecary": 100,
+		"Marksman": 100,
+		"Apprentice": 200,
+	}
+
+	wizardTypeArray := [10]string{
+		"Chronomancer",
+		"Elementalist",
+		"Enchanter",
+		"Illusionist",
+		"Necromancer",
+		"Sigilist",
+		"Soothsayer",
+		"Summoner",
+		"Thaumaturge",
+		"Witch",
+	}
+
+//	playerKnownSpells := make([]string, 8)
+
+
+	playerWizardType := wizardTypeArray[rollTox(10)]
+
+	fmt.Println(playerWizardType)
+	fmt.Println(startingGold)
+	fmt.Println(soldiersCostMap["Archer"])
 }
