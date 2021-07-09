@@ -87,19 +87,134 @@ func rollTox(x int) int {
 
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	fmt.Println(rollDx(10))
 	startingGold := 500
 
 	type Soldiers struct {
 		name string
 		cost int
-	
 	}
 
 	type Wizards struct {
 		school string
-		
+		spell1 string
+		spell2 string
+		spell3 string
+		spell4 string
+		spell5 string
+		spell6 string
+		spell7 string
+		spell8 string
 	}
+
+	chronomancerSpells := [8]string{
+		"Crumble",
+		"Decay",
+		"Fast Act",
+		"Fleet Feet",
+		"Petrify",
+		"Slow",
+		"Timestore",
+		"Time Walk",
+	}
+
+	elementalistSpells := [8]string{
+		"Call Storm",
+		"Destructive Sphere",
+		"Elemental Ball",
+		"Elemental Bolt",
+		"Elemental Hammer",
+		"Elemental Shield",
+		"Scatter Shot",
+		"Wall",
+	}
+
+	enchanterSpells := [8]string{
+		"Animate Construct",
+		"Control Construct",
+		"Embed Enchantment",
+		"Enchant Armour",
+		"Enchant Weapon",
+		"Grenade",
+		"Strength",
+		"Telekinesis",
+	}
+
+	illusionistSpells := [8]string{
+		"Beauty",
+		"Fool's Gold",
+		"Glow",
+		"Illusionary Solider",
+		"Invisibility",
+		"Monstrous Form",
+		"Teleport",
+		"Transpose",
+	}
+
+	necromancerSpells := [8]string{
+		"Bone Dart",
+		"Bones of the Earth",
+		"Control Undead",
+		"Raise Zombie",
+		"Reveal Death",
+		"Spell Eater",
+		"Steal Health",
+		"Strike Dead",
+	}
+
+	sigilistSpells := [8]string{
+		"Absorb Knowledge",
+		"Create Grimoire",
+		"Draining Word",
+		"Explosive Rune",
+		"Furious Quill",
+		"Power Word",
+		"Push",
+		"Write Scroll",
+	}
+
+	soothsayerSpells := [8]string{
+		"Awareness",
+		"Combat Awareness",
+		"Forget Spell",
+		"Mind Control",
+		"Reveal Invisible",
+		"Reveal Secret",
+		"Will Power",
+		"Wizard Eye",
+	}
+
+	summonerSpells := [8]string{
+		"Bind Demon",
+		"Imp",
+		"Leap",
+		"Plague of Insects",
+		"Planar Tear",
+		"Possess",
+		"Summon Demon",
+	}
+
+	thaumaturgeSpells := [8]string{
+		"Banish",
+		"Blinding Light",
+		"Circle of Protection",
+		"Dispel",
+		"Heal",
+		"Miraculous Cure",
+		"Restore Life",
+		"Shield",
+	}
+
+	witchSpells := [8]string{
+		"Animal Companion",
+		"Brew Potion",
+		"Control Animal",
+		"Curse",
+		"Familiar",
+		"Fog",
+		"Mud",
+		"Posion Dart",
+	}
+
 	soldiersCostMap := map[string]int{
 		"War Hound": 20,
 		"Thug": 20,
@@ -116,6 +231,24 @@ func main() {
 		"Apothecary": 100,
 		"Marksman": 100,
 		"Apprentice": 200,
+	}
+
+	soliderNumberArray := [15]string{
+		"War Hound",
+		"Thug",
+		"Archer",
+		"Crossbowman",
+		"Infantryman",
+		"Tracker",
+		"Man-at-Arms",
+		"Treasure Hunter",
+		"Knight",
+		"Templar",
+		"Ranger",
+		"Barbarian",
+		"Apothecary",
+		"Marksman",
+		"Apprentice",
 	}
 
 	wizardTypeArray := [10]string{
@@ -137,6 +270,17 @@ func main() {
 	playerWizardType := wizardTypeArray[rollTox(10)]
 
 	fmt.Println(playerWizardType)
-	fmt.Println(startingGold)
-	fmt.Println(soldiersCostMap["Archer"])
+	fmt.Println("Starting Gold: ", startingGold)
+	fmt.Println(soldiersCostMap[soliderNumberArray[rollTox(15)]])
+	fmt.Println(witchSpells[rollTox(8)])
+	fmt.Println(thaumaturgeSpells[rollTox(8)])
+	fmt.Println(enchanterSpells[rollTox(8)])
+	fmt.Println(chronomancerSpells[rollTox(8)])
+	fmt.Println(elementalistSpells[rollTox(8)])
+	fmt.Println(illusionistSpells[rollTox(8)])
+	fmt.Println(necromancerSpells[rollTox(8)])
+	fmt.Println(sigilistSpells[rollTox(8)])
+	fmt.Println(soothsayerSpells[rollTox(8)])
+	fmt.Println(summonerSpells[rollTox(8)])
+
 }
