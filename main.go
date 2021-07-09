@@ -11,57 +11,6 @@ import (
 //	"strconv"
 )
 
-//classes w/ oposition
-//chronomancer 
-//  +2 necro sooth ele
-//  +4 tha summ ill witch sigil
-//  +6 enchant
-
-//elementalist
-//  +2 summ en chr
-//  +4 tha sooth sig wit nec
-//  +6 ill
-
-//enchanter
-//  +2 wit sigil ele
-//  +4 nec ill sum sooth tha
-//  +6 chrono
-
-//illusionist
-//  +2 sooth sigil tha
-//  +4 nec wit chro summ enc
-//  +6 ele
-
-//necromancer
-//  +2 wit chro summ
-//  +4 ele sig ill enc soot
-//  +6 tha
-
-//sigilist
-//  +2 tha ill enc
-//  +4 nec ele wit chro soo
-//  +6 summ
-
-//soothsayer
-//  +2 tha chro ill
-//  +4 ench summ necr ele sigil
-//  +6 witch
-
-//summoner
-//  +2 necro witch ele
-//  +4 sooth enc ill chro tha
-//  +6 sigi
-
-//thaumaturge
-//  +2 soot sigil ill
-//  +4 ele witch chro summ ench
-//  +6 necro
-
-//witch
-//  +2 enc necr summ
-//  +4 tha ill ele sigi chro
-//  +6 soot
-
 //spells: three own school, one each aligned, two neautral (different)
 
 //stats: move (m) fight (f) shoot (s) armour (a) will (w) health (h)
@@ -85,9 +34,13 @@ func rollTox(x int) int {
 	return rand.Intn(x)
 }
 
+func addSolider(x int) int {
+//passes in remaining gold, returns the solider bought and remaining money
+	return 0
+}
+
 func main() {
 	rand.Seed(time.Now().UnixNano())
-	startingGold := 500
 
 	type Soldiers struct {
 		name string
@@ -105,7 +58,7 @@ func main() {
 		spell7 string
 		spell8 string
 	}
-
+//Following are various arrays, which are also held with blank identifers
 	chronomancerSpells := [8]string{
 		"Crumble",
 		"Decay",
@@ -116,6 +69,7 @@ func main() {
 		"Timestore",
 		"Time Walk",
 	}
+	_ = chronomancerSpells
 
 	elementalistSpells := [8]string{
 		"Call Storm",
@@ -128,6 +82,8 @@ func main() {
 		"Wall",
 	}
 
+	_ = elementalistSpells
+
 	enchanterSpells := [8]string{
 		"Animate Construct",
 		"Control Construct",
@@ -138,6 +94,8 @@ func main() {
 		"Strength",
 		"Telekinesis",
 	}
+
+	_ = enchanterSpells
 
 	illusionistSpells := [8]string{
 		"Beauty",
@@ -150,6 +108,8 @@ func main() {
 		"Transpose",
 	}
 
+	_ = illusionistSpells
+
 	necromancerSpells := [8]string{
 		"Bone Dart",
 		"Bones of the Earth",
@@ -160,6 +120,8 @@ func main() {
 		"Steal Health",
 		"Strike Dead",
 	}
+
+	_ = necromancerSpells
 
 	sigilistSpells := [8]string{
 		"Absorb Knowledge",
@@ -172,6 +134,8 @@ func main() {
 		"Write Scroll",
 	}
 
+	_ = sigilistSpells
+
 	soothsayerSpells := [8]string{
 		"Awareness",
 		"Combat Awareness",
@@ -183,6 +147,8 @@ func main() {
 		"Wizard Eye",
 	}
 
+	_ = soothsayerSpells
+
 	summonerSpells := [8]string{
 		"Bind Demon",
 		"Imp",
@@ -192,6 +158,8 @@ func main() {
 		"Possess",
 		"Summon Demon",
 	}
+
+	_ = summonerSpells
 
 	thaumaturgeSpells := [8]string{
 		"Banish",
@@ -204,6 +172,8 @@ func main() {
 		"Shield",
 	}
 
+	_ = thaumaturgeSpells
+
 	witchSpells := [8]string{
 		"Animal Companion",
 		"Brew Potion",
@@ -214,6 +184,8 @@ func main() {
 		"Mud",
 		"Posion Dart",
 	}
+
+	_ = witchSpells
 
 	soldiersCostMap := map[string]int{
 		"War Hound": 20,
@@ -264,23 +236,204 @@ func main() {
 		"Witch",
 	}
 
+	chronomancerAllied := [3]string{
+		"Necromancer",
+		"Soothsayer",
+		"Elementalist",
+	}
+
+	_ = chronomancerAllied
+
+	chronomancerNeutral := [5]string {
+		"Thaumaturge",
+		"Summoner",
+		"Illusionist",
+		"Witch",
+		"Sigilist",
+	}
+
+	_ = chronomancerNeutral
+
+	elementalistAllied := [3]string{
+		"Summoner",
+		"Enchanter",
+		"Chronomancer",
+	}
+
+	_ = elementalistAllied
+
+	elementalistNeutral := [5]string {
+		"Thaumaturge",
+		"Soothsayer",
+		"Sigilist",
+		"Witch",
+		"Necromancer",
+	}
+
+	_ = elementalistNeutral
+
+	enchanterAllied := [3]string{
+		"Witch",
+		"Sigilist",
+		"Elementalist",
+	}
+
+	_ = enchanterAllied
+
+	enchanterNeutral := [5]string {
+		"Witch",
+		"Illusionist",
+		"Summoner",
+		"Soothsayer",
+		"Thaumaturge",
+	}
+
+	_ = enchanterNeutral
+
+	illusionistAllied := [3]string{
+		"Soothsayer",
+		"Sigilist",
+		"Thaumaturge",
+	}
+
+	_ = illusionistAllied
+
+	illusionistNeutral := [5]string {
+		"Necromancer",
+		"Witch",
+		"Chronomancer",
+		"Summoner",
+		"Enchanter",
+	}
+
+	_ = illusionistNeutral
+
+	necromancerAllied := [3]string{
+		"Witch",
+		"Chronomancer",
+		"Summoner",
+	}
+
+	_ = necromancerAllied
+
+	necromancerNeutral := [5]string{
+		"Elementalist",
+		"Sigilist",
+		"Illusionist",
+		"Enchanter",
+		"Soothsayer",
+	}
+
+	_ = necromancerNeutral
+
+	sigilistAllied := [3]string{
+		"Thaumaturge",
+		"Illusionist",
+		"Enchanter",
+	}
+
+	_ = sigilistAllied
+
+	sigilistNeutral := [5]string{
+		"Necromancer",
+		"Elementalist",
+		"Witch",
+		"Chronomancer",
+		"Soothsayer",
+	}
+
+	_ = sigilistNeutral
+
+	soothsayerAllied := [3]string{
+		"Thaumaturge",
+		"Chronomancer",
+		"Illusionist",
+	}
+
+	_ = soothsayerAllied
+
+	soothsayerNeutral := [5]string{
+		"Enchanter",
+		"Summoner",
+		"Necromancer",
+		"Elementalist",
+		"Sigilist",
+	}
+
+	_ = soothsayerNeutral
+
+	summonerAllied := [3]string{
+		"Necromancer",
+		"Witch",
+		"Elementalist",
+	}
+
+	_ = summonerAllied
+
+	summonerNeutral := [5]string{
+		"Soothsayer",
+		"Enchanter",
+		"Illusionist",
+		"Chronomancer",
+		"Thaumaturge",
+	}
+
+	_ = summonerNeutral
+
+	thaumaturgeAllied := [3]string{
+		"Soothsayer",
+		"Sigilist",
+		"Illusionist",
+	}
+
+	_ = thaumaturgeAllied
+
+	thaumaturgeNeutral := [5]string{
+		"Elementalist",
+		"Witch",
+		"Chronomancer",
+		"Summoner",
+		"Enchanter",
+	}
+
+	_ = thaumaturgeNeutral
+
+	witchAllied := [3]string{
+		"Enchanter",
+		"Necromancer",
+		"Summoner",
+	}
+
+	_ = witchAllied
+
+	witchNeutral := [5]string{
+		"Thaumaturge",
+		"Illusionist",
+		"Elementalist",
+		"Sigilist",
+		"Chronomancer",
+	}
+
+	_ = witchNeutral
+
+	opposedMap := map[string]string{
+		"Chronomancer" : "Enchanter",
+		"Elementalist" : "Illusionist",
+		"Enchanter" : "Chronomancer",
+		"Illusionist" : "Elementalist",
+		"Necromancer" : "Thaumaturge",
+		"Sigilist" : "Summoner",
+		"Soothsayer" : "Witch",
+		"Summoner" : "Sigilist",
+		"Thaumaturge" : "Necromancer",
+		"Witch" : "Soothsayer",
+	}
+	startingGold := 500
 //	playerKnownSpells := make([]string, 8)
-
-
 	playerWizardType := wizardTypeArray[rollTox(10)]
 
-	fmt.Println(playerWizardType)
+	fmt.Println("Wizard type is", playerWizardType)
 	fmt.Println("Starting Gold: ", startingGold)
 	fmt.Println(soldiersCostMap[soliderNumberArray[rollTox(15)]])
-	fmt.Println(witchSpells[rollTox(8)])
-	fmt.Println(thaumaturgeSpells[rollTox(8)])
-	fmt.Println(enchanterSpells[rollTox(8)])
-	fmt.Println(chronomancerSpells[rollTox(8)])
-	fmt.Println(elementalistSpells[rollTox(8)])
-	fmt.Println(illusionistSpells[rollTox(8)])
-	fmt.Println(necromancerSpells[rollTox(8)])
-	fmt.Println(sigilistSpells[rollTox(8)])
-	fmt.Println(soothsayerSpells[rollTox(8)])
-	fmt.Println(summonerSpells[rollTox(8)])
-
+	fmt.Println(opposedMap[playerWizardType])
 }
