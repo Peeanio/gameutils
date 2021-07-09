@@ -21,33 +21,12 @@ import (
 // 6 w-2 w-2 10 w-2 w-4
 // 6 +0 -2 10 +2 10
 
-func rollDx(x int) int {
-//rolls a die up to the number specified
-	min := 1
-	max := x + 1
-	return rand.Intn(max - min) + min
-
-}
-
-func rollTox(x int) int {
-//rolls from zero to number specified
-	return rand.Intn(x)
-}
-
-func addSolider(x int) int {
-//passes in remaining gold, returns the solider bought and remaining money
-	return 0
-}
-
-func main() {
-	rand.Seed(time.Now().UnixNano())
-
-	type Soldiers struct {
+type Soldiers struct {
 		name string
 		cost int
-	}
+}
 
-	type Wizards struct {
+type Wizards struct {
 		school string
 		spell1 string
 		spell2 string
@@ -57,9 +36,10 @@ func main() {
 		spell6 string
 		spell7 string
 		spell8 string
-	}
+}
+
 //Following are various arrays, which are also held with blank identifers
-	chronomancerSpells := [8]string{
+var chronomancerSpells = [8]string{
 		"Crumble",
 		"Decay",
 		"Fast Act",
@@ -68,10 +48,9 @@ func main() {
 		"Slow",
 		"Timestore",
 		"Time Walk",
-	}
-	_ = chronomancerSpells
+}
 
-	elementalistSpells := [8]string{
+var elementalistSpells = [8]string{
 		"Call Storm",
 		"Destructive Sphere",
 		"Elemental Ball",
@@ -82,9 +61,8 @@ func main() {
 		"Wall",
 	}
 
-	_ = elementalistSpells
 
-	enchanterSpells := [8]string{
+var enchanterSpells = [8]string{
 		"Animate Construct",
 		"Control Construct",
 		"Embed Enchantment",
@@ -95,9 +73,8 @@ func main() {
 		"Telekinesis",
 	}
 
-	_ = enchanterSpells
 
-	illusionistSpells := [8]string{
+var illusionistSpells = [8]string{
 		"Beauty",
 		"Fool's Gold",
 		"Glow",
@@ -108,9 +85,8 @@ func main() {
 		"Transpose",
 	}
 
-	_ = illusionistSpells
 
-	necromancerSpells := [8]string{
+var	necromancerSpells = [8]string{
 		"Bone Dart",
 		"Bones of the Earth",
 		"Control Undead",
@@ -121,9 +97,8 @@ func main() {
 		"Strike Dead",
 	}
 
-	_ = necromancerSpells
 
-	sigilistSpells := [8]string{
+var	sigilistSpells = [8]string{
 		"Absorb Knowledge",
 		"Create Grimoire",
 		"Draining Word",
@@ -134,9 +109,8 @@ func main() {
 		"Write Scroll",
 	}
 
-	_ = sigilistSpells
 
-	soothsayerSpells := [8]string{
+var	soothsayerSpells = [8]string{
 		"Awareness",
 		"Combat Awareness",
 		"Forget Spell",
@@ -147,9 +121,8 @@ func main() {
 		"Wizard Eye",
 	}
 
-	_ = soothsayerSpells
 
-	summonerSpells := [8]string{
+var	summonerSpells = [8]string{
 		"Bind Demon",
 		"Imp",
 		"Leap",
@@ -159,9 +132,8 @@ func main() {
 		"Summon Demon",
 	}
 
-	_ = summonerSpells
 
-	thaumaturgeSpells := [8]string{
+var	thaumaturgeSpells = [8]string{
 		"Banish",
 		"Blinding Light",
 		"Circle of Protection",
@@ -172,9 +144,8 @@ func main() {
 		"Shield",
 	}
 
-	_ = thaumaturgeSpells
 
-	witchSpells := [8]string{
+var	witchSpells = [8]string{
 		"Animal Companion",
 		"Brew Potion",
 		"Control Animal",
@@ -185,9 +156,8 @@ func main() {
 		"Posion Dart",
 	}
 
-	_ = witchSpells
 
-	soldiersCostMap := map[string]int{
+var	soldiersCostMap = map[string]int{
 		"War Hound": 20,
 		"Thug": 20,
 		"Archer": 50,
@@ -205,7 +175,7 @@ func main() {
 		"Apprentice": 200,
 	}
 
-	soliderNumberArray := [15]string{
+var	soliderNumberArray = [15]string{
 		"War Hound",
 		"Thug",
 		"Archer",
@@ -223,7 +193,7 @@ func main() {
 		"Apprentice",
 	}
 
-	wizardTypeArray := [10]string{
+var	wizardTypeArray = [10]string{
 		"Chronomancer",
 		"Elementalist",
 		"Enchanter",
@@ -236,15 +206,14 @@ func main() {
 		"Witch",
 	}
 
-	chronomancerAllied := [3]string{
+var	chronomancerAllied = [3]string{
 		"Necromancer",
 		"Soothsayer",
 		"Elementalist",
 	}
 
-	_ = chronomancerAllied
 
-	chronomancerNeutral := [5]string {
+var	chronomancerNeutral = [5]string {
 		"Thaumaturge",
 		"Summoner",
 		"Illusionist",
@@ -252,17 +221,15 @@ func main() {
 		"Sigilist",
 	}
 
-	_ = chronomancerNeutral
 
-	elementalistAllied := [3]string{
+var	elementalistAllied = [3]string{
 		"Summoner",
 		"Enchanter",
 		"Chronomancer",
 	}
 
-	_ = elementalistAllied
 
-	elementalistNeutral := [5]string {
+var	elementalistNeutral = [5]string {
 		"Thaumaturge",
 		"Soothsayer",
 		"Sigilist",
@@ -270,17 +237,15 @@ func main() {
 		"Necromancer",
 	}
 
-	_ = elementalistNeutral
 
-	enchanterAllied := [3]string{
+var	enchanterAllied = [3]string{
 		"Witch",
 		"Sigilist",
 		"Elementalist",
 	}
 
-	_ = enchanterAllied
 
-	enchanterNeutral := [5]string {
+var	enchanterNeutral = [5]string {
 		"Witch",
 		"Illusionist",
 		"Summoner",
@@ -288,17 +253,15 @@ func main() {
 		"Thaumaturge",
 	}
 
-	_ = enchanterNeutral
 
-	illusionistAllied := [3]string{
+var	illusionistAllied = [3]string{
 		"Soothsayer",
 		"Sigilist",
 		"Thaumaturge",
 	}
 
-	_ = illusionistAllied
 
-	illusionistNeutral := [5]string {
+var	illusionistNeutral = [5]string {
 		"Necromancer",
 		"Witch",
 		"Chronomancer",
@@ -306,17 +269,15 @@ func main() {
 		"Enchanter",
 	}
 
-	_ = illusionistNeutral
 
-	necromancerAllied := [3]string{
+var	necromancerAllied = [3]string{
 		"Witch",
 		"Chronomancer",
 		"Summoner",
 	}
 
-	_ = necromancerAllied
 
-	necromancerNeutral := [5]string{
+var	necromancerNeutral = [5]string{
 		"Elementalist",
 		"Sigilist",
 		"Illusionist",
@@ -324,17 +285,15 @@ func main() {
 		"Soothsayer",
 	}
 
-	_ = necromancerNeutral
 
-	sigilistAllied := [3]string{
+var	sigilistAllied = [3]string{
 		"Thaumaturge",
 		"Illusionist",
 		"Enchanter",
 	}
 
-	_ = sigilistAllied
 
-	sigilistNeutral := [5]string{
+var	sigilistNeutral = [5]string{
 		"Necromancer",
 		"Elementalist",
 		"Witch",
@@ -342,17 +301,15 @@ func main() {
 		"Soothsayer",
 	}
 
-	_ = sigilistNeutral
 
-	soothsayerAllied := [3]string{
+var	soothsayerAllied = [3]string{
 		"Thaumaturge",
 		"Chronomancer",
 		"Illusionist",
 	}
 
-	_ = soothsayerAllied
 
-	soothsayerNeutral := [5]string{
+var	soothsayerNeutral = [5]string{
 		"Enchanter",
 		"Summoner",
 		"Necromancer",
@@ -360,17 +317,15 @@ func main() {
 		"Sigilist",
 	}
 
-	_ = soothsayerNeutral
 
-	summonerAllied := [3]string{
+var	summonerAllied = [3]string{
 		"Necromancer",
 		"Witch",
 		"Elementalist",
 	}
 
-	_ = summonerAllied
 
-	summonerNeutral := [5]string{
+var	summonerNeutral = [5]string{
 		"Soothsayer",
 		"Enchanter",
 		"Illusionist",
@@ -378,17 +333,15 @@ func main() {
 		"Thaumaturge",
 	}
 
-	_ = summonerNeutral
 
-	thaumaturgeAllied := [3]string{
+var	thaumaturgeAllied = [3]string{
 		"Soothsayer",
 		"Sigilist",
 		"Illusionist",
 	}
 
-	_ = thaumaturgeAllied
 
-	thaumaturgeNeutral := [5]string{
+var	thaumaturgeNeutral = [5]string{
 		"Elementalist",
 		"Witch",
 		"Chronomancer",
@@ -396,17 +349,15 @@ func main() {
 		"Enchanter",
 	}
 
-	_ = thaumaturgeNeutral
 
-	witchAllied := [3]string{
+var	witchAllied = [3]string{
 		"Enchanter",
 		"Necromancer",
 		"Summoner",
 	}
 
-	_ = witchAllied
 
-	witchNeutral := [5]string{
+var	witchNeutral = [5]string{
 		"Thaumaturge",
 		"Illusionist",
 		"Elementalist",
@@ -414,9 +365,8 @@ func main() {
 		"Chronomancer",
 	}
 
-	_ = witchNeutral
 
-	opposedMap := map[string]string{
+var	opposedMap = map[string]string{
 		"Chronomancer" : "Enchanter",
 		"Elementalist" : "Illusionist",
 		"Enchanter" : "Chronomancer",
@@ -428,7 +378,40 @@ func main() {
 		"Thaumaturge" : "Necromancer",
 		"Witch" : "Soothsayer",
 	}
-	startingGold := 500
+
+var startingGold = 500
+
+func rollDx(x int) int {
+//rolls a die up to the number specified
+	min := 1
+	max := x + 1
+	return rand.Intn(max - min) + min
+
+}
+
+func rollTox(x int) int {
+//rolls from zero to number specified
+	return rand.Intn(x)
+}
+
+//func addSolider(currentGold int, soliderNumberArray ) int {
+//passes in remaining gold, returns the solider bought and remaining money
+//	newSoldier := soliderNumberArray[rollTox(15)]
+//	if (currentGold - soldierCostMap[newSolider]) >= 0 {
+//		curentGold = ( currentGold - soldierCostMap[newSoldier])
+//		soldierSlice := append(newSoldier)
+//	} else {
+//	}
+//}
+
+func main() {
+	rand.Seed(time.Now().UnixNano())
+
+	
+	currentGold := startingGold
+
+	soldierSlice := make([]string, 0)
+
 //	playerKnownSpells := make([]string, 8)
 	playerWizardType := wizardTypeArray[rollTox(10)]
 
