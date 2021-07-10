@@ -8,6 +8,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
+//	"reflect"
 //	"strconv"
 )
 
@@ -26,7 +27,7 @@ type Soldiers struct {
 		cost int
 }
 
-type Wizards struct {
+type PlayerWizards struct {
 		school string
 		spell1 string
 		spell2 string
@@ -38,124 +39,85 @@ type Wizards struct {
 		spell8 string
 }
 
-//Following are various arrays, which are also held with blank identifers
-var chronomancerSpells = [8]string{
-		"Crumble",
-		"Decay",
-		"Fast Act",
-		"Fleet Feet",
-		"Petrify",
-		"Slow",
-		"Timestore",
-		"Time Walk",
+type WizardType struct {
+		spell1 string
+		spell2 string
+		spell3 string
+		spell4 string
+		spell5 string
+		spell6 string
+		spell7 string
+		spell8 string
+		allied1 string
+		allied2 string
+		allied3 string
+		neutral1 string
+		neutral2 string
+		neutral3 string
+		neutral4 string
+		neutral5 string
+		opposed string
+
 }
 
-var elementalistSpells = [8]string{
-		"Call Storm",
-		"Destructive Sphere",
-		"Elemental Ball",
-		"Elemental Bolt",
-		"Elemental Hammer",
-		"Elemental Shield",
-		"Scatter Shot",
-		"Wall",
-	}
+var chronomancer = WizardType{"Crumble", "Decay", "Fast Act", 
+	"Fleet Feet", "Petrify", "Slow", "Timestore", "Time Walk", 
+	"Necromancer", "Soothsayer", "Elementalist", "Thaumaturge", 
+	"Summoner", "Illusionist", "Witch", "Sigilist", "Enchanter"}
+	
+var elementalist = WizardType{"Call Storm", "Destructive Sphere",
+	"Elemental Ball", "Elemental Bolt", "Elemental Hammer",
+	"Elemental Shield", "Scatter Shot", "Wall", "Summoner", 
+	"Enchanter", "Chronomancer", "Thaumaturge", "Soothsayer", 
+	"Sigilist", "Witch", "Necromancer", "Illusionist"}
+	
+var enchanter = WizardType{"Animate Construct", "Control Construct",
+	"Embed Enchantment", "Enchant Armour", "Enchant Weapon", "Grenade",
+	"Strength", "Telekinesis", "Witch", "Sigilist", "Elementalist",
+	"Necromancer", "Illusionist", "Summoner", "Soothsayer", 
+	"Thaumaturge", "Chronomancer"}
 
+var illusionist = WizardType{"Beauty", "Fool's Gold", "Glow", 
+	"Illusionary Solider", "Invisibility", "Monstrous Form", "Teleport",
+	"Transpose", "Soothsayer", "Sigilist", "Thaumaturge", "Necromancer",
+	"Witch", "Chronomancer", "Summoner", "Enchanter", "Elementalist"}
+	
+var necromancer = WizardType{"Bone Dart", "Bones of the Earth", 
+	"Control Undead", "Raise Zombie", "Reveal Death", "Spell Eater",
+	"Steal Health", "Strike Dead", "Witch", "Chronomancer", "Summoner",
+	"Elementalist", "Sigilist", "Illusionist", "Enchanter", 
+	"Soothsayer", "Thaumaturge"}
 
-var enchanterSpells = [8]string{
-		"Animate Construct",
-		"Control Construct",
-		"Embed Enchantment",
-		"Enchant Armour",
-		"Enchant Weapon",
-		"Grenade",
-		"Strength",
-		"Telekinesis",
-	}
-
-
-var illusionistSpells = [8]string{
-		"Beauty",
-		"Fool's Gold",
-		"Glow",
-		"Illusionary Solider",
-		"Invisibility",
-		"Monstrous Form",
-		"Teleport",
-		"Transpose",
-	}
-
-
-var	necromancerSpells = [8]string{
-		"Bone Dart",
-		"Bones of the Earth",
-		"Control Undead",
-		"Raise Zombie",
-		"Reveal Death",
-		"Spell Eater",
-		"Steal Health",
-		"Strike Dead",
-	}
-
-
-var	sigilistSpells = [8]string{
-		"Absorb Knowledge",
-		"Create Grimoire",
-		"Draining Word",
-		"Explosive Rune",
-		"Furious Quill",
-		"Power Word",
-		"Push",
-		"Write Scroll",
-	}
-
-
-var	soothsayerSpells = [8]string{
-		"Awareness",
-		"Combat Awareness",
-		"Forget Spell",
-		"Mind Control",
-		"Reveal Invisible",
-		"Reveal Secret",
-		"Will Power",
-		"Wizard Eye",
-	}
-
-
-var	summonerSpells = [8]string{
-		"Bind Demon",
-		"Imp",
-		"Leap",
-		"Plague of Insects",
-		"Planar Tear",
-		"Possess",
-		"Summon Demon",
-	}
-
-
-var	thaumaturgeSpells = [8]string{
-		"Banish",
-		"Blinding Light",
-		"Circle of Protection",
-		"Dispel",
-		"Heal",
-		"Miraculous Cure",
-		"Restore Life",
-		"Shield",
-	}
-
-
-var	witchSpells = [8]string{
-		"Animal Companion",
-		"Brew Potion",
-		"Control Animal",
-		"Curse",
-		"Familiar",
-		"Fog",
-		"Mud",
-		"Posion Dart",
-	}
-
+var sigilist = WizardType{"Absorb Knowledge", "Create Grimoire", 
+	"Draining Word", "Explosive Rune", "Furious Quill", "Power Word",
+	"Push", "Write Scroll", "Thaumaturge", "Illusionist", "Enchanter",
+	"Necromancer", "Elementalist", "Witch", "Chronomancer", 
+	"Soothsayer", "Summoner"}
+	
+var soothsayer = WizardType{"Awareness", "Combat Awareness", 
+	"Forget Spell", "Mind Control", "Reveal Invisible", "Reveal Secret",
+	"Will Power", "Wizard Eye", "Thaumaturge", "Chronomancer", 
+	"Illusionist", "Enchanter", "Summoner", "Necromancer", 
+	"Elementalist", "Sigilist", "Witch"}
+	
+var summoner = WizardType{"Bind Demon", "Imp", "Leap", 
+	"Plague of Insects", "Planar Tear", "Planar Walk","Possess", 
+	"Summon Demon", "Necromancer", "Witch", "Elementalist", 
+	"Soothsayer", "Enchanter", "Illusionist", "Chronomancer", 
+	"Thaumaturge", "Sigilist"}
+	
+var thaumaturge = WizardType{"Banish", "Blinding Light", 
+	"Circle of Protection", "Dispel", "Heal", "Miraculus Cure",
+	"Restore Life", "Shield", "Soothsayer", "Sigilist", "Illusionist",
+	"Elementalist", "Witch", "Chronomancer", "Summoner", "Enchanter",
+	"Necromancer"}
+	
+	
+var witch = WizardType{"Animal Companion", "Brew Potion", 
+	"Control Animal", "Curse", "Familiar", "Fog", "Mud", "Posion Dart",
+	"Enchanter", "Necromancer", "Summoner", "Thaumaturge", 
+	"Illusionist", "Elementalist", "Sigilist", "Chronomancer", 
+	"Soothsayer"}
 
 var	soldiersCostMap = map[string]int{
 		"War Hound": 20,
@@ -173,7 +135,7 @@ var	soldiersCostMap = map[string]int{
 		"Apothecary": 100,
 		"Marksman": 100,
 		"Apprentice": 200,
-	}
+}
 
 var	soliderNumberArray = [15]string{
 		"War Hound",
@@ -191,7 +153,7 @@ var	soliderNumberArray = [15]string{
 		"Apothecary",
 		"Marksman",
 		"Apprentice",
-	}
+}
 
 var	wizardTypeArray = [10]string{
 		"Chronomancer",
@@ -204,180 +166,7 @@ var	wizardTypeArray = [10]string{
 		"Summoner",
 		"Thaumaturge",
 		"Witch",
-	}
-
-var	chronomancerAllied = [3]string{
-		"Necromancer",
-		"Soothsayer",
-		"Elementalist",
-	}
-
-
-var	chronomancerNeutral = [5]string {
-		"Thaumaturge",
-		"Summoner",
-		"Illusionist",
-		"Witch",
-		"Sigilist",
-	}
-
-
-var	elementalistAllied = [3]string{
-		"Summoner",
-		"Enchanter",
-		"Chronomancer",
-	}
-
-
-var	elementalistNeutral = [5]string {
-		"Thaumaturge",
-		"Soothsayer",
-		"Sigilist",
-		"Witch",
-		"Necromancer",
-	}
-
-
-var	enchanterAllied = [3]string{
-		"Witch",
-		"Sigilist",
-		"Elementalist",
-	}
-
-
-var	enchanterNeutral = [5]string {
-		"Witch",
-		"Illusionist",
-		"Summoner",
-		"Soothsayer",
-		"Thaumaturge",
-	}
-
-
-var	illusionistAllied = [3]string{
-		"Soothsayer",
-		"Sigilist",
-		"Thaumaturge",
-	}
-
-
-var	illusionistNeutral = [5]string {
-		"Necromancer",
-		"Witch",
-		"Chronomancer",
-		"Summoner",
-		"Enchanter",
-	}
-
-
-var	necromancerAllied = [3]string{
-		"Witch",
-		"Chronomancer",
-		"Summoner",
-	}
-
-
-var	necromancerNeutral = [5]string{
-		"Elementalist",
-		"Sigilist",
-		"Illusionist",
-		"Enchanter",
-		"Soothsayer",
-	}
-
-
-var	sigilistAllied = [3]string{
-		"Thaumaturge",
-		"Illusionist",
-		"Enchanter",
-	}
-
-
-var	sigilistNeutral = [5]string{
-		"Necromancer",
-		"Elementalist",
-		"Witch",
-		"Chronomancer",
-		"Soothsayer",
-	}
-
-
-var	soothsayerAllied = [3]string{
-		"Thaumaturge",
-		"Chronomancer",
-		"Illusionist",
-	}
-
-
-var	soothsayerNeutral = [5]string{
-		"Enchanter",
-		"Summoner",
-		"Necromancer",
-		"Elementalist",
-		"Sigilist",
-	}
-
-
-var	summonerAllied = [3]string{
-		"Necromancer",
-		"Witch",
-		"Elementalist",
-	}
-
-
-var	summonerNeutral = [5]string{
-		"Soothsayer",
-		"Enchanter",
-		"Illusionist",
-		"Chronomancer",
-		"Thaumaturge",
-	}
-
-
-var	thaumaturgeAllied = [3]string{
-		"Soothsayer",
-		"Sigilist",
-		"Illusionist",
-	}
-
-
-var	thaumaturgeNeutral = [5]string{
-		"Elementalist",
-		"Witch",
-		"Chronomancer",
-		"Summoner",
-		"Enchanter",
-	}
-
-
-var	witchAllied = [3]string{
-		"Enchanter",
-		"Necromancer",
-		"Summoner",
-	}
-
-
-var	witchNeutral = [5]string{
-		"Thaumaturge",
-		"Illusionist",
-		"Elementalist",
-		"Sigilist",
-		"Chronomancer",
-	}
-
-
-var	opposedMap = map[string]string{
-		"Chronomancer" : "Enchanter",
-		"Elementalist" : "Illusionist",
-		"Enchanter" : "Chronomancer",
-		"Illusionist" : "Elementalist",
-		"Necromancer" : "Thaumaturge",
-		"Sigilist" : "Summoner",
-		"Soothsayer" : "Witch",
-		"Summoner" : "Sigilist",
-		"Thaumaturge" : "Necromancer",
-		"Witch" : "Soothsayer",
-	}
+}
 
 var startingGold = 500
 
@@ -408,15 +197,26 @@ func main() {
 	rand.Seed(time.Now().UnixNano())
 
 	
-	currentGold := startingGold
+	//currentGold := startingGold
 
-	soldierSlice := make([]string, 0)
+	//soldierSlice := make([]string, 0)
 
 //	playerKnownSpells := make([]string, 8)
 	playerWizardType := wizardTypeArray[rollTox(10)]
-
 	fmt.Println("Wizard type is", playerWizardType)
 	fmt.Println("Starting Gold: ", startingGold)
 	fmt.Println(soldiersCostMap[soliderNumberArray[rollTox(15)]])
-	fmt.Println(opposedMap[playerWizardType])
+// fmt.Println((playerWizardType).opposed) why doesn't this work?	
+	switch playerWizardType {
+		case "Chronomancer": fmt.Println(chronomancer.opposed)
+		case "Elementalist": fmt.Println(elementalist.opposed)
+		case "Enchanter": fmt.Println(enchanter.opposed)
+		case "Illusionist": fmt.Println(illusionist.opposed)
+		case "Necromancer": fmt.Println(necromancer.opposed)
+		case "Sigilist": fmt.Println(sigilist.opposed)
+		case "Soothsayer": fmt.Println(soothsayer.opposed)
+		case "Summoner": fmt.Println(summoner.opposed)
+		case "Thaumaturge": fmt.Println(thaumaturge.opposed)
+		case "Witch": fmt.Println(witch.opposed)
+	}
 }
