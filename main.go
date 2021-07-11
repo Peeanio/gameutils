@@ -8,7 +8,7 @@ import (
 	"fmt"
 	"math/rand"
 	"time"
-//	"reflect"
+	"reflect"
 //	"strconv"
 )
 
@@ -60,60 +60,60 @@ type WizardType struct {
 
 }
 
-var chronomancer = WizardType{"Crumble", "Decay", "Fast Act", 
+var Chronomancer = WizardType{"Crumble", "Decay", "Fast Act", 
 	"Fleet Feet", "Petrify", "Slow", "Timestore", "Time Walk", 
 	"Necromancer", "Soothsayer", "Elementalist", "Thaumaturge", 
 	"Summoner", "Illusionist", "Witch", "Sigilist", "Enchanter"}
 	
-var elementalist = WizardType{"Call Storm", "Destructive Sphere",
+var Elementalist = WizardType{"Call Storm", "Destructive Sphere",
 	"Elemental Ball", "Elemental Bolt", "Elemental Hammer",
 	"Elemental Shield", "Scatter Shot", "Wall", "Summoner", 
 	"Enchanter", "Chronomancer", "Thaumaturge", "Soothsayer", 
 	"Sigilist", "Witch", "Necromancer", "Illusionist"}
 	
-var enchanter = WizardType{"Animate Construct", "Control Construct",
+var Enchanter = WizardType{"Animate Construct", "Control Construct",
 	"Embed Enchantment", "Enchant Armour", "Enchant Weapon", "Grenade",
 	"Strength", "Telekinesis", "Witch", "Sigilist", "Elementalist",
 	"Necromancer", "Illusionist", "Summoner", "Soothsayer", 
 	"Thaumaturge", "Chronomancer"}
 
-var illusionist = WizardType{"Beauty", "Fool's Gold", "Glow", 
+var Illusionist = WizardType{"Beauty", "Fool's Gold", "Glow", 
 	"Illusionary Solider", "Invisibility", "Monstrous Form", "Teleport",
 	"Transpose", "Soothsayer", "Sigilist", "Thaumaturge", "Necromancer",
 	"Witch", "Chronomancer", "Summoner", "Enchanter", "Elementalist"}
 	
-var necromancer = WizardType{"Bone Dart", "Bones of the Earth", 
+var Necromancer = WizardType{"Bone Dart", "Bones of the Earth", 
 	"Control Undead", "Raise Zombie", "Reveal Death", "Spell Eater",
 	"Steal Health", "Strike Dead", "Witch", "Chronomancer", "Summoner",
 	"Elementalist", "Sigilist", "Illusionist", "Enchanter", 
 	"Soothsayer", "Thaumaturge"}
 
-var sigilist = WizardType{"Absorb Knowledge", "Create Grimoire", 
+var Sigilist = WizardType{"Absorb Knowledge", "Create Grimoire", 
 	"Draining Word", "Explosive Rune", "Furious Quill", "Power Word",
 	"Push", "Write Scroll", "Thaumaturge", "Illusionist", "Enchanter",
 	"Necromancer", "Elementalist", "Witch", "Chronomancer", 
 	"Soothsayer", "Summoner"}
 	
-var soothsayer = WizardType{"Awareness", "Combat Awareness", 
+var Soothsayer = WizardType{"Awareness", "Combat Awareness", 
 	"Forget Spell", "Mind Control", "Reveal Invisible", "Reveal Secret",
 	"Will Power", "Wizard Eye", "Thaumaturge", "Chronomancer", 
 	"Illusionist", "Enchanter", "Summoner", "Necromancer", 
 	"Elementalist", "Sigilist", "Witch"}
 	
-var summoner = WizardType{"Bind Demon", "Imp", "Leap", 
+var Summoner = WizardType{"Bind Demon", "Imp", "Leap", 
 	"Plague of Insects", "Planar Tear", "Planar Walk","Possess", 
 	"Summon Demon", "Necromancer", "Witch", "Elementalist", 
 	"Soothsayer", "Enchanter", "Illusionist", "Chronomancer", 
 	"Thaumaturge", "Sigilist"}
 	
-var thaumaturge = WizardType{"Banish", "Blinding Light", 
+var Thaumaturge = WizardType{"Banish", "Blinding Light", 
 	"Circle of Protection", "Dispel", "Heal", "Miraculus Cure",
 	"Restore Life", "Shield", "Soothsayer", "Sigilist", "Illusionist",
 	"Elementalist", "Witch", "Chronomancer", "Summoner", "Enchanter",
 	"Necromancer"}
 	
 	
-var witch = WizardType{"Animal Companion", "Brew Potion", 
+var Witch = WizardType{"Animal Companion", "Brew Potion", 
 	"Control Animal", "Curse", "Familiar", "Fog", "Mud", "Posion Dart",
 	"Enchanter", "Necromancer", "Summoner", "Thaumaturge", 
 	"Illusionist", "Elementalist", "Sigilist", "Chronomancer", 
@@ -170,6 +170,54 @@ var	wizardTypeArray = [10]string{
 
 var startingGold = 500
 
+func returnSpell(x WizardType) reflect.Value{
+		var s reflect.Value
+		switch x {
+		case Chronomancer: 
+			w := reflect.ValueOf(&Chronomancer).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Elementalist: 
+			w := reflect.ValueOf(&Elementalist).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Enchanter: 
+			w := reflect.ValueOf(&Enchanter).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Illusionist: 
+			w := reflect.ValueOf(&Illusionist).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Necromancer: 
+			w := reflect.ValueOf(&Necromancer).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Sigilist: 
+			w := reflect.ValueOf(&Sigilist).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Soothsayer: 
+			w := reflect.ValueOf(&Soothsayer).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Summoner: 
+			w := reflect.ValueOf(&Summoner).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Thaumaturge: 
+			w := reflect.ValueOf(&Thaumaturge).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+		case Witch: 
+			w := reflect.ValueOf(&Witch).Elem()
+			s:= w.Field(rollTox(8))
+			return(s)
+			//			fmt.Println(w.Field(rollTox(8)))
+	}
+	return(s)
+}
+
 func rollDx(x int) int {
 //rolls a die up to the number specified
 	min := 1
@@ -206,17 +254,29 @@ func main() {
 	fmt.Println("Wizard type is", playerWizardType)
 	fmt.Println("Starting Gold: ", startingGold)
 	fmt.Println(soldiersCostMap[soliderNumberArray[rollTox(15)]])
-// fmt.Println((playerWizardType).opposed) why doesn't this work?	
+    //fmt.Println((`playerWizardType`).opposed) // why doesn't this work?	
 	switch playerWizardType {
-		case "Chronomancer": fmt.Println(chronomancer.opposed)
-		case "Elementalist": fmt.Println(elementalist.opposed)
-		case "Enchanter": fmt.Println(enchanter.opposed)
-		case "Illusionist": fmt.Println(illusionist.opposed)
-		case "Necromancer": fmt.Println(necromancer.opposed)
-		case "Sigilist": fmt.Println(sigilist.opposed)
-		case "Soothsayer": fmt.Println(soothsayer.opposed)
-		case "Summoner": fmt.Println(summoner.opposed)
-		case "Thaumaturge": fmt.Println(thaumaturge.opposed)
-		case "Witch": fmt.Println(witch.opposed)
+		case "Chronomancer": fmt.Println(Chronomancer.opposed)
+		case "Elementalist": fmt.Println(Elementalist.opposed)
+		case "Enchanter": fmt.Println(Enchanter.opposed)
+		case "Illusionist": fmt.Println(Illusionist.opposed)
+		case "Necromancer": fmt.Println(Necromancer.opposed)
+		case "Sigilist": fmt.Println(Sigilist.opposed)
+		case "Soothsayer": fmt.Println(Soothsayer.opposed)
+		case "Summoner": fmt.Println(Summoner.opposed)
+		case "Thaumaturge": fmt.Println(Thaumaturge.opposed)
+		case "Witch": fmt.Println(Witch.opposed)
 	}
+	//slice :=  make([]reflect.Value, 0, 8 )
+	
+	//i := 1
+	//for i <= 3 {
+		//playerSpellSlice := append(slice, returnSpell(Witch))
+		//fmt.Println(i)
+		//i = i + 1
+	//}
+	
+	//fmt.Println(playerSpellSlice)
+	fmt.Println("First spell is: ", returnSpell(Witch))
+
 }
