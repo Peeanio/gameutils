@@ -40,23 +40,23 @@ type PlayerWizards struct {
 }
 
 type WizardType struct {
-		spell1 string
-		spell2 string
-		spell3 string
-		spell4 string
-		spell5 string
-		spell6 string
-		spell7 string
-		spell8 string
-		allied1 string
-		allied2 string
-		allied3 string
-		neutral1 string
-		neutral2 string
-		neutral3 string
-		neutral4 string
-		neutral5 string
-		opposed string
+		Spell1 string
+		Spell2 string
+		Spell3 string
+		Spell4 string
+		Spell5 string
+		Spell6 string
+		Spell7 string
+		Spell8 string
+		Allied1 string
+		Allied2 string
+		Allied3 string
+		Neutral1 string
+		Neutral2 string
+		Neutral3 string
+		Neutral4 string
+		Neutral5 string
+		Opposed string
 
 }
 
@@ -256,27 +256,73 @@ func main() {
 	fmt.Println(soldiersCostMap[soliderNumberArray[rollTox(15)]])
     //fmt.Println((`playerWizardType`).opposed) // why doesn't this work?	
 	switch playerWizardType {
-		case "Chronomancer": fmt.Println(Chronomancer.opposed)
-		case "Elementalist": fmt.Println(Elementalist.opposed)
-		case "Enchanter": fmt.Println(Enchanter.opposed)
-		case "Illusionist": fmt.Println(Illusionist.opposed)
-		case "Necromancer": fmt.Println(Necromancer.opposed)
-		case "Sigilist": fmt.Println(Sigilist.opposed)
-		case "Soothsayer": fmt.Println(Soothsayer.opposed)
-		case "Summoner": fmt.Println(Summoner.opposed)
-		case "Thaumaturge": fmt.Println(Thaumaturge.opposed)
-		case "Witch": fmt.Println(Witch.opposed)
+		case "Chronomancer": fmt.Println(Chronomancer.Opposed)
+		case "Elementalist": fmt.Println(Elementalist.Opposed)
+		case "Enchanter": fmt.Println(Enchanter.Opposed)
+		case "Illusionist": fmt.Println(Illusionist.Opposed)
+		case "Necromancer": fmt.Println(Necromancer.Opposed)
+		case "Sigilist": fmt.Println(Sigilist.Opposed)
+		case "Soothsayer": fmt.Println(Soothsayer.Opposed)
+		case "Summoner": fmt.Println(Summoner.Opposed)
+		case "Thaumaturge": fmt.Println(Thaumaturge.Opposed)
+		case "Witch": fmt.Println(Witch.Opposed)
 	}
-	//slice :=  make([]reflect.Value, 0, 8 )
 	
-	//i := 1
-	//for i <= 3 {
-		//playerSpellSlice := append(slice, returnSpell(Witch))
-		//fmt.Println(i)
-		//i = i + 1
+	var playerSpellArray [8]string
+	i := 1
+	for i <= 3 {
+		playerSpellArray[i] = returnSpell(Witch).String()
+		fmt.Println(i)
+		i = i + 1
+	}
+	
+	fmt.Println(playerSpellArray)
+	
+	//switch playerWizardType {
+		//case "Chronomancer": 
+			//p := reflect.ValueOf(&Chronomancer).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Elementalist": 
+			//p := reflect.ValueOf(&Elementalist).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Enchanter": 
+			//p := reflect.ValueOf(&Enchanter).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Illusionist": 
+			//p := reflect.ValueOf(&Illusionist).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Necromancer": 
+			//p := reflect.ValueOf(&Necromancer).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Sigilist": 
+			//p := reflect.ValueOf(&Sigilist).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Soothsayer": 
+			//p := reflect.ValueOf(&Soothsayer).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Summoner": 
+			//p := reflect.ValueOf(&Summoner).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Thaumaturge": 
+			//p := reflect.ValueOf(&Thaumaturge).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
+		//case "Witch": 
+			//p := reflect.ValueOf(&Witch).Elem()
+			//f := p.Field(2)
+			//fmt.Printf("%v\n", f.Interface())
 	//}
 	
-	//fmt.Println(playerSpellSlice)
+	
 	fmt.Println("First spell is: ", returnSpell(Witch))
+	fmt.Println("Second spell is: ", returnSpell(Witch).String())
 
 }
