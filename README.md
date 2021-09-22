@@ -1,9 +1,5 @@
-This is a random character generator for Cyberpunk 2020 pen and paper RPG. It is a work in 
-progress. Goal is to learn about writing and ultimately distributing software.
+This is a project is a collection of utilities for various board and tabletop games.
 
-There are several versions, as I have been working on the same project in multiple
-languages to see it how it goes. I will be pursuing the python version for now,
-and hope to have more features such as equipment and name generation, 
-perhaps a gui version.
+First is a random character generator for Cyberpunk 2020 pen and paper RPG. It is a work in progress. I intend to add more role playing games to the same script, such as D&D. My goal is to learn about writing and ultimately distributing software.
 
-The sh and c versions are depreciated. The python version is the main, and should be kept with the two name txt files. These are used for name generation. Apart from that, the script is portable and can be used to dump to files easily. 
+Second is a warband generator for the game Frostgrave. I wrote a test version in Go first, but did not think the project warranted that language, so I am rewriting in Python. I will keep the old version in the repo for reference for now.
