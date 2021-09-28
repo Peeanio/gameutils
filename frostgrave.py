@@ -23,7 +23,19 @@ def rollToX(x):
 #returns a number between 0 and x
 	rollresult = random.randint(0,x)
 	return rollresult
-	
+
+def GetSpells(array, num):
+	availableSpells = array.copy()
+	for i in range(0, num):
+		newSpell = ReturnSpell((len(availableSpells)-1), availableSpells)
+		if newSpell in spellList:
+			availableSpells.remove(newSpell)
+			newSpell = ReturnSpell((len(availableSpells)-1), availableSpells)
+		else:
+			availableSpells.remove(newSpell)
+		spellList.append(newSpell)
+	return spellList
+
 #declare data structs
 class WizardType():
 	def __init__(self, spell1, spell2, spell3, spell4, spell5, spell6,\
@@ -129,47 +141,62 @@ arrayWitchRelations = ["Enchanter", "Necromancer", "Summoner",\
 "Thaumaturge", "Illusionist", "Elementalist", "Sigilist",\
 "Chronomancer", "Soothsayer"]
 startingGold = 500
+spellList = [ ]
 
 #functions
 def ReturnSpell(x, spellschool):
 #returns a spell from a school given a number
 	spell = spellschool[rollToX(x)]
-	print(spell)
+	return spell
 	
 playerClass = arrayWizardType[rollToX(9)]
 	
 if playerClass == "Chronomancer":
 	spellArray = "arrayChronomancerSpells"
 	relationsArray = "arrayChronomancerRelations"
+	GetSpells(arrayChronomancerSpells, 3)
 elif playerClass == "Elementalist":
 	spellArray = "arrayElementalistSpells"
 	relationsArray = "arrayElementalistRelations"
+	GetSpells(arrayElementalistSpells, 3)
 elif playerClass == "Enchanter":
 	spellArray = "arrayEnchanterSpells"
 	relationsArray = "arrayEnchanterRelations"
+	GetSpells(arrayEnchanterSpells, 3)
 elif playerClass == "Illusionist":
 	spellArray = "arrayIllusionistSpells"
-	relationsArray = "arrayIllusionistRelations"	
+	relationsArray = "arrayIllusionistRelations"
+	GetSpells(arrayIllusionistSpells, 3)	
 elif playerClass == "Necromancer":
 	spellArray = "arrayNecromancerSpells"
-	relationsArray = "arrayNecromancerRelations"	
-elif playerClass == "Siglist":
+	relationsArray = "arrayNecromancerRelations"
+	GetSpells(arrayNecromancerSpells, 3)	
+elif playerClass == "Sigilist":
 	spellArray = "arraySigilistSpells"
-	relationsArray = "arraySigilistRelations"	
+	relationsArray = "arraySigilistRelations"
+	GetSpells(arraySigilistSpells, 3)	
 elif playerClass == "Soothsayer":
 	spellArray = "arraySoothsayerSpells"
-	relationsArray = "arraySoothsayerRelations"	
+	relationsArray = "arraySoothsayerRelations"
+	GetSpells(arraySoothsayerSpells, 3)	
 elif playerClass == "Summoner":
 	spellArray = "arraySummonerSpells"
-	relationsArray = "arraySummonerRelations"	
+	relationsArray = "arraySummonerRelations"
+	GetSpells(arraySummonerSpells, 3)	
 elif playerClass == "Thaumaturge":
 	spellArray = "arrayThaumaturgeSpells"
-	relationsArray = "arrayThaumaturgeRelations"	
+	relationsArray = "arrayThaumaturgeRelations"
+	GetSpells(arrayThaumaturgeSpells, 3)	
 elif playerClass == "Witch":
 	spellArray = "arrayWitchSpells"
-	relationsArray = "arrayWitchRelations"	
+	relationsArray = "arrayWitchRelations"
+	GetSpells(arrayWitchSpells, 3)
 else:
 	print("wtf class do you have?")
-	break
+
 	
 ReturnSpell(7, arrayWitchSpells)
+
+availableSpells = spellArray
+
+print(spellList)
