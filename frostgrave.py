@@ -24,13 +24,21 @@ def rollToX(x):
 	rollresult = random.randint(0,x)
 	return rollresult
 
+def ReturnSpell(x, spellschool):
+#returns a spell from a school given a number
+	spell = spellschool[rollToX(x)]
+	return spell
+
 def GetSpells(array, num):
+#gets spells from an array given the name and length
 	availableSpells = array.copy()
 	for i in range(0, num):
-		newSpell = ReturnSpell((len(availableSpells)-1), availableSpells)
+		newSpell = ReturnSpell((len(availableSpells)-1), \
+		availableSpells)
 		if newSpell in spellList:
 			availableSpells.remove(newSpell)
-			newSpell = ReturnSpell((len(availableSpells)-1), availableSpells)
+			newSpell = ReturnSpell((len(availableSpells)-1), \
+			availableSpells)
 		else:
 			availableSpells.remove(newSpell)
 		spellList.append(newSpell)
@@ -142,12 +150,6 @@ arrayWitchRelations = ["Enchanter", "Necromancer", "Summoner",\
 "Chronomancer", "Soothsayer"]
 startingGold = 500
 spellList = [ ]
-
-#functions
-def ReturnSpell(x, spellschool):
-#returns a spell from a school given a number
-	spell = spellschool[rollToX(x)]
-	return spell
 	
 playerClass = arrayWizardType[rollToX(9)]
 	
@@ -155,42 +157,72 @@ if playerClass == "Chronomancer":
 	spellArray = "arrayChronomancerSpells"
 	relationsArray = "arrayChronomancerRelations"
 	GetSpells(arrayChronomancerSpells, 3)
+	GetSpells(arrayNecromancerSpells, 1)
+	GetSpells(arraySoothsayerSpells, 1)
+	GetSpells(arrayElementalistSpells, 1)
 elif playerClass == "Elementalist":
 	spellArray = "arrayElementalistSpells"
 	relationsArray = "arrayElementalistRelations"
 	GetSpells(arrayElementalistSpells, 3)
+	GetSpells(arraySummonerSpells, 1)
+	GetSpells(arrayEnchanterSpells, 1)
+	GetSpells(arrayChronomancerSpells, 1)
 elif playerClass == "Enchanter":
 	spellArray = "arrayEnchanterSpells"
 	relationsArray = "arrayEnchanterRelations"
 	GetSpells(arrayEnchanterSpells, 3)
+	GetSpells(arrayWitchSpells, 1)
+	GetSpells(arraySigilistSpells, 1)
+	GetSpells(arrayElementalistSpells, 1)
 elif playerClass == "Illusionist":
 	spellArray = "arrayIllusionistSpells"
 	relationsArray = "arrayIllusionistRelations"
-	GetSpells(arrayIllusionistSpells, 3)	
+	GetSpells(arrayIllusionistSpells, 3)
+	GetSpells(arraySoothsayerSpells, 1)
+	GetSpells(arraySigilistSpells, 1)
+	GetSpells(arrayThaumaturgeSpells, 1)	
 elif playerClass == "Necromancer":
 	spellArray = "arrayNecromancerSpells"
 	relationsArray = "arrayNecromancerRelations"
-	GetSpells(arrayNecromancerSpells, 3)	
+	GetSpells(arrayNecromancerSpells, 3)
+	GetSpells(arrayWitchSpells, 1)
+	GetSpells(arrayChronomancerSpells, 1)
+	GetSpells(arraySummonerSpells, 1)	
 elif playerClass == "Sigilist":
 	spellArray = "arraySigilistSpells"
 	relationsArray = "arraySigilistRelations"
-	GetSpells(arraySigilistSpells, 3)	
+	GetSpells(arraySigilistSpells, 3)
+	GetSpells(arrayThaumaturgeSpells, 1)
+	GetSpells(arrayIllusionistSpells, 1)
+	GetSpells(arrayEnchanterSpells, 1)	
 elif playerClass == "Soothsayer":
 	spellArray = "arraySoothsayerSpells"
 	relationsArray = "arraySoothsayerRelations"
-	GetSpells(arraySoothsayerSpells, 3)	
+	GetSpells(arraySoothsayerSpells, 3)
+	GetSpells(arrayThaumaturgeSpells, 1)
+	GetSpells(arrayIllusionistSpells, 1)
+	GetSpells(arrayEnchanterSpells, 1)	
 elif playerClass == "Summoner":
 	spellArray = "arraySummonerSpells"
 	relationsArray = "arraySummonerRelations"
-	GetSpells(arraySummonerSpells, 3)	
+	GetSpells(arraySummonerSpells, 3)
+	GetSpells(arrayNecromancerSpells, 1)
+	GetSpells(arrayWitchSpells, 1)
+	GetSpells(arrayElementalistSpells, 1)	
 elif playerClass == "Thaumaturge":
 	spellArray = "arrayThaumaturgeSpells"
 	relationsArray = "arrayThaumaturgeRelations"
-	GetSpells(arrayThaumaturgeSpells, 3)	
+	GetSpells(arrayThaumaturgeSpells, 3)
+	GetSpells(arraySoothsayerSpells, 1)
+	GetSpells(arraySigilistSpells, 1)
+	GetSpells(arrayIllusionistSpells, 1)	
 elif playerClass == "Witch":
 	spellArray = "arrayWitchSpells"
 	relationsArray = "arrayWitchRelations"
 	GetSpells(arrayWitchSpells, 3)
+	GetSpells(arrayEnchanterSpells, 1)
+	GetSpells(arrayNecromancerSpells, 1)
+	GetSpells(arraySummonerSpells, 1)
 else:
 	print("wtf class do you have?")
 
