@@ -44,6 +44,23 @@ def GetSpells(array, num):
 		spellList.append(newSpell)
 	return spellList
 
+def GetAllSpells(spells, relations):
+#get all of the spells, using other functions
+	GetSpells(spells, 3)
+	GetSpells(relations[0], 1)
+	GetSpells(relations[1], 1)
+	GetSpells(relations[2], 1)
+	availableRelations = relations.copy()
+	enemyRelation = availableRelations.pop(-1)
+	del availableRelations[0:2]
+	firstRelation = availableRelations[random.randint(0,4)]
+	availableRelations.remove(firstRelation)
+	secondRelation = availableRelations[random.randint(0,3)]
+	GetSpells(firstRelation, 1)
+	GetSpells(secondRelation, 1)
+	
+	return spellList
+
 #declare data structs
 class WizardType():
 	def __init__(self, spell1, spell2, spell3, spell4, spell5, spell6,\
@@ -92,137 +109,108 @@ dictSoliderCost = {"War Hound": 20, "Thug": 20, "Archer": 50,\
 "Barbarian": 100, "Apothecary": 100, "Marksman": 100, "Apprentice": 200}
 arrayChronomancerSpells = ["Crumble", "Decay", "Fast Act", \
 "Fleet Feet", "Petrify", "Slow", "Timestore", "Time Walk"]
-arrayChronomancerRelations = ["Necromancer", "Soothsayer",\
-"Elementalist", "Thaumaturge",	"Summoner", "Illusionist", "Witch",\
-"Sigilist", "Enchanter"]
 arrayElementalistSpells = ["Call Storm", "Destructive Sphere",\
 "Elemental Ball", "Elemental Bolt", "Elemental Hammer",\
 "Elemental Shield", "Scatter Shot", "Wall"]
-arrayElementalistRelations = ["Summoner",	"Enchanter",\
-"Chronomancer", "Thaumaturge", "Soothsayer", "Sigilist", "Witch", \
-"Necromancer", "Illusionist"]
 arrayEnchanterSpells = ["Animate Construct", "Control Construct",\
 "Embed Enchantment", "Enchant Armour", "Enchant Weapon", "Grenade",\
 "Strength", "Telekinesis"]
-arrayEnchanterRelations = ["Witch", "Sigilist", "Elementalist",\
-"Necromancer", "Illusionist", "Summoner", "Soothsayer", "Thaumaturge", \
-"Chronomancer"]
 arrayIllusionistSpells = ["Beauty", "Fool's Gold", "Glow", \
 "Illusionary Solider", "Invisibility", "Monstrous Form", "Teleport",\
 "Transpose"]
-arrayIllusionistRelations = ["Soothsayer", "Sigilist", "Thaumaturge",\
-"Necromancer", "Witch", "Chronomancer", "Summoner", "Enchanter",\
-"Elementalist"]
 arrayNecromancerSpells = ["Bone Dart", "Bones of the Earth",\
 "Control Undead", "Raise Zombie", "Reveal Death", "Spell Eater",\
 "Steal Health", "Strike Dead"]
-arrayNecromancerRelations = ["Witch", "Chronomancer", "Summoner",\
-"Elementalist", "Sigilist", "Illusionist", "Enchanter", "Soothsayer",\
-"Thaumaturge"]
 arraySigilistSpells = ["Absorb Knowledge", "Create Grimoire",\
 "Draining Word", "Explosive Rune", "Furious Quill", "Power Word",\
 "Push", "Write Scroll"]
-arraySigilistRelations = ["Thaumaturge", "Illusionist", "Enchanter",\
-"Necromancer", "Elementalist", "Witch", "Chronomancer","Soothsayer",\
-"Summoner"]
 arraySoothsayerSpells = ["Awareness", "Combat Awareness",\
 "Forget Spell", "Mind Control", "Reveal Invisible", "Reveal Secret",\
 "Will Power", "Wizard Eye"]
-arraySoothsayerRelations = ["Thaumaturge", "Chronomancer",\
-"Illusionist", "Enchanter", "Summoner", "Necromancer", "Elementalist",\
-"Sigilist", "Witch"]
 arraySummonerSpells = ["Bind Demon", "Imp", "Leap",\
 "Plague of Insects", "Planar Tear", "Planar Walk","Possess",\
 "Summon Demon"]
-arraySummonerRelations = ["Necromancer", "Witch", "Elementalist",\
-"Soothsayer","Enchanter", "Illusionist", "Chronomancer", "Thaumaturge",\
-"Sigilist"]
 arrayThaumaturgeSpells = ["Banish", "Blinding Light",\
 "Circle of Protection", "Dispel", "Heal", "Miraculus Cure",\
 "Restore Life", "Shield"]
-arrayThaumaturgeRelations = ["Soothsayer", "Sigilist", "Illusionist",\
-"Elementalist", "Witch", "Chronomancer", "Summoner", "Enchanter",\
-"Necromancer"]
 arrayWitchSpells = ["Animal Companion", "Brew Potion",\
 "Control Animal", "Curse", "Familiar", "Fog", "Mud", "Posion Dart"]
-arrayWitchRelations = ["Enchanter", "Necromancer", "Summoner",\
-"Thaumaturge", "Illusionist", "Elementalist", "Sigilist",\
-"Chronomancer", "Soothsayer"]
+arrayChronomancerRelations = [arrayNecromancerSpells, arraySoothsayerSpells,\
+arrayElementalistSpells, arrayThaumaturgeSpells,	arraySummonerSpells, arrayIllusionistSpells, arrayWitchSpells,\
+arraySigilistSpells, arrayEnchanterSpells]
+arrayElementalistRelations = [arraySummonerSpells,	arrayEnchanterSpells,\
+arrayChronomancerSpells, arrayThaumaturgeSpells, arraySoothsayerSpells, arraySigilistSpells, arrayWitchSpells, \
+arrayNecromancerSpells, arrayIllusionistSpells]
+arrayEnchanterRelations = [arrayWitchSpells, arraySigilistSpells, arrayElementalistSpells,\
+arrayNecromancerSpells, arrayIllusionistSpells, arraySummonerSpells, arraySoothsayerSpells, arrayThaumaturgeSpells, \
+arrayChronomancerSpells]
+arrayIllusionistRelations = [arraySoothsayerSpells, arraySigilistSpells, arrayThaumaturgeSpells,\
+arrayNecromancerSpells, arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells, arrayEnchanterSpells,\
+arrayElementalistSpells]
+arrayNecromancerRelations = [arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells,\
+arrayElementalistSpells, arraySigilistSpells, arrayIllusionistSpells, arrayEnchanterSpells, arraySoothsayerSpells,\
+arrayThaumaturgeSpells]
+arraySigilistRelations = [arrayThaumaturgeSpells, arrayIllusionistSpells, arrayEnchanterSpells,\
+arrayNecromancerSpells, arrayElementalistSpells, arrayWitchSpells, arrayChronomancerSpells,arraySoothsayerSpells,\
+arraySummonerSpells]
+arraySoothsayerRelations = [arrayThaumaturgeSpells, arrayChronomancerSpells,\
+arrayIllusionistSpells, arrayEnchanterSpells, arraySummonerSpells, arrayNecromancerSpells, arrayElementalistSpells,\
+arraySigilistSpells, arrayWitchSpells]
+arraySummonerRelations = [arrayNecromancerSpells, arrayWitchSpells, arrayElementalistSpells,\
+arraySoothsayerSpells,arrayEnchanterSpells, arrayIllusionistSpells, arrayChronomancerSpells, arrayThaumaturgeSpells,\
+arraySigilistSpells]
+arrayThaumaturgeRelations = [arraySoothsayerSpells, arraySigilistSpells, arrayIllusionistSpells,\
+arrayElementalistSpells, arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells, arrayEnchanterSpells,\
+arrayNecromancerSpells]
+arrayWitchRelations = [arrayEnchanterSpells, arrayNecromancerSpells, arraySummonerSpells,\
+arrayThaumaturgeSpells, arrayIllusionistSpells, arrayElementalistSpells, arraySigilistSpells,\
+arrayChronomancerSpells, arraySoothsayerSpells]
+
 startingGold = 500
 spellList = [ ]
 	
 playerClass = arrayWizardType[rollToX(9)]
 	
 if playerClass == "Chronomancer":
-	spellArray = "arrayChronomancerSpells"
-	relationsArray = "arrayChronomancerRelations"
-	GetSpells(arrayChronomancerSpells, 3)
-	GetSpells(arrayNecromancerSpells, 1)
-	GetSpells(arraySoothsayerSpells, 1)
-	GetSpells(arrayElementalistSpells, 1)
+	spellArray = arrayChronomancerSpells
+	relationsArray = arrayChronomancerRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Elementalist":
-	spellArray = "arrayElementalistSpells"
-	relationsArray = "arrayElementalistRelations"
-	GetSpells(arrayElementalistSpells, 3)
-	GetSpells(arraySummonerSpells, 1)
-	GetSpells(arrayEnchanterSpells, 1)
-	GetSpells(arrayChronomancerSpells, 1)
+	spellArray = arrayElementalistSpells
+	relationsArray = arrayElementalistRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Enchanter":
-	spellArray = "arrayEnchanterSpells"
-	relationsArray = "arrayEnchanterRelations"
-	GetSpells(arrayEnchanterSpells, 3)
-	GetSpells(arrayWitchSpells, 1)
-	GetSpells(arraySigilistSpells, 1)
-	GetSpells(arrayElementalistSpells, 1)
+	spellArray = arrayEnchanterSpells
+	relationsArray = arrayEnchanterRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Illusionist":
-	spellArray = "arrayIllusionistSpells"
-	relationsArray = "arrayIllusionistRelations"
-	GetSpells(arrayIllusionistSpells, 3)
-	GetSpells(arraySoothsayerSpells, 1)
-	GetSpells(arraySigilistSpells, 1)
-	GetSpells(arrayThaumaturgeSpells, 1)	
+	spellArray = arrayIllusionistSpells
+	relationsArray = arrayIllusionistRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Necromancer":
-	spellArray = "arrayNecromancerSpells"
-	relationsArray = "arrayNecromancerRelations"
-	GetSpells(arrayNecromancerSpells, 3)
-	GetSpells(arrayWitchSpells, 1)
-	GetSpells(arrayChronomancerSpells, 1)
-	GetSpells(arraySummonerSpells, 1)	
+	spellArray = arrayNecromancerSpells
+	relationsArray = arrayNecromancerRelations
+	GetAllSpells(spellArray, relationsArray)	
 elif playerClass == "Sigilist":
-	spellArray = "arraySigilistSpells"
-	relationsArray = "arraySigilistRelations"
-	GetSpells(arraySigilistSpells, 3)
-	GetSpells(arrayThaumaturgeSpells, 1)
-	GetSpells(arrayIllusionistSpells, 1)
-	GetSpells(arrayEnchanterSpells, 1)	
+	spellArray = arraySigilistSpells
+	relationsArray = arraySigilistRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Soothsayer":
-	spellArray = "arraySoothsayerSpells"
-	relationsArray = "arraySoothsayerRelations"
-	GetSpells(arraySoothsayerSpells, 3)
-	GetSpells(arrayThaumaturgeSpells, 1)
-	GetSpells(arrayIllusionistSpells, 1)
-	GetSpells(arrayEnchanterSpells, 1)	
+	spellArray = arraySoothsayerSpells
+	relationsArray = arraySoothsayerRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Summoner":
-	spellArray = "arraySummonerSpells"
-	relationsArray = "arraySummonerRelations"
-	GetSpells(arraySummonerSpells, 3)
-	GetSpells(arrayNecromancerSpells, 1)
-	GetSpells(arrayWitchSpells, 1)
-	GetSpells(arrayElementalistSpells, 1)	
+	spellArray = arraySummonerSpells
+	relationsArray = arraySummonerRelations
+	GetAllSpells(spellArray, relationsArray)
 elif playerClass == "Thaumaturge":
-	spellArray = "arrayThaumaturgeSpells"
-	relationsArray = "arrayThaumaturgeRelations"
-	GetSpells(arrayThaumaturgeSpells, 3)
-	GetSpells(arraySoothsayerSpells, 1)
-	GetSpells(arraySigilistSpells, 1)
-	GetSpells(arrayIllusionistSpells, 1)	
+	spellArray = arrayThaumaturgeSpells
+	relationsArray = arrayThaumaturgeRelations
+	GetAllSpells(spellArray, relationsArray)	
 elif playerClass == "Witch":
-	spellArray = "arrayWitchSpells"
-	relationsArray = "arrayWitchRelations"
-	GetSpells(arrayWitchSpells, 3)
-	GetSpells(arrayEnchanterSpells, 1)
-	GetSpells(arrayNecromancerSpells, 1)
-	GetSpells(arraySummonerSpells, 1)
+	spellArray = arrayWitchSpells
+	relationsArray = arrayWitchRelations
+	GetAllSpells(spellArray, relationsArray)
 else:
 	print("wtf class do you have?")
 
