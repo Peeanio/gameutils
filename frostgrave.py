@@ -103,7 +103,7 @@ arraySoldierType = ["War Hound", "Thug", "Archer","Crossbowman",\
 "Infantryman", "Tracker", "Man-at-Arms", "Treasure Hunter", "Knight",\
 "Templar", "Ranger", "Barbarian", "Apothecary", "Marksman",\
 "Apprentice"]
-dictSoliderCost = {"War Hound": 20, "Thug": 20, "Archer": 50,\
+dictSoldierCost = {"War Hound": 20, "Thug": 20, "Archer": 50,\
 "Crossbowman": 50, "Infantryman": 50, "Tracker": 80, "Man-at-Arms": 80,\
 "Treasure Hunter": 80, "Knight": 100, "Templar": 100, "Ranger": 100,\
 "Barbarian": 100, "Apothecary": 100, "Marksman": 100, "Apprentice": 200}
@@ -135,36 +135,46 @@ arrayThaumaturgeSpells = ["Banish", "Blinding Light",\
 "Restore Life", "Shield"]
 arrayWitchSpells = ["Animal Companion", "Brew Potion",\
 "Control Animal", "Curse", "Familiar", "Fog", "Mud", "Posion Dart"]
-arrayChronomancerRelations = [arrayNecromancerSpells, arraySoothsayerSpells,\
-arrayElementalistSpells, arrayThaumaturgeSpells,	arraySummonerSpells, arrayIllusionistSpells, arrayWitchSpells,\
+arrayChronomancerRelations = [arrayNecromancerSpells, \
+arraySoothsayerSpells, arrayElementalistSpells, arrayThaumaturgeSpells,\
+arraySummonerSpells, arrayIllusionistSpells, arrayWitchSpells,\
 arraySigilistSpells, arrayEnchanterSpells]
-arrayElementalistRelations = [arraySummonerSpells,	arrayEnchanterSpells,\
-arrayChronomancerSpells, arrayThaumaturgeSpells, arraySoothsayerSpells, arraySigilistSpells, arrayWitchSpells, \
+arrayElementalistRelations = [arraySummonerSpells,\
+arrayEnchanterSpells, arrayChronomancerSpells, arrayThaumaturgeSpells,\
+arraySoothsayerSpells, arraySigilistSpells, arrayWitchSpells, \
 arrayNecromancerSpells, arrayIllusionistSpells]
-arrayEnchanterRelations = [arrayWitchSpells, arraySigilistSpells, arrayElementalistSpells,\
-arrayNecromancerSpells, arrayIllusionistSpells, arraySummonerSpells, arraySoothsayerSpells, arrayThaumaturgeSpells, \
-arrayChronomancerSpells]
-arrayIllusionistRelations = [arraySoothsayerSpells, arraySigilistSpells, arrayThaumaturgeSpells,\
-arrayNecromancerSpells, arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells, arrayEnchanterSpells,\
-arrayElementalistSpells]
-arrayNecromancerRelations = [arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells,\
-arrayElementalistSpells, arraySigilistSpells, arrayIllusionistSpells, arrayEnchanterSpells, arraySoothsayerSpells,\
+arrayEnchanterRelations = [arrayWitchSpells, arraySigilistSpells,\
+arrayElementalistSpells, arrayNecromancerSpells,\
+arrayIllusionistSpells, arraySummonerSpells, arraySoothsayerSpells,\
+arrayThaumaturgeSpells, arrayChronomancerSpells]
+arrayIllusionistRelations = [arraySoothsayerSpells,\
+arraySigilistSpells, arrayThaumaturgeSpells, arrayNecromancerSpells,\
+arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells,\
+arrayEnchanterSpells, arrayElementalistSpells]
+arrayNecromancerRelations = [arrayWitchSpells, arrayChronomancerSpells,\
+arraySummonerSpells, arrayElementalistSpells, arraySigilistSpells,\
+arrayIllusionistSpells, arrayEnchanterSpells, arraySoothsayerSpells,\
 arrayThaumaturgeSpells]
-arraySigilistRelations = [arrayThaumaturgeSpells, arrayIllusionistSpells, arrayEnchanterSpells,\
-arrayNecromancerSpells, arrayElementalistSpells, arrayWitchSpells, arrayChronomancerSpells,arraySoothsayerSpells,\
-arraySummonerSpells]
-arraySoothsayerRelations = [arrayThaumaturgeSpells, arrayChronomancerSpells,\
-arrayIllusionistSpells, arrayEnchanterSpells, arraySummonerSpells, arrayNecromancerSpells, arrayElementalistSpells,\
+arraySigilistRelations = [arrayThaumaturgeSpells,\
+arrayIllusionistSpells, arrayEnchanterSpells, arrayNecromancerSpells,\
+arrayElementalistSpells, arrayWitchSpells, arrayChronomancerSpells,\
+arraySoothsayerSpells, arraySummonerSpells]
+arraySoothsayerRelations = [arrayThaumaturgeSpells,\
+arrayChronomancerSpells, arrayIllusionistSpells, arrayEnchanterSpells,\
+arraySummonerSpells, arrayNecromancerSpells, arrayElementalistSpells,\
 arraySigilistSpells, arrayWitchSpells]
-arraySummonerRelations = [arrayNecromancerSpells, arrayWitchSpells, arrayElementalistSpells,\
-arraySoothsayerSpells,arrayEnchanterSpells, arrayIllusionistSpells, arrayChronomancerSpells, arrayThaumaturgeSpells,\
-arraySigilistSpells]
-arrayThaumaturgeRelations = [arraySoothsayerSpells, arraySigilistSpells, arrayIllusionistSpells,\
-arrayElementalistSpells, arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells, arrayEnchanterSpells,\
-arrayNecromancerSpells]
-arrayWitchRelations = [arrayEnchanterSpells, arrayNecromancerSpells, arraySummonerSpells,\
-arrayThaumaturgeSpells, arrayIllusionistSpells, arrayElementalistSpells, arraySigilistSpells,\
-arrayChronomancerSpells, arraySoothsayerSpells]
+arraySummonerRelations = [arrayNecromancerSpells, arrayWitchSpells,\
+arrayElementalistSpells, arraySoothsayerSpells,arrayEnchanterSpells,\
+arrayIllusionistSpells, arrayChronomancerSpells,\
+arrayThaumaturgeSpells, arraySigilistSpells]
+arrayThaumaturgeRelations = [arraySoothsayerSpells,\
+arraySigilistSpells, arrayIllusionistSpells, arrayElementalistSpells,\
+arrayWitchSpells, arrayChronomancerSpells, arraySummonerSpells,\
+arrayEnchanterSpells, arrayNecromancerSpells]
+arrayWitchRelations = [arrayEnchanterSpells, arrayNecromancerSpells,\
+arraySummonerSpells, arrayThaumaturgeSpells, arrayIllusionistSpells,\
+arrayElementalistSpells, arraySigilistSpells, arrayChronomancerSpells,\
+arraySoothsayerSpells]
 
 startingGold = 500
 spellList = [ ]
@@ -214,9 +224,195 @@ elif playerClass == "Witch":
 else:
 	print("wtf class do you have?")
 
+def GetSoldiers():
+#returns a list with the amount of starting gold, and an int for gold
+	global soldierList
+	soldierList = []
+	global currentGold
+	currentGold = startingGold
+	availableSoldiers = arraySoldierType.copy()
+	count = 0
+	#roll for solider, removing all soliders that are too expensive
+	#money. get money based on dictionary prices
+	while currentGold > 19:
+
+		newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		#print(newSoldier)
+		#soldierList.append(newSoldier)
+		#currentGold = currentGold - dictSoldierCost[soldierList[count]]
+	
+		#the following works, but more verbose than I think needed.
+		#maybe something with for loops over the dictionary amount
+		#based on remaining currentGold?
+		if currentGold < 20:
+			continue
+		if currentGold <= 50 and newSoldier == "Infantryman":
+			availableSoldiers.remove("Infantryman")
+			availableSoldiers.remove("Crossbowman")
+			availableSoldiers.remove("Archer")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 50 and newSoldier == "Crossbowman":
+			availableSoldiers.remove("Crossbowman")
+			availableSoldiers.remove("Infantryman")
+			availableSoldiers.remove("Archer")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 50 and newSoldier == "Archer":
+			availableSoldiers.remove("Archer")
+			availableSoldiers.remove("Crossbowman")
+			availableSoldiers.remove("Infantryman")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 80 and newSoldier == "Treasure Hunter":
+			availableSoldiers.remove("Treasure Hunter")
+			availableSoldiers.remove("Man-at-Arms")
+			availableSoldiers.remove("Tracker")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 80 and newSoldier == "Man-at-Arms":
+			availableSoldiers.remove("Man-at-Arms")
+			availableSoldiers.remove("Treasure Hunter")
+			availableSoldiers.remove("Tracker")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 80 and newSoldier == "Tracker":
+			availableSoldiers.remove("Tracker")
+			availableSoldiers.remove("Treasure Hunter")
+			availableSoldiers.remove("Man-at-Arms")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 100 and newSoldier == "Marksman":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+		elif currentGold <= 100 and newSoldier == "Apothecary":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 100 and newSoldier == "Barbarian":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 100 and newSoldier == "Ranger":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 100 and newSoldier == "Templar":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 100 and newSoldier == "Knight":
+			availableSoldiers.remove("Marksman")
+			availableSoldiers.remove("Apothecary")
+			availableSoldiers.remove("Barbarian")
+			availableSoldiers.remove("Ranger")
+			availableSoldiers.remove("Templar")
+			availableSoldiers.remove("Knight")
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		elif currentGold <= 200 and newSoldier == "Apprentice":
+			availableSoldiers.remove('Apprentice')
+			newSoldier = availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)]
+		else:
+			soldierList.append(newSoldier)
+		if count >= len(soldierList):
+			continue
+		else:
+			currentGold = currentGold - dictSoldierCost[soldierList\
+			[count]]
+		count = count + 1
+	#refund if too poor
+	if currentGold < 0:
+		currentGold = currentGold + dictSoldierCost[soldierList[-1]]
+		del soldierList[-1]		
+	return soldierList
+	return currentGold
+
+def GetSoldiers2():
+#second run
+	global soldierList
+	soldierList = []
+	global currentGold
+	currentGold = startingGold
+	availableSoldiers = arraySoldierType.copy()
+	availableCosts = dictSoldierCost.copy()
+	#roll for solider, removing all soliders that are too expensive
+	#money. get money based on dictionary prices
+	while currentGold > 19:
+
+		newSoldier = soldierList.append(availableSoldiers[rollToX(len\
+		(availableSoldiers) -1)])
+		currentGold = currentGold - dictSoldierCost[soldierList[0]]
+	
+		#the following works, but more verbose than I think needed.
+		#maybe something with for loops over the dictionary amount
+		#based on remaining currentGold?
+		if currentGold < 20:
+			continue
+		
+		for value in availableCosts:
+			if value > currentGold:
+				del availableCosts[key]
+		
+		soldierList.append(availableSoldiers[rollToX(len\
+		(availableSoldiers)-1)])
+	return soldierList
+	return currentGold
+	
+def GetName(filename):
+#function to make repeatable
+        #get the number of lines, then get a random number between 0 and it
+        numoflines = FileLen(filename)
+        randomnum = random.randint(0,numoflines)
+
+        #open the file, read it, print only the generated line number
+        file = open(filename)
+        all_lines = file.readlines()
+        return str(all_lines[randomnum].strip())
+
+def FileLen(fname):
+#open file, count the lines, return
+        with open(fname) as f:
+                for i, l in enumerate(f):
+                        pass
+        return i + 1
+
+
 	
 ReturnSpell(7, arrayWitchSpells)
 
 availableSpells = spellArray
 
 print(spellList)
+
+
+GetSoldiers()
+print(GetName("firstnames.txt") + " " + GetName("surnames.txt"))
+print(soldierList)
+print(currentGold)
