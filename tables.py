@@ -28,17 +28,17 @@ def FileLen(fname):
         return i + 1
 
 def GetLine(filename):
-#function to make repeatable for any word type
+#function to make repeatable for any word type and line number
         numoflines = FileLen(filename)
         randomnum = random.randint(0,numoflines)
 
         #open the file, read it, print only the generated line number
         file = open(filename)
         all_lines = file.readlines()
-        return str(all_lines[randomnum].strip())
+        return (str(all_lines[randomnum].strip()), (randomnum + 1))
 
 def GetEntry():
-#returns a random value of a table file
+#returns a random value of a table file, along with line number
     name = GetLine(args.table[0])
     return name
 
@@ -48,4 +48,5 @@ try:
 except:
 	parser.print_help()
 else:
-	print(GetEntry())
+	result, line = GetEntry()
+	print(line, " ", result)
