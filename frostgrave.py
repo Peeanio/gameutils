@@ -11,6 +11,9 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-f", "--frostgrave", action="store_true", \
 	dest="frostgrave", help="generate Frostgrave warband")
+parser.add_option("-a", "--apprentice", action="store_true", \
+	dest="apprentice", default=False, \
+	help="have an apprentice in warband")
 (options, args) = parser.parse_args()
 
 #functions
@@ -68,7 +71,13 @@ def GetSoldiers():
 	global currentGold
 	currentGold = startingGold
 	availableSoldiers = arraySoldierType.copy()
-	count = 0
+	if options.apprentice == True:
+		availableSoldiers.remove("Apprentice")
+		soldierList.append("Apprentice")
+		currentGold = currentGold - dictSoldierCost["Apprentice"]
+		count = 1
+	else:
+		count = 0
 	#roll for solider, removing all soliders that are too expensive
 	#money. get money based on dictionary prices
 	while currentGold > 19:
