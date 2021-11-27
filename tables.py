@@ -17,6 +17,8 @@ import argparse
 #parsing
 parser = argparse.ArgumentParser()
 parser.add_argument('table', nargs=1, help="print help")
+parser.add_argument("-l", "--linenum", action="store_true", \
+	dest="linenums", default=False, help="show the line numbers")
 args = parser.parse_args()
 
 #functions
@@ -47,6 +49,9 @@ try:
 	args.table
 except:
 	parser.print_help()
+
+result, line = GetEntry()
+if args.linenums == False:
+	print(result)
 else:
-	result, line = GetEntry()
 	print(line, " ", result)
