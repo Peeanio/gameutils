@@ -14,6 +14,9 @@ parser.add_option("-f", "--frostgrave", action="store_true", \
 parser.add_option("-a", "--apprentice", action="store_true", \
 	dest="apprentice", default=False, \
 	help="have an apprentice in warband")
+parser.add_option("-t", "--wizardtype", metavar="WIZARDTYPE", \
+	dest="wizardtype", default="random", \
+	help="specify a wiard type or random for random. default is random")
 (options, args) = parser.parse_args()
 
 #functions
@@ -71,6 +74,7 @@ def GetSoldiers():
 	global currentGold
 	currentGold = startingGold
 	availableSoldiers = arraySoldierType.copy()
+#special handling for forcing apprentice
 	if options.apprentice == True:
 		availableSoldiers.remove("Apprentice")
 		soldierList.append("Apprentice")
@@ -252,7 +256,18 @@ def GenWarband():
 	global spellList
 	spellList = [ ]
 	
-	playerClass = arrayWizardType[rollToX(9)]
+#random only if type not specified
+	if options.wizardtype == "random":
+		playerClass = arrayWizardType[rollToX(9)]
+	else:
+		wt = options.wizardtype.capitalize()
+		print(wt in arrayWizardType)
+		try:
+			wt in arrayWizardType
+		except:
+			quit()
+				
+		playerClass = arrayWizardType[arrayWizardType.index(wt)]		
 	
 	if playerClass == "Chronomancer":
 		spellArray = arrayChronomancerSpells
