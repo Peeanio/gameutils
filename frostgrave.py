@@ -261,7 +261,6 @@ def GenWarband():
 		playerClass = arrayWizardType[rollToX(9)]
 	else:
 		wt = options.wizardtype.capitalize()
-		print(wt in arrayWizardType)
 		try:
 			wt in arrayWizardType
 		except:
