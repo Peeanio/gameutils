@@ -57,14 +57,25 @@ func main() {
 				"Operation": Operations[idInt],
 				})
 			} 
-			//else {
-			//	c.JSON(http.StatusOK, gin.H{
-			//		"ID": "Not found!",
-			//	})
-			//}
 		}
 	})
 	
+	router.PUT("/operations/:id", func(c *gin.Context) {
+		//updates an operation
+		var json Operation
+		calledId := c.Params.ByName("id")
+		idInt, err := strconv.Atoi(calledId)
+		if err != nil {
+			fmt.Println(err)
+		}
+		if err := c.ShouldBindJSON(&json); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		Operations[idInt] = Operation{ID: json.ID, Title: json.Title, Agent: Agent{CodeName: json.Agent.CodeName, RealName: json.Agent.RealName}, Status: json.Status}
+
+		c.JSON(http.StatusOK, gin.H{"Operation": Operations[idInt]})
+	})
 	
 	log.Fatal(router.Run(":9000"))
 }
