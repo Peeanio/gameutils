@@ -60,8 +60,37 @@ func main() {
 		}
 	})
 	
+	router.GET("/operations/all", func(c *gin.Context) {
+		fmt.Println("Endpoint hit: returnAllOperation")
+		c.JSON(http.StatusOK, gin.H{
+			"Operations": Operations}) 
+	})
+	
+	router.POST("/operations/:id", func(c *gin.Context) {
+		//creates an operation
+		fmt.Println("Endpoint hit: create an Operation")
+		var json Operation
+		calledId := c.Params.ByName("id")
+		idInt, err := strconv.Atoi(calledId)
+		if err != nil {
+			fmt.Println(err)
+		}
+		if Operations[idInt].ID != "" {
+			c.JSON(http.StatusBadRequest, gin.H{"error": "operation exists!"})
+			return
+		}
+		if err := c.ShouldBindJSON(&json); err != nil {
+			c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+			return
+		}
+		Operations[idInt] = Operation{ID: json.ID, Title: json.Title, Agent: Agent{CodeName: json.Agent.CodeName, RealName: json.Agent.RealName}, Status: json.Status}
+
+		c.JSON(http.StatusOK, gin.H{"Operation": Operations[idInt]})
+	})
+	
 	router.PUT("/operations/:id", func(c *gin.Context) {
 		//updates an operation
+		fmt.Println("Endpoint hit: update an Operation")
 		var json Operation
 		calledId := c.Params.ByName("id")
 		idInt, err := strconv.Atoi(calledId)
@@ -73,6 +102,19 @@ func main() {
 			return
 		}
 		Operations[idInt] = Operation{ID: json.ID, Title: json.Title, Agent: Agent{CodeName: json.Agent.CodeName, RealName: json.Agent.RealName}, Status: json.Status}
+
+		c.JSON(http.StatusOK, gin.H{"Operation": Operations[idInt]})
+	})
+	
+	router.DELETE("/operations/:id", func(c *gin.Context) {
+		//updates an operation
+		fmt.Println("Endpoint hit: delete an Operation")
+		calledId := c.Params.ByName("id")
+		idInt, err := strconv.Atoi(calledId)
+		if err != nil {
+			fmt.Println(err)
+		}
+		Operations[idInt] = Operation{}
 
 		c.JSON(http.StatusOK, gin.H{"Operation": Operations[idInt]})
 	})
