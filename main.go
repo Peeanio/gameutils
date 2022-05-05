@@ -6,69 +6,65 @@ package main
 
 import (
 		"fmt"
-		"encoding/json"
+		//"encoding/json"
 		"net/http"
-		"io"
+		//"io"
 		"log"
+		"github.com/gin-gonic/gin"
+		"strconv"
 )
 
 type Operation struct {
 	ID string `json:"ID"`
 	Title string `json:"Title"`
-	Agent string `json:"Agent"`
+	Agent Agent `json:"Agent"`
 	Status string `json:"Status"`
 }
 
-var Operations []Operation
-
-func hello(res http.ResponseWriter, req *http.Request) {
-	res.Header().Set(
-		"Content-Type",
-		"text/html",
-	)
-	io.WriteString(
-		res,
-		`<DOCTYPE html>
-		<html>
-			<head>
-				<title>Hello, World</title>
-			</head>
-			<body>
-				Hello, World!
-			</body>
-		</html>`,
-	)
-	fmt.Println("Endpoint hit: hello")
+type Agent struct {
+	CodeName string `json:"CodeName"`
+	RealName string `json:"RealName"`
 }
+	
 
-func handleRequests() {
-	mux := http.NewServeMux()
-	mux.HandleFunc("/hello", hello)
-	mux.HandleFunc("/operations", returnAllOperations)
-//	mux.HandleFunc("/operation/{id}", returnSingleOperation)
-	//log.Fatal(http.ListenAndServe(":9000", nil))
-	s := &http.Server{
-		Addr: ":9000",
-		Handler: mux,
-	}
-	log.Fatal(s.ListenAndServe())
-}
+var Operations [3]Operation
 
-func returnAllOperations(w http.ResponseWriter, r *http.Request){
-	fmt.Println("Endpoint hit: returnAllOperations")
-	json.NewEncoder(w).Encode(Operations)
-}
-
-//func createNewOperation(w http.ResponseWriter, r *http.Request) {
-//	reqBody, _ := ioutil.ReadAll(r.body)
-//	fmt.Fprintf(w, "%+v", string(reqBody))
-//}
 
 func main() {
-	fmt.Println("HTTP API - Espionage v1")
-	Operations = []Operation{
-		Operation{ID: "1", Title: "SECOND CANCEL", Agent: "Jada Wiseman", Status: "Register"},
-		Operation{ID: "2", Title: "TAUT BIRTHDAY", Agent: "Jaroslav Maanan", Status: "Choclate"},
-	}
-	handleRequests()
+	Operations[1] = Operation{ID: "1", Title: "SECOND CANCEL", Agent: Agent{CodeName: "Burn", RealName: "Jada Wiseman"}, Status: "Register"}
+	Operations[2] = Operation{ID: "2", Title: "TAUT BIRTHDAY", Agent: Agent{CodeName: "Convert", RealName: "Jaroslav Maanan"}, Status: "Choclate"}
+	
+	fmt.Println(Operations)
+	fmt.Println("HTTP API - Espionage v2")
+	router := gin.Default()
+	
+	router.GET("/hello", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "World",
+		})
+	})
+	
+	router.GET("/operations/:id", func(c *gin.Context) {
+		fmt.Println("Endpoint hit: returnOperation")
+		calledId := c.Params.ByName("id")
+		idInt, err := strconv.Atoi(calledId)
+		if err != nil {
+			fmt.Println(err)
+		}
+		for _, operation := range Operations {
+			if operation.ID == calledId {
+				c.JSON(http.StatusOK, gin.H{
+				"Operation": Operations[idInt],
+				})
+			} 
+			//else {
+			//	c.JSON(http.StatusOK, gin.H{
+			//		"ID": "Not found!",
+			//	})
+			//}
+		}
+	})
+	
+	
+	log.Fatal(router.Run(":9000"))
 }
