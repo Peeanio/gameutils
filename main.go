@@ -6,7 +6,7 @@ package main
 
 import (
 		"fmt"
-		//"encoding/json"
+		"encoding/json"
 		"net/http"
 		//"io"
 		"log"
@@ -34,6 +34,11 @@ func main() {
 	Operations[1] = Operation{ID: "1", Title: "SECOND CANCEL", Agent: Agent{CodeName: "Burn", RealName: "Jada Wiseman"}, Status: "Register"}
 	Operations[2] = Operation{ID: "2", Title: "TAUT BIRTHDAY", Agent: Agent{CodeName: "Convert", RealName: "Jaroslav Maanan"}, Status: "Choclate"}
 	
+	op, err := json.Marshal(Operations[1])
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println(string(op))
 	fmt.Println(Operations)
 	fmt.Println("HTTP API - Espionage v2")
 	router := gin.Default()
@@ -53,9 +58,14 @@ func main() {
 		}
 		for _, operation := range Operations {
 			if operation.ID == calledId {
-				c.JSON(http.StatusOK, gin.H{
-				"Operation": Operations[idInt],
-				})
+				//c.JSON(http.StatusOK, gin.H{
+				//"Operation": Operations[idInt],
+				//})
+				op, err := json.Marshal(Operations[idInt])
+				if err != nil {
+					fmt.Println(err)
+				}
+				c.String(http.StatusOK, string(op)) 
 			} 
 		}
 	})
