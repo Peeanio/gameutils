@@ -5,13 +5,16 @@
 package main
 
 import (
+		"bytes"
 		"fmt"
 		"encoding/json"
+		"os/exec"
 		"net/http"
 		//"io"
 		"log"
 		"github.com/gin-gonic/gin"
 		"strconv"
+		"strings"
 )
 
 type Operation struct {
@@ -29,10 +32,34 @@ type Agent struct {
 
 var Operations [3]Operation
 
+func returnOpString(zero string, one string, two string, three string, four string, five string, six string, seven string) string {
+	//returns a string from the codename string with eight positions in the commdn
+	cmd:= exec.Command(one, two, three, four, five, six, seven)
+	var out bytes.Buffer
+	cmd.Stdout = &out
+	err := cmd.Run()
+	if err != nil {
+		fmt.Println(err)
+	}
+	result:= strings.TrimSuffix(out.String(), "\n")
+	return result
+}
+
+func createOperation(id string) Operation {
+	//input a command, return a string
+	 title := returnOpString("python3", "./codename.py", "-q", "-u", "-o", "", "", "")
+	 codeName := returnOpString("python3", "./codename.py", "-q", "-c", "", "", "", "")
+	 realName := returnOpString("python3", "./codename.py", "-q", "-a", "firstnames.txt", "-n", "surnames.txt", "-o")
+	 status := returnOpString("python3", "./codename.py", "-q", "-u", "-c", "", "", "")
+	 op := Operation{ID: id, Title: title, Agent: Agent{CodeName: codeName, RealName: realName}, Status: status}
+	 return op
+	 
+}
 
 func main() {
-	Operations[1] = Operation{ID: "1", Title: "SECOND CANCEL", Agent: Agent{CodeName: "Burn", RealName: "Jada Wiseman"}, Status: "Register"}
-	Operations[2] = Operation{ID: "2", Title: "TAUT BIRTHDAY", Agent: Agent{CodeName: "Convert", RealName: "Jaroslav Maanan"}, Status: "Choclate"}
+	Operations[0] = createOperation("0")
+	Operations[1] = createOperation("1")
+	Operations[2] = createOperation("2")
 	
 	op, err := json.Marshal(Operations[1])
 	if err != nil {
