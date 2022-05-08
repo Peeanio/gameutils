@@ -6,13 +6,13 @@ package main
 
 import (
 		"bytes"
-		"fmt"
 		"encoding/json"
-		"os/exec"
-		"net/http"
+		"fmt"
+		"github.com/gin-gonic/gin"
 		//"io"
 		"log"
-		"github.com/gin-gonic/gin"
+		"net/http"
+		"os/exec"
 		"strconv"
 		"strings"
 )
@@ -33,7 +33,8 @@ type Agent struct {
 var Operations [3]Operation
 
 func returnOpString(zero string, one string, two string, three string, four string, five string, six string, seven string) string {
-	//returns a string from the codename string with eight positions in the commdn
+	//returns a string from the codename string with eight positions in the command
+	//NEEDS: to get away from static argument amount
 	cmd:= exec.Command(one, two, three, four, five, six, seven)
 	var out bytes.Buffer
 	cmd.Stdout = &out
@@ -41,6 +42,7 @@ func returnOpString(zero string, one string, two string, three string, four stri
 	if err != nil {
 		fmt.Println(err)
 	}
+	//trims newline
 	result:= strings.TrimSuffix(out.String(), "\n")
 	return result
 }
@@ -57,7 +59,7 @@ func createOperation(id string) Operation {
 }
 
 func operationRouters(router *gin.Engine) {
-	//all /operation endpoints
+	//all /operation endpoints, one for each REST method
 	router.GET("/operations/:id", func(c *gin.Context) {
 		fmt.Println("Endpoint hit: returnOperation")
 		calledId := c.Params.ByName("id")
@@ -133,18 +135,32 @@ func operationRouters(router *gin.Engine) {
 		if err != nil {
 			fmt.Println(err)
 		}
-		Operations[idInt] = Operation{ID: "REDACTED", Title: "REDACTED", Agent: Agent{CodeName: "REDACTED", RealName: "REDACTED"}, Status: "REDACTED"}
+		Operations[idInt] = Operation{ID: calledId, Title: "REDACTED", Agent: Agent{CodeName: "REDACTED", RealName: "REDACTED"}, Status: "REDACTED"}
 
 		c.JSON(http.StatusOK, gin.H{c.Params.ByName("id"): "deleted"})
 	})
 
 }
 
+func loginRouter(router *gin.Engine) {
+	//deals with login cookies
+	
+	router.GET("/login", func(c *gin.Context){
+		cookie, err := c.Cookie("gin_cookie")
+		
+		if err != nil {
+			cookie = "NotSet"
+			c.SetCookie("gin_cookie", "test", 3600, "/", "localhost", false, true)
+		}
+		fmt.Printf("Cookie value: %s \n", cookie)
+	})
+}
+
 func main() {
+	//creates three operations for testing use
 	Operations[0] = createOperation("0")
 	Operations[1] = createOperation("1")
 	Operations[2] = createOperation("2")
-	
 	//debug to see the operations
 	//op, err := json.Marshal(Operations[1])
 	//if err != nil {
@@ -152,9 +168,12 @@ func main() {
 	//}
 	//fmt.Println(string(op))
 	//fmt.Println(Operations)
-	fmt.Println("HTTP API - Espionage v2")
-	router := gin.Default()
 	
+	
+	fmt.Println("HTTP API - Espionage v2")
+	//starts the gin router
+	router := gin.Default()
+	// /hello endpoint used for testing
 	router.GET("/hello", func(c *gin.Context) {
 		c.JSON(200, gin.H{
 			"message": "World",
@@ -162,6 +181,7 @@ func main() {
 	})
 	
 	operationRouters(router)
+	loginRouter(router)
 	
 	log.Fatal(router.Run(":9000"))
 }
