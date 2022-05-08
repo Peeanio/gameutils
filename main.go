@@ -48,7 +48,7 @@ func returnOpString(zero string, one string, two string, three string, four stri
 func createOperation(id string) Operation {
 	//input a command, return a string
 	 title := returnOpString("python3", "./codename.py", "-q", "-u", "-o", "", "", "")
-	 codeName := returnOpString("python3", "./codename.py", "-q", "-c", "", "", "", "")
+	 codeName := returnOpString("python3", "./codename.py", "-q", "-c", "-u", "", "", "")
 	 realName := returnOpString("python3", "./codename.py", "-q", "-a", "firstnames.txt", "-n", "surnames.txt", "-o")
 	 status := returnOpString("python3", "./codename.py", "-q", "-u", "-c", "", "", "")
 	 op := Operation{ID: id, Title: title, Agent: Agent{CodeName: codeName, RealName: realName}, Status: status}
@@ -56,26 +56,8 @@ func createOperation(id string) Operation {
 	 
 }
 
-func main() {
-	Operations[0] = createOperation("0")
-	Operations[1] = createOperation("1")
-	Operations[2] = createOperation("2")
-	
-	op, err := json.Marshal(Operations[1])
-	if err != nil {
-		fmt.Println(err)
-	}
-	fmt.Println(string(op))
-	fmt.Println(Operations)
-	fmt.Println("HTTP API - Espionage v2")
-	router := gin.Default()
-	
-	router.GET("/hello", func(c *gin.Context) {
-		c.JSON(200, gin.H{
-			"message": "World",
-		})
-	})
-	
+func operationRouters(router *gin.Engine) {
+	//all /operation endpoints
 	router.GET("/operations/:id", func(c *gin.Context) {
 		fmt.Println("Endpoint hit: returnOperation")
 		calledId := c.Params.ByName("id")
@@ -144,17 +126,42 @@ func main() {
 	})
 	
 	router.DELETE("/operations/:id", func(c *gin.Context) {
-		//updates an operation
+		//REDACTS an operation, all elements changed
 		fmt.Println("Endpoint hit: delete an Operation")
 		calledId := c.Params.ByName("id")
 		idInt, err := strconv.Atoi(calledId)
 		if err != nil {
 			fmt.Println(err)
 		}
-		Operations[idInt] = Operation{}
+		Operations[idInt] = Operation{ID: "REDACTED", Title: "REDACTED", Agent: Agent{CodeName: "REDACTED", RealName: "REDACTED"}, Status: "REDACTED"}
 
-		c.JSON(http.StatusOK, gin.H{"Operation": Operations[idInt]})
+		c.JSON(http.StatusOK, gin.H{c.Params.ByName("id"): "deleted"})
 	})
+
+}
+
+func main() {
+	Operations[0] = createOperation("0")
+	Operations[1] = createOperation("1")
+	Operations[2] = createOperation("2")
+	
+	//debug to see the operations
+	//op, err := json.Marshal(Operations[1])
+	//if err != nil {
+		//fmt.Println(err)
+	//}
+	//fmt.Println(string(op))
+	//fmt.Println(Operations)
+	fmt.Println("HTTP API - Espionage v2")
+	router := gin.Default()
+	
+	router.GET("/hello", func(c *gin.Context) {
+		c.JSON(200, gin.H{
+			"message": "World",
+		})
+	})
+	
+	operationRouters(router)
 	
 	log.Fatal(router.Run(":9000"))
 }

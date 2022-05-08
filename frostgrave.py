@@ -13,7 +13,7 @@ parser.add_option("-f", "--frostgrave", action="store_true", \
 	dest="frostgrave", help="generate Frostgrave warband")
 parser.add_option("-a", "--apprentice", action="store_true", \
 	dest="apprentice", default=False, \
-	help="have an apprentice in warband")
+	help="force an apprentice in warband")
 parser.add_option("-t", "--wizardtype", metavar="WIZARDTYPE", \
 	dest="wizardtype", default="random", \
 	help="specify a wiard type or random for random. default is random")
