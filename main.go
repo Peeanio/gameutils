@@ -83,8 +83,19 @@ func operationRouters(router *gin.Engine) {
 	
 	router.GET("/operations/all", func(c *gin.Context) {
 		fmt.Println("Endpoint hit: returnAllOperation")
-		c.JSON(http.StatusOK, gin.H{
-			"Operations": Operations}) 
+		//gets the cookie "gin_cookie"
+		val, err := c.Cookie("gin_cookie")
+		if err != nil {
+			fmt.Println("cookie err")
+		}
+		// if "gin_cookie" != test, unauthorised
+		if val == "test" {
+			c.JSON(http.StatusOK, gin.H{
+				"Operations": Operations}) 
+		} else {
+			c.JSON(http.StatusUnauthorized, gin.H{
+				"status": "unauthorized"})
+			}
 	})
 	
 	router.POST("/operations/:id", func(c *gin.Context) {
