@@ -28,8 +28,10 @@ parser.add_option("-q", "--quiet", action="store_true", \
 parser.add_option("-u", "--upper", action="store_true",\
 	dest="upper", default=False, \
 	help="codename will be shown in upper case instead of camel")
-parser.add_option("--nospaces", action="store_true", dest="nospaces",\
+parser.add_option("--no-spaces", action="store_true", dest="nospaces",\
 	default=False, help="no spaces in the codename")
+parser.add_option("--best-of", type="int", dest="BESTOFCOUNT",\
+    default=1, help="select from the best of INT number")
 (options, args) = parser.parse_args()
 
 def FileLen(fname):
@@ -61,21 +63,23 @@ def CodeName():
 	return name
 	
 #script begins
-if options.operation == True:
-	result = Operation()
-elif options.codename == True:
-	result = CodeName()
-else:
-	parser.print_help()
+for i in range(options.BESTOFCOUNT): 
+    if options.operation == True:
+	    result = Operation()
+    elif options.codename == True:
+	    result = CodeName()
+    else:
+	    parser.print_help()
 
-#optional settings
-if options.upper == True:
-	result = result.upper()
-if options.nospaces == True:
-	result = result.replace(" ", "")
-if options.quiet == False and options.operation == True:
-	print("Operation: " + result)
-elif options.quiet == False and options.codename == True:
-	print("Codename: " + result)
-else:
-	print(result)
+    #optional settings
+    if options.upper == True:
+	    result = result.upper()
+    if options.nospaces == True:
+	    result = result.replace(" ", "")
+    if options.quiet == False and options.operation == True:
+	    print("Operation: " + result)
+    elif options.quiet == False and options.codename == True:
+    	print("Codename: " + result)
+    else:
+	    print(result)
+    
