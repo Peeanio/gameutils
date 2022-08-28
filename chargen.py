@@ -8,6 +8,8 @@ import sys
 #file opening
 from optparse import OptionParser
 #for option parsing
+import json
+#output formatting
 
 ########################################################################
 # option parsing setup
@@ -15,6 +17,8 @@ from optparse import OptionParser
 parser = OptionParser()
 parser.add_option("-c", "--2020", action="store_true", dest="cyberpunk",\
 	help="generate Cyberpunk 2020V2 character")
+parser.add_option("-f", "--5e", action="store_true", dest="fifthE",\
+    help="generate a 5th ed SRD character")
 (options, args) = parser.parse_args()
 
 ########################################################################
@@ -119,8 +123,130 @@ def getname(filename):
         all_lines = file.readlines()
         return str(all_lines[randomnum].strip())
 
+def gen5eCharacter():
+#generates a 5th ed SRD character
+    characterFirstName = getname("firstnames.txt") 
+    characterLastName = getname("surnames.txt")
+#    print(characterFirstName + " " + characterLastName)
+    for x,y in statDict.items():
+        characterStatDict[x] = dndRollStat(x)
+#        print(characterStatDict[x])
+
+#    print(characterStatDict)
+    characterRace = dndRollRace()
+    characterClass, characterHitPoints = dndRollClass()
+    print(json.dumps({'name': {'firstName': characterFirstName, 'lastName':\
+        characterLastName}, 'race': characterRace, 'class': characterClass, \
+        'hitPoints': characterHitPoints, 'stats': characterStatDict}))
+
+def dndRollStat(stat):
+#creates a text output of a score for a stat
+    statScoreList = []
+    for i in range(4):
+        statScoreList.append(rollDx(6))
+    statScoreList.sort(reverse=True)
+    statScoreList.pop(-1)
+#    print(statScoreList)
+    statScore = statScoreList[0] + statScoreList[1] + statScoreList[2]
+#    print(stat + " is: " + str(statScore))
+    return statScore
+
+def dndRollRace():
+#picks a random race and increments stats
+    numOfRace = rollToX(len(dndRaceList) - 1)
+    characterRace = dndRaceList[numOfRace]
+    if characterRace == "Dragonborn":
+        characterStatDict.update({'STR': characterStatDict['STR']+ 2})
+        characterStatDict.update({'CHA': characterStatDict['CHA']+ 1})
+    if characterRace == "Dwarf":
+        characterStatDict.update({'CON': characterStatDict['CON']+ 2})
+        characterStatDict.update({'WIS': characterStatDict['WIS']+ 1})
+    if characterRace == "Elf":
+        characterStatDict.update({'DEX': characterStatDict['DEX']+ 2})
+        characterStatDict.update({'INT': characterStatDict['INT']+ 1})
+    if characterRace == "Gnome":
+        characterStatDict.update({'INT': characterStatDict['INT']+ 2})
+        characterStatDict.update({'CON': characterStatDict['CON']+ 1})
+    if characterRace == "Half-Elf":
+        characterStatDict.update({'CHA': characterStatDict['CHA']+ 2})
+        randStatNum = rollToX(5)
+        randStat = statList[randStatNum]
+        characterStatDict.update({randStat: characterStatDict[randStat]+ 1})
+    if characterRace == "Halfing":
+        characterStatDict.update({'DEX': characterStatDict['DEX']+ 2})
+        characterStatDict.update({'CHA': characterStatDict['CHA']+ 1})
+    if characterRace == "Half-Orc":
+        characterStatDict.update({'STR': characterStatDict['STR']+ 2})
+        characterStatDict.update({'CON': characterStatDict['CON']+ 1})
+    if characterRace == "Human":
+        characterStatDict.update({'STR': characterStatDict['STR']+ 1})
+        characterStatDict.update({'DEX': characterStatDict['DEX']+ 1})
+        characterStatDict.update({'CON': characterStatDict['DEX']+ 1})
+        characterStatDict.update({'INT': characterStatDict['DEX']+ 1})
+        characterStatDict.update({'WIS': characterStatDict['DEX']+ 1})
+        characterStatDict.update({'CHA': characterStatDict['DEX']+ 1})
+    if characterRace == "Tiefling":
+        characterStatDict.update({'CHA': characterStatDict['CHA']+ 2})
+        characterStatDict.update({'INT': characterStatDict['INT']+ 1})
+    return characterRace
+
+def dndRollClass():
+#picks a random class, prepares hitpoints, kicks off additional generation
+    numOfClass = rollToX(len(dndClassList) - 1)
+    characterClass = dndClassList[numOfClass]
+    if characterClass == "Barbarian":
+       pass 
+    if characterClass == "Bard":
+        pass
+    if characterClass == "Cleric":
+        pass
+    if characterClass == "Druid":
+        pass
+    if characterClass == "Fighter":
+        pass
+    if characterClass == "Monk":
+        pass
+    if characterClass == "Paladin":
+        pass
+    if characterClass == "Ranger":
+        pass
+    if characterClass == "Rogue":
+        pass
+    if characterClass == "Sorcerer":
+        pass
+    if characterClass == "Warlock":
+        pass
+    if characterClass == "Wizard":
+        pass
+    characterHitPoints = dndClassHitDieDict[characterClass]
+    return characterClass, characterHitPoints
+
+def dndGenBarbarian():
+    pass
+def dndGenBard():
+    pass
+def dndGenCleric():
+    pass
+def dndGenDruid():
+    pass
+def dndGenFighter():
+    pass
+def dndGenMonk():
+    pass
+def dndGenPaladin():
+    pass
+def dndGenRanger():
+    pass
+def dndGenRogue():
+    pass
+def dndGenSorcerer():
+    pass
+def dndGenWarlock():
+    pass
+def dndGenWizard():
+    pass
 ########################################################################
-#declare arrays
+#cyberpunk declare arrays
 arrayClasses=["Solo", "Rocker", "Netrunner", "Media", "Nomad", "Fixer",\
  "Cop", "Corporate", "Techie", "Medtechie"]
 arrayClothes=["Biker Leathers", "Blue Jeans", "Corporate Suits", \
@@ -156,8 +282,22 @@ arrayWeapons=["Knife", "Light pistol", "Med pistol", "Heavy Pistol",\
   "Hvy. Assault rifle", "Hvy. Assault Rifle"]
 
 ########################################################################
+#5e declare values
+statDict = { "STR": 0, "DEX": 0, "CON": 0, "INT": 0, "WIS": 0, "CHA": 0}
+statList = ["STR", "DEX", "CON", "INT", "WIS", "CHA"]
+characterStatDict = dict()
+dndRaceList = ["Dragonborn", "Dwarf", "Elf", "Gnome", "Half-Elf", "Halfling",\
+    "Half-Orc", "Human", "Tiefling"]
+dndClassList = ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", \
+    "Paladin", "Ranger", "Rogue", "Sorcerer", "Warlock", "Wizard"]
+dndClassHitDieDict = {"Barbarian": 12, "Bard": 8, "Cleric": 8, "Druid": 8, \
+    "Fighter": 10, "Monk": 8, "Paladin": 10, "Ranger": 10, "Rogue": 8, \
+    "Sorcerer": 6, "Warlock": 8, "Wizard": 6 }
+#######################################################################
 #main
 if options.cyberpunk == True:
 	genCharacter()
+elif options.fifthE == True:
+    gen5eCharacter()
 else:
 	parser.print_help()
