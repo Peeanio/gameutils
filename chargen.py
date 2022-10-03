@@ -14,11 +14,18 @@ import json
 ########################################################################
 # option parsing setup
 
-parser = argparse.ArgumentParser(description='Generate characters for games')
-parser.add_argument("-c", "--2020", action="store_true", dest="cyberpunk",\
-	help="generate Cyberpunk 2020V2 character")
-parser.add_argument("-f", "--5e", action="store_true", dest="fifthE",\
-    help="generate a 5th ed SRD character")
+parser = argparse.ArgumentParser(prog='chargen.py', description=\
+    'Generate characters for games')
+subparsers = parser.add_subparsers(title='subcommands', \
+    description='valid subcommands', help='type of character to gen',\
+    dest="game_arg")
+parser_cyberpunk = subparsers.add_parser('cyberpunk', help='Cyberpunk 2020')
+parser_fivee = subparsers.add_parser('five_e', \
+    help='Dungeons and Dragons 5th Edition')
+#parser.add_argument("-c", "--2020", action="store_true", dest="cyberpunk",\
+#	help="generate Cyberpunk 2020V2 character")
+#parser.add_argument("-f", "--5e", action="store_true", dest="fifthE",\
+#    help="generate a 5th ed SRD character")
 args = parser.parse_args()
 
 ########################################################################
@@ -295,9 +302,9 @@ dndClassHitDieDict = {"Barbarian": 12, "Bard": 8, "Cleric": 8, "Druid": 8, \
     "Sorcerer": 6, "Warlock": 8, "Wizard": 6 }
 #######################################################################
 #main
-if args.cyberpunk == True:
+if args.game_arg == "cyberpunk":
 	genCharacter()
-elif args.fifthE == True:
+elif args.game_arg == "five_e":
     gen5eCharacter()
 else:
-	parser.print_help()
+    parser.print_help()
