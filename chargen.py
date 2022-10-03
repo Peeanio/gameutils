@@ -6,20 +6,20 @@ import random
 #libary for random number generation
 import sys
 #file opening
-from optparse import OptionParser
-#for option parsing
+import argparse 
+#for argument parsing
 import json
 #output formatting
 
 ########################################################################
 # option parsing setup
 
-parser = OptionParser()
-parser.add_option("-c", "--2020", action="store_true", dest="cyberpunk",\
+parser = argparse.ArgumentParser(description='Generate characters for games')
+parser.add_argument("-c", "--2020", action="store_true", dest="cyberpunk",\
 	help="generate Cyberpunk 2020V2 character")
-parser.add_option("-f", "--5e", action="store_true", dest="fifthE",\
+parser.add_argument("-f", "--5e", action="store_true", dest="fifthE",\
     help="generate a 5th ed SRD character")
-(options, args) = parser.parse_args()
+args = parser.parse_args()
 
 ########################################################################
 #functions
@@ -295,9 +295,9 @@ dndClassHitDieDict = {"Barbarian": 12, "Bard": 8, "Cleric": 8, "Druid": 8, \
     "Sorcerer": 6, "Warlock": 8, "Wizard": 6 }
 #######################################################################
 #main
-if options.cyberpunk == True:
+if args.cyberpunk == True:
 	genCharacter()
-elif options.fifthE == True:
+elif args.fifthE == True:
     gen5eCharacter()
 else:
 	parser.print_help()
