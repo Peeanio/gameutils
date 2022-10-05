@@ -22,6 +22,12 @@ subparsers = parser.add_subparsers(title='subcommands', \
 parser_cyberpunk = subparsers.add_parser('cyberpunk', help='Cyberpunk 2020')
 parser_fivee = subparsers.add_parser('five_e', \
     help='Dungeons and Dragons 5th Edition')
+parser_fivee.add_argument("-o", "--old-array", action="store_false",\
+   dest="newArray", default=True,\
+   help="use the old 3d6 straight value method (not default)")
+parser_fivee.add_argument("-n", "--new-array", action="store_true", \
+   dest="newArray", default=True,\
+   help="use the new 4d6 drop the lowest method (default)") 
 #parser.add_argument("-c", "--2020", action="store_true", dest="cyberpunk",\
 #	help="generate Cyberpunk 2020V2 character")
 #parser.add_argument("-f", "--5e", action="store_true", dest="fifthE",\
@@ -148,15 +154,18 @@ def gen5eCharacter():
 
 def dndRollStat(stat):
 #creates a text output of a score for a stat
-    statScoreList = []
-    for i in range(4):
-        statScoreList.append(rollDx(6))
-    statScoreList.sort(reverse=True)
-    statScoreList.pop(-1)
-#    print(statScoreList)
-    statScore = statScoreList[0] + statScoreList[1] + statScoreList[2]
-#    print(stat + " is: " + str(statScore))
-    return statScore
+   statScoreList = []
+   if args.newArray == True:
+      for i in range(4):
+         statScoreList.append(rollDx(6))
+         statScoreList.sort(reverse=True)
+      statScoreList.pop(-1)
+      statScore = statScoreList[0] + statScoreList[1] + statScoreList[2]
+   else:
+      for i in range(3):
+         statScoreList.append(rollDx(6))
+      statScore = statScoreList[0] + statScoreList[1] + statScoreList[2]
+   return statScore
 
 def dndRollRace():
 #picks a random race and increments stats
