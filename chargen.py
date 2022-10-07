@@ -19,7 +19,16 @@ parser = argparse.ArgumentParser(prog='chargen.py', description=\
 subparsers = parser.add_subparsers(title='subcommands', \
     description='valid subcommands', help='type of character to gen',\
     dest="game_arg")
-parser_cyberpunk = subparsers.add_parser('cyberpunk', help='Cyberpunk 2020')
+parser_cyberpunk = subparsers.add_parser('cyberpunk',\
+ help='Cyberpunk 2020')
+parser_ose = subparsers.add_parser('ose',\
+ help='Old School Essentials Advanced')
+parser_ose.add_argument("-b", "--basic", action="store_true", \
+   dest="oseBasic", default=True,\
+   help="Old School Essentials Basic")
+parser_ose.add_argument("-a", "--advanced", action="store_true", \
+   dest="oseAdvanced", default=False,\
+   help="Old School Essentials Advanced")
 parser_fivee = subparsers.add_parser('five_e', \
     help='Dungeons and Dragons 5th Edition')
 parser_fivee.add_argument("-2", "--two-array", action="store_true", \
@@ -271,6 +280,18 @@ def dndGenWarlock():
     pass
 def dndGenWizard():
     pass
+    
+def genOseCharacter():
+   characterFirstName = getname("firstnames.txt") 
+   nameChance = rollDx(10)
+   if nameChance == 1:
+      characterLastName = "of " + getname("surnames.txt")
+   elif nameChance == 2:
+      characterLastName = getname("surnames.txt") + "-" + getname("surnames.txt")
+   else:
+      characterLastName = getname("surnames.txt")
+   print(json.dumps({'name': {'firstName': characterFirstName, 'lastName':\
+        characterLastName}}))
 ########################################################################
 #cyberpunk declare arrays
 arrayClasses=["Solo", "Rocker", "Netrunner", "Media", "Nomad", "Fixer",\
@@ -321,9 +342,12 @@ dndClassHitDieDict = {"Barbarian": 12, "Bard": 8, "Cleric": 8, "Druid": 8, \
     "Sorcerer": 6, "Warlock": 8, "Wizard": 6 }
 #######################################################################
 #main
-if args.game_arg == "cyberpunk":
-	genCharacter()
-elif args.game_arg == "five_e":
-    gen5eCharacter()
-else:
-    parser.print_help()
+if __name__ == '__main__':
+   if args.game_arg == "cyberpunk":
+      genCharacter()
+   elif args.game_arg == "five_e":
+       gen5eCharacter()
+   elif args.game_arg == "ose":
+       genOseCharacter()
+   else:
+       parser.print_help()
