@@ -142,13 +142,16 @@ def getname(filename):
 def gen5eCharacter():
 #generates a 5th ed SRD character
     characterFirstName = getname("firstnames.txt") 
-    characterLastName = getname("surnames.txt")
-#    print(characterFirstName + " " + characterLastName)
+    nameChance = rollDx(10)
+    if nameChance == 1:
+      characterLastName = "of " + getname("surnames.txt")
+    elif nameChance == 2:
+      characterLastName = getname("surnames.txt") + "-" + getname("surnames.txt")
+    else:
+      characterLastName = getname("surnames.txt")
     for x,y in statDict.items():
         characterStatDict[x] = dndRollStat(x)
-#        print(characterStatDict[x])
 
-#    print(characterStatDict)
     characterRace = dndRollRace()
     characterClass, characterHitPoints = dndRollClass()
     print(json.dumps({'name': {'firstName': characterFirstName, 'lastName':\
