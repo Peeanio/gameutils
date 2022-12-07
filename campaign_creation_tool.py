@@ -4,6 +4,7 @@
 """solo wargaming campaign-inspired creation tool"""
 
 import argparse
+import requests
 
 parser = argparse.ArgumentParser(prog='campaign_creation_tool.py', \
 description='multipurpose campaign creation utility')
@@ -20,3 +21,5 @@ def generate_map():
 if __name__ == '__main__':
     if args.command_arg == 'map':
         generate_map()
+
+#https://tools.dehumanizer.com/mapgen/index2/php?more=0&maxx=15&maxy15&type=hex&seed=601147581
