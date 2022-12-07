@@ -47,59 +47,59 @@ def rollToX(x):
 #returns a number between 0 and x
     rollresult = random.randint(0,x)
     return rollresult
+if __name__ == '__main__':
+   if args.rollArg == 'traditional':
+       if args.sizeOfDice is None:
+           sizeOfDice = 7
+       else:
+           sizeOfDice = args.sizeOfDice + 1
 
-if args.rollArg == 'traditional':
-    if args.sizeOfDice is None:
-        sizeOfDice = 7
-    else:
-        sizeOfDice = args.sizeOfDice + 1
+       if args.numOfDice is None:
+           print ("Please enter the number of dice to roll:")
+           rollDice(int(input()))
 
-    if args.numOfDice is None:
-        print ("Please enter the number of dice to roll:")
-        rollDice(int(input()))
+       else: 
+           rollDice(int(args.numOfDice))
 
-    else: 
-        rollDice(int(args.numOfDice))
+   elif args.rollArg == 'fivee':
+       if (args.booleanAdvantage) != (args.booleanDisadvantage):
+           firstRolledResult = rollDx(20)
+           secondRolledResult = rollDx(20)
+           listRolledResult = [firstRolledResult, secondRolledResult]
+           listRolledResultSorted = sorted(listRolledResult)
+           if args.booleanAdvantage == True:
+               listRolledResultSorted.pop(0)
+               finalResult = listRolledResultSorted[0]
+           if args.booleanDisadvantage == True:
+               listRolledResultSorted.pop(-1)
+               finalResult = listRolledResultSorted[0]
+       else:
+           firstRolledResult = rollDx(20)
+           secondRolledResult = None
+           finalResult = firstRolledResult
+       #proficency/expertise logic
+       args.rollLevel = int(args.rollLevel)
+       if args.rollLevel >= 1 and args.rollLevel <= 4:
+           currentProficiencyModifier = 2
+       elif args.rollLevel >= 5 and args.rollLevel <= 8:
+           currentProficiencyModifier = 3
+       elif args.rollLevel >= 9 and args.rollLevel <= 12:
+           currentProficiencyModifier = 4
+       elif args.rollLevel >= 13 and args.rollLevel <= 16:
+           currentProficiencyModifier = 5
+       elif args.rollLevel >= 17 and args.rollLevel <= 20:
+           currentProficiencyModifier = 6
+       else:
+           print("level is outside of band, aborting")
+       totalModifier = int(args.rollModifier)
+       if (args.booleanProficiency):
+           totalModifier = totalModifier + currentProficiencyModifier
+       if (args.booleanExpertise):
+           totalModifier = totalModifier + currentProficiencyModifier 
+       if args.booleanVerbose == False:
+           print(str(finalResult + totalModifier))
+       else:
+           print(json.dumps({'finalRoll': finalResult + totalModifier, 'rolledDie': finalResult, 'staticModifier': int(args.rollModifier), 'level': args.rollLevel, 'proficiency': args.booleanProficiency, 'expertise': args.booleanExpertise, 'advantage': args.booleanAdvantage, 'disadvantage': args.booleanDisadvantage, 'firstRolledResult': firstRolledResult, 'secondRolledResult': secondRolledResult}))
 
-elif args.rollArg == 'fivee':
-    if (args.booleanAdvantage) != (args.booleanDisadvantage):
-        firstRolledResult = rollDx(20)
-        secondRolledResult = rollDx(20)
-        listRolledResult = [firstRolledResult, secondRolledResult]
-        listRolledResultSorted = sorted(listRolledResult)
-        if args.booleanAdvantage == True:
-            listRolledResultSorted.pop(0)
-            finalResult = listRolledResultSorted[0]
-        if args.booleanDisadvantage == True:
-            listRolledResultSorted.pop(-1)
-            finalResult = listRolledResultSorted[0]
-    else:
-        firstRolledResult = rollDx(20)
-        secondRolledResult = None
-        finalResult = firstRolledResult
-    #proficency/expertise logic
-    args.rollLevel = int(args.rollLevel)
-    if args.rollLevel >= 1 and args.rollLevel <= 4:
-        currentProficiencyModifier = 2
-    elif args.rollLevel >= 5 and args.rollLevel <= 8:
-        currentProficiencyModifier = 3
-    elif args.rollLevel >= 9 and args.rollLevel <= 12:
-        currentProficiencyModifier = 4
-    elif args.rollLevel >= 13 and args.rollLevel <= 16:
-        currentProficiencyModifier = 5
-    elif args.rollLevel >= 17 and args.rollLevel <= 20:
-        currentProficiencyModifier = 6
-    else:
-        print("level is outside of band, aborting")
-    totalModifier = int(args.rollModifier)
-    if (args.booleanProficiency):
-        totalModifier = totalModifier + currentProficiencyModifier
-    if (args.booleanExpertise):
-        totalModifier = totalModifier + currentProficiencyModifier 
-    if args.booleanVerbose == False:
-        print(str(finalResult + totalModifier))
-    else:
-        print(json.dumps({'finalRoll': finalResult + totalModifier, 'rolledDie': finalResult, 'staticModifier': int(args.rollModifier), 'level': args.rollLevel, 'proficiency': args.booleanProficiency, 'expertise': args.booleanExpertise, 'advantage': args.booleanAdvantage, 'disadvantage': args.booleanDisadvantage, 'firstRolledResult': firstRolledResult, 'secondRolledResult': secondRolledResult}))
-
-else:
-    parser.print_help()
+   else:
+       parser.print_help()
