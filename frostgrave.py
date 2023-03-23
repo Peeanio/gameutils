@@ -6,239 +6,240 @@
 import random
 import sys
 from optparse import OptionParser
+import json
 
 #parsing
 parser = OptionParser()
 parser.add_option("-f", "--frostgrave", action="store_true", \
-	dest="frostgrave", help="generate Frostgrave warband")
+    dest="frostgrave", help="generate Frostgrave warband")
 parser.add_option("-a", "--apprentice", action="store_true", \
-	dest="apprentice", default=False, \
-	help="force an apprentice in warband")
+    dest="apprentice", default=False, \
+    help="force an apprentice in warband")
 parser.add_option("-t", "--wizardtype", metavar="WIZARDTYPE", \
-	dest="wizardtype", default="random", \
-	help="specify a wiard type or random for random. default is random")
+    dest="wizardtype", default="random", \
+    help="specify a wiard type or random for random. default is random")
 (options, args) = parser.parse_args()
 
 #functions
 def rollDx(x):
 #returns a number between one and x
-	rollresult = random.randint(1,x)
-	return rollresult
+    rollresult = random.randint(1,x)
+    return rollresult
 
 def rollToX(x):
 #returns a number between 0 and x
-	rollresult = random.randint(0,x)
-	return rollresult
+    rollresult = random.randint(0,x)
+    return rollresult
 
 def ReturnSpell(x, spellschool):
 #returns a spell from a school given a number
-	spell = spellschool[rollToX(x)]
-	return spell
+    spell = spellschool[rollToX(x)]
+    return spell
 
 def GetSpells(array, num):
 #gets spells from an array given the name and length
-	availableSpells = array.copy()
-	for i in range(0, num):
-		newSpell = ReturnSpell((len(availableSpells)-1), \
-		availableSpells)
-		if newSpell in spellList:
-			availableSpells.remove(newSpell)
-			newSpell = ReturnSpell((len(availableSpells)-1), \
-			availableSpells)
-		else:
-			availableSpells.remove(newSpell)
-		spellList.append(newSpell)
-	return spellList
+    availableSpells = array.copy()
+    for i in range(0, num):
+        newSpell = ReturnSpell((len(availableSpells)-1), \
+        availableSpells)
+        if newSpell in spellList:
+            availableSpells.remove(newSpell)
+            newSpell = ReturnSpell((len(availableSpells)-1), \
+            availableSpells)
+        else:
+            availableSpells.remove(newSpell)
+        spellList.append(newSpell)
+    return spellList
 
 def GetAllSpells(spells, relations):
 #get all of the spells, using other functions
-	GetSpells(spells, 3)
-	GetSpells(relations[0], 1)
-	GetSpells(relations[1], 1)
-	GetSpells(relations[2], 1)
-	availableRelations = relations.copy()
-	enemyRelation = availableRelations.pop(-1)
-	del availableRelations[0:2]
-	firstRelation = availableRelations[random.randint(0,4)]
-	availableRelations.remove(firstRelation)
-	secondRelation = availableRelations[random.randint(0,3)]
-	GetSpells(firstRelation, 1)
-	GetSpells(secondRelation, 1)
-	
-	return spellList
+    GetSpells(spells, 3)
+    GetSpells(relations[0], 1)
+    GetSpells(relations[1], 1)
+    GetSpells(relations[2], 1)
+    availableRelations = relations.copy()
+    enemyRelation = availableRelations.pop(-1)
+    del availableRelations[0:2]
+    firstRelation = availableRelations[random.randint(0,4)]
+    availableRelations.remove(firstRelation)
+    secondRelation = availableRelations[random.randint(0,3)]
+    GetSpells(firstRelation, 1)
+    GetSpells(secondRelation, 1)
+    
+    return spellList
 
 def GetSoldiers():
 #returns a list with the soldiers and an int for gold
-	global soldierList
-	soldierList = []
-	global currentGold
-	currentGold = startingGold
-	availableSoldiers = arraySoldierType.copy()
+    global soldierList
+    soldierList = []
+    global currentGold
+    currentGold = startingGold
+    availableSoldiers = arraySoldierType.copy()
 #special handling for forcing apprentice
-	if options.apprentice == True:
-		availableSoldiers.remove("Apprentice")
-		soldierList.append("Apprentice")
-		currentGold = currentGold - dictSoldierCost["Apprentice"]
-		count = 1
-	else:
-		count = 0
-	#roll for solider, removing all soliders that are too expensive
-	#money. get money based on dictionary prices
-	while currentGold > 19:
+    if options.apprentice == True:
+        availableSoldiers.remove("Apprentice")
+        soldierList.append("Apprentice")
+        currentGold = currentGold - dictSoldierCost["Apprentice"]
+        count = 1
+    else:
+        count = 0
+    #roll for solider, removing all soliders that are too expensive
+    #money. get money based on dictionary prices
+    while currentGold > 19:
 
-		newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-	
-		#the following works, but more verbose than I think needed.
-		#maybe something with for loops over the dictionary amount
-		#based on remaining currentGold?
-		if currentGold < 20:
-			continue
-		if currentGold <= 50 and newSoldier == "Infantryman":
-			availableSoldiers.remove("Infantryman")
-			availableSoldiers.remove("Crossbowman")
-			availableSoldiers.remove("Archer")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 50 and newSoldier == "Crossbowman":
-			availableSoldiers.remove("Crossbowman")
-			availableSoldiers.remove("Infantryman")
-			availableSoldiers.remove("Archer")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 50 and newSoldier == "Archer":
-			availableSoldiers.remove("Archer")
-			availableSoldiers.remove("Crossbowman")
-			availableSoldiers.remove("Infantryman")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 80 and newSoldier == "Treasure Hunter":
-			availableSoldiers.remove("Treasure Hunter")
-			availableSoldiers.remove("Man-at-Arms")
-			availableSoldiers.remove("Tracker")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 80 and newSoldier == "Man-at-Arms":
-			availableSoldiers.remove("Man-at-Arms")
-			availableSoldiers.remove("Treasure Hunter")
-			availableSoldiers.remove("Tracker")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 80 and newSoldier == "Tracker":
-			availableSoldiers.remove("Tracker")
-			availableSoldiers.remove("Treasure Hunter")
-			availableSoldiers.remove("Man-at-Arms")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 100 and newSoldier == "Marksman":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-		elif currentGold <= 100 and newSoldier == "Apothecary":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 100 and newSoldier == "Barbarian":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 100 and newSoldier == "Ranger":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 100 and newSoldier == "Templar":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 100 and newSoldier == "Knight":
-			availableSoldiers.remove("Marksman")
-			availableSoldiers.remove("Apothecary")
-			availableSoldiers.remove("Barbarian")
-			availableSoldiers.remove("Ranger")
-			availableSoldiers.remove("Templar")
-			availableSoldiers.remove("Knight")
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		elif currentGold <= 200 and newSoldier == "Apprentice":
-			availableSoldiers.remove('Apprentice')
-			newSoldier = availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)]
-		else:
-			soldierList.append(newSoldier)
-		if count >= len(soldierList):
-			continue
-		else:
-			currentGold = currentGold - dictSoldierCost[soldierList\
-			[count]]
-		count = count + 1
-	#refund if too poor
-	if currentGold < 0:
-		currentGold = currentGold + dictSoldierCost[soldierList[-1]]
-		del soldierList[-1]		
-	return soldierList
-	return currentGold
+        newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+    
+        #the following works, but more verbose than I think needed.
+        #maybe something with for loops over the dictionary amount
+        #based on remaining currentGold?
+        if currentGold < 20:
+            continue
+        if currentGold <= 50 and newSoldier == "Infantryman":
+            availableSoldiers.remove("Infantryman")
+            availableSoldiers.remove("Crossbowman")
+            availableSoldiers.remove("Archer")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 50 and newSoldier == "Crossbowman":
+            availableSoldiers.remove("Crossbowman")
+            availableSoldiers.remove("Infantryman")
+            availableSoldiers.remove("Archer")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 50 and newSoldier == "Archer":
+            availableSoldiers.remove("Archer")
+            availableSoldiers.remove("Crossbowman")
+            availableSoldiers.remove("Infantryman")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 80 and newSoldier == "Treasure Hunter":
+            availableSoldiers.remove("Treasure Hunter")
+            availableSoldiers.remove("Man-at-Arms")
+            availableSoldiers.remove("Tracker")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 80 and newSoldier == "Man-at-Arms":
+            availableSoldiers.remove("Man-at-Arms")
+            availableSoldiers.remove("Treasure Hunter")
+            availableSoldiers.remove("Tracker")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 80 and newSoldier == "Tracker":
+            availableSoldiers.remove("Tracker")
+            availableSoldiers.remove("Treasure Hunter")
+            availableSoldiers.remove("Man-at-Arms")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 100 and newSoldier == "Marksman":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+        elif currentGold <= 100 and newSoldier == "Apothecary":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 100 and newSoldier == "Barbarian":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 100 and newSoldier == "Ranger":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 100 and newSoldier == "Templar":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 100 and newSoldier == "Knight":
+            availableSoldiers.remove("Marksman")
+            availableSoldiers.remove("Apothecary")
+            availableSoldiers.remove("Barbarian")
+            availableSoldiers.remove("Ranger")
+            availableSoldiers.remove("Templar")
+            availableSoldiers.remove("Knight")
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        elif currentGold <= 200 and newSoldier == "Apprentice":
+            availableSoldiers.remove('Apprentice')
+            newSoldier = availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)]
+        else:
+            soldierList.append(newSoldier)
+        if count >= len(soldierList):
+            continue
+        else:
+            currentGold = currentGold - dictSoldierCost[soldierList\
+            [count]]
+        count = count + 1
+    #refund if too poor
+    if currentGold < 0:
+        currentGold = currentGold + dictSoldierCost[soldierList[-1]]
+        del soldierList[-1]     
+    return soldierList
+    return currentGold
 
 def GetSoldiers2():
 #second run, NOT used
-	global soldierList
-	soldierList = []
-	global currentGold
-	currentGold = startingGold
-	availableSoldiers = arraySoldierType.copy()
-	availableCosts = dictSoldierCost.copy()
-	#roll for solider, removing all soliders that are too expensive
-	#money. get money based on dictionary prices
-	while currentGold > 19:
+    global soldierList
+    soldierList = []
+    global currentGold
+    currentGold = startingGold
+    availableSoldiers = arraySoldierType.copy()
+    availableCosts = dictSoldierCost.copy()
+    #roll for solider, removing all soliders that are too expensive
+    #money. get money based on dictionary prices
+    while currentGold > 19:
 
-		newSoldier = soldierList.append(availableSoldiers[rollToX(len\
-		(availableSoldiers) -1)])
-		currentGold = currentGold - dictSoldierCost[soldierList[0]]
-	
-		#the following works, but more verbose than I think needed.
-		#maybe something with for loops over the dictionary amount
-		#based on remaining currentGold?
-		if currentGold < 20:
-			continue
-		
-		for value in availableCosts:
-			if value > currentGold:
-				del availableCosts[key]
-		
-		soldierList.append(availableSoldiers[rollToX(len\
-		(availableSoldiers)-1)])
-	return soldierList
-	return currentGold
-	
+        newSoldier = soldierList.append(availableSoldiers[rollToX(len\
+        (availableSoldiers) -1)])
+        currentGold = currentGold - dictSoldierCost[soldierList[0]]
+    
+        #the following works, but more verbose than I think needed.
+        #maybe something with for loops over the dictionary amount
+        #based on remaining currentGold?
+        if currentGold < 20:
+            continue
+        
+        for value in availableCosts:
+            if value > currentGold:
+                del availableCosts[key]
+        
+        soldierList.append(availableSoldiers[rollToX(len\
+        (availableSoldiers)-1)])
+    return soldierList
+    return currentGold
+    
 def FileLen(fname):
 #open file, count the lines, return
         with open(fname) as f:
                 for i, l in enumerate(f):
                         pass
         return i + 1
-	
+    
 def GetName(filename):
 #function to make repeatable for first/last
         numoflines = FileLen(filename)
@@ -251,77 +252,80 @@ def GetName(filename):
 
 def GenWarband():
 #generates the warband; main script here
-	global startingGold
-	startingGold = 500
-	global spellList
-	spellList = [ ]
-	
+    global startingGold
+    startingGold = 500
+    global spellList
+    spellList = [ ]
+    
 #random only if type not specified
-	if options.wizardtype == "random":
-		playerClass = arrayWizardType[rollToX(9)]
-	else:
-		wt = options.wizardtype.capitalize()
-		try:
-			wt in arrayWizardType
-		except:
-			quit()
-				
-		playerClass = arrayWizardType[arrayWizardType.index(wt)]		
-	
-	if playerClass == "Chronomancer":
-		spellArray = arrayChronomancerSpells
-		relationsArray = arrayChronomancerRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Elementalist":
-		spellArray = arrayElementalistSpells
-		relationsArray = arrayElementalistRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Enchanter":
-		spellArray = arrayEnchanterSpells
-		relationsArray = arrayEnchanterRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Illusionist":
-		spellArray = arrayIllusionistSpells
-		relationsArray = arrayIllusionistRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Necromancer":
-		spellArray = arrayNecromancerSpells
-		relationsArray = arrayNecromancerRelations
-		GetAllSpells(spellArray, relationsArray)	
-	elif playerClass == "Sigilist":
-		spellArray = arraySigilistSpells
-		relationsArray = arraySigilistRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Soothsayer":
-		spellArray = arraySoothsayerSpells
-		relationsArray = arraySoothsayerRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Summoner":
-		spellArray = arraySummonerSpells
-		relationsArray = arraySummonerRelations
-		GetAllSpells(spellArray, relationsArray)
-	elif playerClass == "Thaumaturge":
-		spellArray = arrayThaumaturgeSpells
-		relationsArray = arrayThaumaturgeRelations
-		GetAllSpells(spellArray, relationsArray)	
-	elif playerClass == "Witch":
-		spellArray = arrayWitchSpells
-		relationsArray = arrayWitchRelations
-		GetAllSpells(spellArray, relationsArray)
-	else:
-		print("wtf class do you have?")
-	
-	
-	playerName = GetName("firstnames.txt") + " " + \
-	GetName("surnames.txt")
-	print("Name is: " + playerName)
-	
-	availableSpells = spellArray
-	print("Class: " + playerClass)
-	print("Spells are: " + str(spellList))
-	GetSoldiers()
-	print("Soldiers are: " + str(soldierList))
-	print("Remaining Gold is: " + str(currentGold))
+    if options.wizardtype == "random":
+        playerClass = arrayWizardType[rollToX(9)]
+    else:
+        wt = options.wizardtype.capitalize()
+        try:
+            wt in arrayWizardType
+        except:
+            quit()
+                
+        playerClass = arrayWizardType[arrayWizardType.index(wt)]        
+    
+    if playerClass == "Chronomancer":
+        spellArray = arrayChronomancerSpells
+        relationsArray = arrayChronomancerRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Elementalist":
+        spellArray = arrayElementalistSpells
+        relationsArray = arrayElementalistRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Enchanter":
+        spellArray = arrayEnchanterSpells
+        relationsArray = arrayEnchanterRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Illusionist":
+        spellArray = arrayIllusionistSpells
+        relationsArray = arrayIllusionistRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Necromancer":
+        spellArray = arrayNecromancerSpells
+        relationsArray = arrayNecromancerRelations
+        GetAllSpells(spellArray, relationsArray)    
+    elif playerClass == "Sigilist":
+        spellArray = arraySigilistSpells
+        relationsArray = arraySigilistRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Soothsayer":
+        spellArray = arraySoothsayerSpells
+        relationsArray = arraySoothsayerRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Summoner":
+        spellArray = arraySummonerSpells
+        relationsArray = arraySummonerRelations
+        GetAllSpells(spellArray, relationsArray)
+    elif playerClass == "Thaumaturge":
+        spellArray = arrayThaumaturgeSpells
+        relationsArray = arrayThaumaturgeRelations
+        GetAllSpells(spellArray, relationsArray)    
+    elif playerClass == "Witch":
+        spellArray = arrayWitchSpells
+        relationsArray = arrayWitchRelations
+        GetAllSpells(spellArray, relationsArray)
+    else:
+        print("wtf class do you have?")
+    
+    
+    playerName = GetName("firstnames.txt") + " " + \
+    GetName("surnames.txt")
+    availableSpells = spellArray
+    GetSoldiers()
+    print(json.dumps({"name": playerName, "class": playerClass, "spells": \
+    spellList, "soliders": soldierList, "gold": currentGold}))
+    #print("Name is: " + playerName)
+    #availableSpells = spellArray
+    #print("Class: " + playerClass)
+    #print("Spells are: " + str(spellList))
+    #GetSoldiers()
+    #print("Soldiers are: " + str(soldierList))
+    #print("Remaining Gold is: " + str(currentGold))
 
 #declare data structs
 arrayWizardType = ["Chronomancer", "Elementalist", "Enchanter", \
@@ -408,6 +412,6 @@ arraySoothsayerSpells]
 #script proper starts
 
 if options.frostgrave == True:
-	GenWarband()
+    GenWarband()
 else:
-	parser.print_help()
+    parser.print_help()
