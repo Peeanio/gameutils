@@ -319,13 +319,6 @@ def GenWarband():
     GetSoldiers()
     print(json.dumps({"name": playerName, "class": playerClass, "spells": \
     spellList, "soliders": soldierList, "gold": currentGold}))
-    #print("Name is: " + playerName)
-    #availableSpells = spellArray
-    #print("Class: " + playerClass)
-    #print("Spells are: " + str(spellList))
-    #GetSoldiers()
-    #print("Soldiers are: " + str(soldierList))
-    #print("Remaining Gold is: " + str(currentGold))
 
 #declare data structs
 arrayWizardType = ["Chronomancer", "Elementalist", "Enchanter", \
