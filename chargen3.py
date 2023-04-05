@@ -4,8 +4,7 @@
 chargen v3 is a character creation tool for tabletop roleplaying games
 v3 is geared towards using an api to determine character information
 """
-
-import sys
+import math
 import random
 import argparse
 import json
@@ -110,38 +109,7 @@ def dnd_roll_stat():
             stat_score_list.sort(reverse=True)
         stat_score_list.pop(-1)
         stat_score = stat_score_list[0] + stat_score_list[1] + stat_score_list[2]
-    if stat_score == 1:
-        modifier = -5
-    elif stat_score == 2 or stat_score == 3:
-        modifier = -4
-    elif stat_score == 4 or stat_score == 5:
-        modifier = -3
-    elif stat_score == 6 or stat_score == 7:
-        modifier = -2
-    elif stat_score == 8 or stat_score == 9:
-        modifier = -1
-    elif stat_score == 10 or stat_score == 11:
-        modifier = 0
-    elif stat_score == 12 or stat_score == 13:
-        modifier = 1
-    elif stat_score == 14 or stat_score == 15:
-        modifier = 2
-    elif stat_score == 16 or stat_score == 17:
-        modifier = 3
-    elif stat_score == 18 or stat_score == 19:
-        modifier = 4
-    elif stat_score == 20 or stat_score == 21:
-        modifier = 5
-    elif stat_score == 22 or stat_score == 23:
-        modifier = 6
-    elif stat_score == 24 or stat_score == 25:
-        modifier = 7
-    elif stat_score == 26 or stat_score == 27:
-        modifier = 8
-    elif stat_score == 28 or stat_score == 29:
-        modifier = 9
-    elif stat_score == 30:
-        modifier = 10
+        modifier = math.floor(( stat_score - 10) / 2)
     return {"score": stat_score, "modifier": modifier}
 
 def fivee_get_hp(data_dict, class_name, constitution):
@@ -171,12 +139,12 @@ def prompt_from_options(option_name, json_struct):
 
 def main():
     '''main loop'''
-    r = requests.get(args.api_url)
+    r = requests.get(args.api_url, timeout=20)
     #print(r.json())
     data_dict = {}
     for endpoint in r.json().items():
         endpoint_name = endpoint[0]
-        local_request = requests.get(endpoint[1])
+        local_request = requests.get(endpoint[1], timeout=20)
         data_dict[endpoint_name] = local_request.json()["results"]
     player = FiveECharacter(data_dict)
     print(json.dumps(player.__dict__))
