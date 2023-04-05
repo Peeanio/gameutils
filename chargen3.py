@@ -31,6 +31,8 @@ parser_fivee.add_argument("-4", "--four-array", action="store_true", \
    help="use a 4d6 drop the lowest method (default)")
 parser.add_argument("-a", "--api", dest="api_url", default=\
     "https://api.open5e.com/", help="base URL for API")
+parser_fivee.add_argument("-r", "--random", action="store_true", dest="random",\
+    default=False, help="randomly generate the character (not default)")
 args = parser.parse_args()
 
 ###############################################################################
@@ -39,11 +41,16 @@ class FiveECharacter():
     """ Dungeons and Dragons 5th edition Character """
     def __init__(self, data_dict):
         '''create character'''
-        self.first_name = get_name("firstnames.txt")
-        self.last_name = get_name("surnames.txt")
+        self.first_name = prompt_from_options("names", \
+            get_name_selection("firstnames.txt"))
+        self.last_name = prompt_from_options("names", \
+            get_name_selection("surnames.txt"))
         self.race_name = prompt_from_options("races", data_dict["races"])
         self.class_name = prompt_from_options("classes", data_dict["classes"])
-
+        self.stats = {"strength": dnd_roll_stat(), "dexterity": \
+        dnd_roll_stat(), "constitution": dnd_roll_stat(), "intelligence": \
+        dnd_roll_stat(), "wisdom": dnd_roll_stat(), "charisma": \
+        dnd_roll_stat()}
 
 ###############################################################################
 # functions
@@ -72,6 +79,17 @@ def get_name(file_name):
     all_lines = file.readlines()
     return str(all_lines[random_num].strip())
 
+def get_name_selection(file_name):
+    """similar to get_name, used to get 10 random names"""
+    name_list = []
+    for i in range(0,9):
+        num_of_lines = file_len(file_name)
+        random_num = random.randint(0, num_of_lines)
+        file = open(file_name)
+        all_lines = file.readlines()
+        name_list.append({"name": str(all_lines[random_num].strip())})
+    return name_list
+
 def dnd_roll_stat():
     '''creates a text output of a score for a stat'''
     stat_score_list = []
@@ -93,29 +111,30 @@ def dnd_roll_stat():
 
 def prompt_from_options(option_name, json_struct):
     '''asks the user what to pick out of available options'''
-    print(f"Please pick one of the following options from character {option_name}: ")
-    for count, value in enumerate(json_struct):
-        print(f"{count}: {value['name']}")
-    selection = input(f"Pick by number, or 'r' for random: ")
-    if selection == "r":
+    if not args.random:
+        print(f"Please pick one of the following options from character {option_name}: ")
+        for count, value in enumerate(json_struct):
+            print(f"{count}: {value['name']}")
+        selection = input(f"Pick by number, or 'r' for random: ")
+        if selection == "r":
+            selection = random.randint(0, len(json_struct))
+        if type(selection) is not int:
+            selection = int(selection)
+    else:
         selection = random.randint(0, len(json_struct))
-    if type(selection) is not int:
-        selection = int(selection)
     return json_struct[selection]["name"]
 
 def main():
     '''main loop'''
     r = requests.get(args.api_url)
-    print(r.json())
+    #print(r.json())
     data_dict = {}
     for endpoint in r.json().items():
         endpoint_name = endpoint[0]
         local_request = requests.get(endpoint[1])
         data_dict[endpoint_name] = local_request.json()["results"]
     player = FiveECharacter(data_dict)
-    print(player.first_name)
-    print(player.class_name)
-    print(player.race_name)
+    print(json.dumps(player.__dict__))
 
 ###############################################################################
 # main
