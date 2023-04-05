@@ -47,10 +47,13 @@ class FiveECharacter():
             get_name_selection("surnames.txt"))
         self.race_name = prompt_from_options("races", data_dict["races"])
         self.class_name = prompt_from_options("classes", data_dict["classes"])
+        self.background = prompt_from_options("backgrounds", data_dict["backgrounds"])
         self.stats = {"strength": dnd_roll_stat(), "dexterity": \
         dnd_roll_stat(), "constitution": dnd_roll_stat(), "intelligence": \
         dnd_roll_stat(), "wisdom": dnd_roll_stat(), "charisma": \
         dnd_roll_stat()}
+        self.hit_points = fivee_get_hp(data_dict, self.class_name, \
+            self.stats["constitution"])
 
 ###############################################################################
 # functions
@@ -107,7 +110,49 @@ def dnd_roll_stat():
             stat_score_list.sort(reverse=True)
         stat_score_list.pop(-1)
         stat_score = stat_score_list[0] + stat_score_list[1] + stat_score_list[2]
-    return stat_score
+    if stat_score == 1:
+        modifier = -5
+    elif stat_score == 2 or stat_score == 3:
+        modifier = -4
+    elif stat_score == 4 or stat_score == 5:
+        modifier = -3
+    elif stat_score == 6 or stat_score == 7:
+        modifier = -2
+    elif stat_score == 8 or stat_score == 9:
+        modifier = -1
+    elif stat_score == 10 or stat_score == 11:
+        modifier = 0
+    elif stat_score == 12 or stat_score == 13:
+        modifier = 1
+    elif stat_score == 14 or stat_score == 15:
+        modifier = 2
+    elif stat_score == 16 or stat_score == 17:
+        modifier = 3
+    elif stat_score == 18 or stat_score == 19:
+        modifier = 4
+    elif stat_score == 20 or stat_score == 21:
+        modifier = 5
+    elif stat_score == 22 or stat_score == 23:
+        modifier = 6
+    elif stat_score == 24 or stat_score == 25:
+        modifier = 7
+    elif stat_score == 26 or stat_score == 27:
+        modifier = 8
+    elif stat_score == 28 or stat_score == 29:
+        modifier = 9
+    elif stat_score == 30:
+        modifier = 10
+    return {"score": stat_score, "modifier": modifier}
+
+def fivee_get_hp(data_dict, class_name, constitution):
+    """uses the class name to find starting hp from data dict"""
+    for count, value in enumerate(data_dict["classes"]):
+        if value["name"] == class_name:
+            class_int = count
+    hp_string = data_dict["classes"][class_int]["hp_at_1st_level"]
+    value = int(hp_string.split(" ")[0])
+    value = value + constitution["modifier"]
+    return value
 
 def prompt_from_options(option_name, json_struct):
     '''asks the user what to pick out of available options'''
