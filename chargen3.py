@@ -32,6 +32,9 @@ parser.add_argument("-a", "--api", dest="api_url", default=\
     "https://api.open5e.com/", help="base URL for API")
 parser_fivee.add_argument("-r", "--random", action="store_true", dest="random",\
     default=False, help="randomly generate the character (not default)")
+parser_fivee.add_argument("-v", "--background", action="store_true", \
+    dest="background", default=False, \
+    help="create background (not default)")
 args = parser.parse_args()
 
 ###############################################################################
@@ -45,12 +48,14 @@ class FiveECharacter():
         self.last_name = prompt_from_options("names", \
             get_name_selection("surnames.txt"))
         self.race_name = prompt_from_options("races", data_dict["races"])
+        for count, value in enumerate(data_dict["races"]):
+            if self.race_name == value["name"]:
+                race_number = count
         self.class_name = prompt_from_options("classes", data_dict["classes"])
-        self.background = prompt_from_options("backgrounds", data_dict["backgrounds"])
-        self.stats = {"strength": dnd_roll_stat(), "dexterity": \
-        dnd_roll_stat(), "constitution": dnd_roll_stat(), "intelligence": \
-        dnd_roll_stat(), "wisdom": dnd_roll_stat(), "charisma": \
-        dnd_roll_stat()}
+        if args.background:
+            self.background = prompt_from_options("backgrounds", \
+                data_dict["backgrounds"])
+        self.stats = fivee_get_stats(data_dict["races"][race_number]["asi"])
         self.hit_points = fivee_get_hp(data_dict, self.class_name, \
             self.stats["constitution"])
 
@@ -92,7 +97,27 @@ def get_name_selection(file_name):
         name_list.append({"name": str(all_lines[random_num].strip())})
     return name_list
 
-def dnd_roll_stat():
+def fivee_get_stats(asi_list):
+    """returns the dict of ability scores"""
+    scores = {}
+    scores_names = ["strength", "dexterity", "constitution", "intelligence", \
+        "wisdom", "charisma"]
+    available_scores = ["strength", "dexterity", "constitution", "intelligence", \
+        "wisdom", "charisma"]
+    increase_scores = []
+    for increase in asi_list:
+        stat_name = increase["attributes"][0].lower()
+        value = increase["value"]
+        if stat_name == "other" and stat_name not in available_scores:
+            stat_name = available_scores[random.randint(0, len(available_scores) -1)]
+        increase_scores.append({"name": stat_name, "amount": value})
+        available_scores.remove(stat_name)
+    scores = {}
+    for score in scores_names:
+        scores[score] = fivee_roll_stat(score, increase_scores)
+    return scores
+
+def fivee_roll_stat(score_name, increase_scores):
     '''creates a text output of a score for a stat'''
     stat_score_list = []
     if args.two_array is True:
@@ -109,7 +134,11 @@ def dnd_roll_stat():
             stat_score_list.sort(reverse=True)
         stat_score_list.pop(-1)
         stat_score = stat_score_list[0] + stat_score_list[1] + stat_score_list[2]
-        modifier = math.floor(( stat_score - 10) / 2)
+    for count, value in enumerate(increase_scores):
+        if score_name in value["name"]:
+            #print(f'adding {increase_scores[count]["amount"]} to {stat_score} ({value["name"]})')
+            stat_score = stat_score + increase_scores[count]["amount"]
+    modifier = math.floor(( stat_score - 10) / 2)
     return {"score": stat_score, "modifier": modifier}
 
 def fivee_get_hp(data_dict, class_name, constitution):
@@ -134,17 +163,17 @@ def prompt_from_options(option_name, json_struct):
         if type(selection) is not int:
             selection = int(selection)
     else:
-        selection = random.randint(0, len(json_struct))
+        selection = random.randint(0, len(json_struct) -1)
     return json_struct[selection]["name"]
 
 def main():
     '''main loop'''
-    r = requests.get(args.api_url, timeout=20)
+    r = requests.get(args.api_url, timeout=30)
     #print(r.json())
     data_dict = {}
     for endpoint in r.json().items():
         endpoint_name = endpoint[0]
-        local_request = requests.get(endpoint[1], timeout=20)
+        local_request = requests.get(endpoint[1], timeout=30)
         data_dict[endpoint_name] = local_request.json()["results"]
     player = FiveECharacter(data_dict)
     print(json.dumps(player.__dict__))
