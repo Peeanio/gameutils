@@ -159,7 +159,7 @@ def prompt_from_options(option_name, json_struct):
             print(f"{count}: {value['name']}")
         selection = input(f"Pick by number, or 'r' for random: ")
         if selection == "r":
-            selection = random.randint(0, len(json_struct))
+            selection = random.randint(0, len(json_struct) -1)
         if type(selection) is not int:
             selection = int(selection)
     else:
