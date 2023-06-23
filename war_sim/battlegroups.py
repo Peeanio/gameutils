@@ -15,6 +15,7 @@ class Army_Element():
 
     def summarize_units(self):
         totals = {}
+        self.sub_unit_names = []
         for unit_type in self.command:
             if unit_type['name'] in totals:
                 totals[unit_type['name']] += unit_type['quantity']
