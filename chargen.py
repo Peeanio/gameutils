@@ -162,10 +162,11 @@ def gen5eCharacter():
         characterStatDict[x] = dndRollStat(x)
 
     characterRace = dndRollRace()
-    characterClass, characterHitPoints = dndRollClass()
+    characterClass, characterHitPoints, dndProficiencies = dndRollClass()
     print(json.dumps({'name': {'firstName': characterFirstName, 'lastName':\
         characterLastName}, 'race': characterRace, 'class': characterClass, \
-        'hitPoints': characterHitPoints, 'stats': characterStatDict}))
+        'hitPoints': characterHitPoints, 'stats': characterStatDict, \
+        'proficiencies': dndProficiencies}))
 
 def dndRollStat(stat):
 #creates a text output of a score for a stat
@@ -257,57 +258,136 @@ def dndRollClass():
     numOfClass = rollToX(len(dndClassList) - 1)
     characterClass = dndClassList[numOfClass]
     if characterClass == "Barbarian":
-       pass 
+        dndProficiencies = fiveEGenBarbarian()
     if characterClass == "Bard":
-        pass
+        dndProficiencies = fiveEGenBard()
     if characterClass == "Cleric":
-        pass
+        dndProficiencies = fiveEGenCleric()
     if characterClass == "Druid":
-        pass
+        dndProficiencies = fiveEGenDruid()
     if characterClass == "Fighter":
-        pass
+        dndProficiencies = dndProficiencies = fiveEGenFighter()
     if characterClass == "Monk":
-        pass
+        dndProficiencies = fiveEGenMonk()
     if characterClass == "Paladin":
-        pass
+        dndProficiencies = fiveEGenPaladin()
     if characterClass == "Ranger":
-        pass
+        dndProficiencies = fiveEGenRanger()
     if characterClass == "Rogue":
-        pass
+        dndProficiencies = fiveEGenRogue()
     if characterClass == "Sorcerer":
-        pass
+        dndProficiencies = fiveEGenSorcerer()
     if characterClass == "Warlock":
-        pass
+        dndProficiencies = fiveEGenWarlock()
     if characterClass == "Wizard":
-        pass
+        dndProficiencies = fiveEGenWizard()
     characterHitPoints = dndClassHitDieDict[characterClass] + characterStatDict["CON"]["modifier"]
-    return characterClass, characterHitPoints
+    return characterClass, characterHitPoints, dndProficiencies
 
 def fiveEGenBarbarian():
-    pass
+    dndSavingThrows = ["STR", "CON"]
+    dndWeaponsProficiencies = ["simple weapons", "martial weapons"]
+    dndArmourProficiencies = ["light armour", "medium armour", "shields"]
+    skills = chooseFromList(2, ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenBard():
-    pass
+    dndSavingThrows = ["DEX", "CHA"]
+    dndWeaponsProficiencies = ["simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"]
+    dndArmourProficiencies = ["light armour"]
+    skills = chooseFromList(3, ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History", "Investigation", "Nature", "Religion", "Animal Handling", "Insight", "Medicine", "Perception", "Survival", "Deception", "Intimidation", "Performance", "Persuasion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenCleric():
-    pass
+    dndSavingThrows = ["WIS", "CHA"]
+    dndWeaponsProficiencies = ["simple weapons"]
+    dndArmourProficiencies = ["light armour", "medium armour", "shields"]
+    skills = chooseFromList(2, ["History", "Insight", "Medicine", "Persuasion", "Religion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenDruid():
-    pass
+    dndSavingThrows = ["INT", "WIS"]
+    dndWeaponsProficiencies = ["clubs", "daggers", "darts", "javelins", "maces", "quarterstaffs", "scimitarts", "sickles", "slings", "spears"]
+    dndArmourProficiencies = ["light armour", "medium armour", "shields", "no metal armour"]
+    skills = chooseFromList(2, ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenFighter():
-    pass
+    dndSavingThrows = ["STR", "CON"]
+    dndWeaponsProficiencies = ["simple weapons", "martial weapons"]
+    dndArmourProficiencies = ["all armour", "shields"]
+    skills = chooseFromList(2, ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenMonk():
-    pass
+    dndSavingThrows = ["STR", "DEX"]
+    dndWeaponsProficiencies = ["simple weapons", "shortswords"]
+    dndArmourProficiencies = []
+    skills = chooseFromList(2, ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenPaladin():
-    pass
+    dndSavingThrows = ["WIS", "CHA"]
+    dndWeaponsProficiencies = ["simple weapons", "martial weapons"]
+    dndArmourProficiencies = ["all armour", "shields"]
+    skills = chooseFromList(2, ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenRanger():
-    pass
+    dndSavingThrows = ["STR", "DEX"]
+    dndWeaponsProficiencies = ["simple weapons", "martial weapons"]
+    dndArmourProficiencies = ["light armour", "medium armour", "shields"]
+    skills = chooseFromList(3, ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenRogue():
-    pass
+    dndSavingThrows = ["DEX", "INT"]
+    dndWeaponsProficiencies = ["simple weapons", "hand crossbows", "longswords", "rapiers", "shortswords"]
+    dndArmourProficiencies = ["light armour"]
+    skills = chooseFromList(4, ["Acrobatics", "Athletics", "Deception", "Insight", "Investigation", "Perception", "Performance", "Persuasion", "Slight of Hand", "Stealth"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenSorcerer():
-    pass
+    dndSavingThrows = ["CON", "CHA"]
+    dndWeaponsProficiencies = ["daggers", "darts", "slings", "quarterstaffs", "light crossbows"]
+    dndArmourProficiencies = []
+    skills = chooseFromList(2, ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenWarlock():
-    pass
+    dndSavingThrows = ["WIS", "CHA"]
+    dndWeaponsProficiencies = ["simple weapons"]
+    dndArmourProficiencies = ["light armour"]
+    skills = chooseFromList(2, ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
+
 def fiveEGenWizard():
-    pass
+    dndSavingThrows = ["INT", "WIS"]
+    dndWeaponsProficiencies = ["daggers", "darts", "slings", "quarterstaffs", "light crossbows"]
+    dndArmourProficiencies = []
+    skills = chooseFromList(2, ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"])
+    profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
+    return profDict
     
+def chooseFromList(amount, listOfOptions):
+    #provide an amount to choose from a list options, returns list of selections
+    selections = []
+    for pick in range(0, amount):
+        number = rollToX(len(listOfOptions))
+        selections.append(listOfOptions.pop(number - 1))
+    return selections
+
 def genOseCharacter():
    characterFirstName = getname("firstnames.txt") 
    nameChance = rollDx(10)
@@ -367,6 +447,13 @@ dndClassList = ["Barbarian", "Bard", "Cleric", "Druid", "Fighter", "Monk", \
 dndClassHitDieDict = {"Barbarian": 12, "Bard": 8, "Cleric": 8, "Druid": 8, \
     "Fighter": 10, "Monk": 8, "Paladin": 10, "Ranger": 10, "Rogue": 8, \
     "Sorcerer": 6, "Warlock": 8, "Wizard": 6 }
+dndSavingThrows = []
+dndToolsProficiencies = []
+dndWeaponsProficiencies = []
+dndArmourProficiencies = []
+dndSkills = []
+dndEquipment = []
+dndClass = []
 #######################################################################
 #main
 if __name__ == '__main__':
