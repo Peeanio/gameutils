@@ -162,11 +162,11 @@ def gen5eCharacter():
         characterStatDict[x] = dndRollStat(x)
 
     characterRace = dndRollRace()
-    characterClass, characterHitPoints, dndProficiencies = dndRollClass()
+    characterClass, characterHitPoints, dndProficiencies, equipment, features = dndRollClass()
     print(json.dumps({'name': {'firstName': characterFirstName, 'lastName':\
         characterLastName}, 'race': characterRace, 'class': characterClass, \
         'hitPoints': characterHitPoints, 'stats': characterStatDict, \
-        'proficiencies': dndProficiencies}))
+        'proficiencies': dndProficiencies, "equipment": equipment, "features": features}))
 
 def dndRollStat(stat):
 #creates a text output of a score for a stat
@@ -258,31 +258,31 @@ def dndRollClass():
     numOfClass = rollToX(len(dndClassList) - 1)
     characterClass = dndClassList[numOfClass]
     if characterClass == "Barbarian":
-        dndProficiencies = fiveEGenBarbarian()
+        dndProficiencies, equipment, features = fiveEGenBarbarian()
     if characterClass == "Bard":
-        dndProficiencies = fiveEGenBard()
+        dndProficiencies, equipment, features = fiveEGenBard()
     if characterClass == "Cleric":
-        dndProficiencies = fiveEGenCleric()
+        dndProficiencies, equipment, features = fiveEGenCleric()
     if characterClass == "Druid":
-        dndProficiencies = fiveEGenDruid()
+        dndProficiencies, equipment, features = fiveEGenDruid()
     if characterClass == "Fighter":
-        dndProficiencies = dndProficiencies = fiveEGenFighter()
+        dndProficiencies, equipment, features = fiveEGenFighter()
     if characterClass == "Monk":
-        dndProficiencies = fiveEGenMonk()
+        dndProficiencies, equipment, features = fiveEGenMonk()
     if characterClass == "Paladin":
-        dndProficiencies = fiveEGenPaladin()
+        dndProficiencies, equipment, features = fiveEGenPaladin()
     if characterClass == "Ranger":
-        dndProficiencies = fiveEGenRanger()
+        dndProficiencies, equipment, features = fiveEGenRanger()
     if characterClass == "Rogue":
-        dndProficiencies = fiveEGenRogue()
+        dndProficiencies, equipment, features = fiveEGenRogue()
     if characterClass == "Sorcerer":
-        dndProficiencies = fiveEGenSorcerer()
+        dndProficiencies, equipment, features = fiveEGenSorcerer()
     if characterClass == "Warlock":
-        dndProficiencies = fiveEGenWarlock()
+        dndProficiencies, equipment, features = fiveEGenWarlock()
     if characterClass == "Wizard":
-        dndProficiencies = fiveEGenWizard()
+        dndProficiencies, equipment, features = fiveEGenWizard()
     characterHitPoints = dndClassHitDieDict[characterClass] + characterStatDict["CON"]["modifier"]
-    return characterClass, characterHitPoints, dndProficiencies
+    return characterClass, characterHitPoints, dndProficiencies, equipment, features
 
 def fiveEGenBarbarian():
     dndSavingThrows = ["STR", "CON"]
@@ -290,7 +290,9 @@ def fiveEGenBarbarian():
     dndArmourProficiencies = ["light armour", "medium armour", "shields"]
     skills = chooseFromList(2, ["Animal Handling", "Athletics", "Intimidation", "Nature", "Perception", "Survival"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList[1, ["greataxe", ""]], chooseFromList[1, ["handaxe x2", ""]], "explorer's pack", "javelin x4"]
+    features = ["Rage", "Unarmoured Defence"]
+    return profDict, equipment, features
 
 def fiveEGenBard():
     dndSavingThrows = ["DEX", "CHA"]
@@ -298,7 +300,9 @@ def fiveEGenBard():
     dndArmourProficiencies = ["light armour"]
     skills = chooseFromList(3, ["Athletics", "Acrobatics", "Sleight of Hand", "Stealth", "Arcana", "History", "Investigation", "Nature", "Religion", "Animal Handling", "Insight", "Medicine", "Perception", "Survival", "Deception", "Intimidation", "Performance", "Persuasion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["rapier", "longsword", ""]), chooseFromList(1, ["diplomat's pack", "entertainer's pack"]), chooseFromList(1, ["lute", ""]), "leather armour", "dagger"]
+    features = ["Spellcasting", "Ritual casting", "Bardic Inspiration"]
+    return profDict, equipment, features
 
 def fiveEGenCleric():
     dndSavingThrows = ["WIS", "CHA"]
@@ -306,7 +310,9 @@ def fiveEGenCleric():
     dndArmourProficiencies = ["light armour", "medium armour", "shields"]
     skills = chooseFromList(2, ["History", "Insight", "Medicine", "Persuasion", "Religion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["mace", "warhammer"]), chooseFromList(1, ["scale armour", "leather armour", "chain mail"]), chooseFromList(1, ["light crossbow, twenty bolts", ""]), chooseFromList(1, ["priest's pack", "explorer's pack"]), "shield", "holy symbol"]
+    features = ["Spellcasting", "Ritual Casting", chooseFromList(1, ["Knowledge Domain", "Life Domain", "Light Domain", "Nature Domain", "Tempest Domain", "Trickery Domain", "War Domain"])]
+    return profDict, equipment, features
 
 def fiveEGenDruid():
     dndSavingThrows = ["INT", "WIS"]
@@ -314,7 +320,9 @@ def fiveEGenDruid():
     dndArmourProficiencies = ["light armour", "medium armour", "shields", "no metal armour"]
     skills = chooseFromList(2, ["Arcana", "Animal Handling", "Insight", "Medicine", "Nature", "Perception", "Religion", "Survival"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["wooden shield", ""]), chooseFromList(1, ["scimitar", ""]), "leather armour", "explorer's pack", "druidic focus"]
+    features = ["Spellcasting", "Ritual casting", "Druidic"]
+    return profDict, equipment, features
 
 def fiveEGenFighter():
     dndSavingThrows = ["STR", "CON"]
@@ -322,7 +330,9 @@ def fiveEGenFighter():
     dndArmourProficiencies = ["all armour", "shields"]
     skills = chooseFromList(2, ["Acrobatics", "Animal Handling", "Athletics", "History", "Insight", "Intimidation", "Perception", "Survival"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["Chain mail", "leather armour, longbow, 20 arrows"]), chooseFromList(1, [" and a shield", "two "]), chooseFromList(1, ["light crossbow, 20 bolts", "handaxe x2"]), chooseFromList(1, ["dungeoneer's pack", "explorer's pack"])]
+    features = [chooseFromList(1, ["Archery", "Defence", "Dueling", "Great Weapon Fighting", "Protection", "Two-Weapon Fighting"]), "Second Wind"]
+    return profDict, equipment, features
 
 def fiveEGenMonk():
     dndSavingThrows = ["STR", "DEX"]
@@ -330,7 +340,9 @@ def fiveEGenMonk():
     dndArmourProficiencies = []
     skills = chooseFromList(2, ["Acrobatics", "Athletics", "History", "Insight", "Religion", "Stealth"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["shortsword", ""]), chooseFromList(1, ["dungeoneer's pack", "explorer's pack"]), "darts x10"]
+    features = ["Martial Arts", "Unarmoured Defence"]
+    return profDict, equipment, features
 
 def fiveEGenPaladin():
     dndSavingThrows = ["WIS", "CHA"]
@@ -338,7 +350,9 @@ def fiveEGenPaladin():
     dndArmourProficiencies = ["all armour", "shields"]
     skills = chooseFromList(2, ["Athletics", "Insight", "Intimidation", "Medicine", "Persuasion", "Religion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, [" and a shield", " x2"]), chooseFromList(1, ["javelins x5", ""]), chooseFromList(1, ["priests's pack", "explorer's pack"]), "chain mail", "holy symbol"]
+    features = ["Divine Sense", "Lay on Hands"]
+    return profDict, equipment, features
 
 def fiveEGenRanger():
     dndSavingThrows = ["STR", "DEX"]
@@ -346,7 +360,9 @@ def fiveEGenRanger():
     dndArmourProficiencies = ["light armour", "medium armour", "shields"]
     skills = chooseFromList(3, ["Animal Handling", "Athletics", "Insight", "Investigation", "Nature", "Perception", "Stealth", "Survival"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["scale mail", "leather armour"]), chooseFromList(1, ["shortsword x2", " x2"]), chooseFromList(1, ["dungeoneer's pack", "explorer's pack"]), "longbow", "arrows x20"]
+    features = ["Favour enemy: " + chooseFromList(1, ["aberrations", "beasts", "celestials", "constructs", "dragons", "elementals", "fey", "fiends", "giants", "monstrosities", "oozes", "plants", "undead", "humanoids"]), "Natural Explorer: " + chooseFromList(1, ["arctic", "coast", "desert", "forest", "grassland", "mountain", "swamp", "Underdark"])]
+    return profDict, equipment, features
 
 def fiveEGenRogue():
     dndSavingThrows = ["DEX", "INT"]
@@ -354,7 +370,9 @@ def fiveEGenRogue():
     dndArmourProficiencies = ["light armour"]
     skills = chooseFromList(4, ["Acrobatics", "Athletics", "Deception", "Insight", "Investigation", "Perception", "Performance", "Persuasion", "Slight of Hand", "Stealth"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["rapier", "shortsword"]), chooseFromList(1, ["shortbox, arrows x20", "shortsword"]), chooseFromList(1, ["burglar's pack", "dungeoneer's pack", "explorer's pack"]), "leather armour" , "daggers x2", "thieves' tools"]
+    features = ["Expertise", "Sneak Attack", "Theives' Cant"]
+    return profDict, equipment, features
 
 def fiveEGenSorcerer():
     dndSavingThrows = ["CON", "CHA"]
@@ -362,7 +380,9 @@ def fiveEGenSorcerer():
     dndArmourProficiencies = []
     skills = chooseFromList(2, ["Arcana", "Deception", "Insight", "Intimidation", "Persuasion", "Religion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["light crossbow, bolts x20", ""]), chooseFromList(1, ["component pouch", "arcane focus"]), chooseFromList(1, ["dungeoneer's pack", "explorer's pack"]), "dagger x2"]
+    features = ["Spellcasting", "Sorcerous Origin: " + chooseFromList(1, ["Draconic Bloodline", "Wild Magic"])]
+    return profDict, equipment, features
 
 def fiveEGenWarlock():
     dndSavingThrows = ["WIS", "CHA"]
@@ -370,7 +390,9 @@ def fiveEGenWarlock():
     dndArmourProficiencies = ["light armour"]
     skills = chooseFromList(2, ["Arcana", "Deception", "History", "Intimidation", "Investigation", "Nature", "Religion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["light crossbow, bolts x20", ""]), chooseFromList(1, ["component pouch", "arcane focus"]), chooseFromList(1, ["dungeoneer's pack", "scholar's pack"]), "leather armour", chooseFromList(1, [""]), "dagger x2"]
+    features = ["Pact Magic", "Otherwordly Patron: " + chooseFromList(1, ["the Archfey", "the Fiend", "the Great Old One"])]
+    return profDict, equipment, features
 
 def fiveEGenWizard():
     dndSavingThrows = ["INT", "WIS"]
@@ -378,7 +400,9 @@ def fiveEGenWizard():
     dndArmourProficiencies = []
     skills = chooseFromList(2, ["Arcana", "History", "Insight", "Investigation", "Medicine", "Religion"])
     profDict = {"savingThrows": dndSavingThrows, "weaponProficiencies": dndWeaponsProficiencies, "armourProficiencies": dndArmourProficiencies, "skills": skills}
-    return profDict
+    equipment = [chooseFromList(1, ["quarterstaff", "dagger"]), chooseFromList(1, ["component pouch", "arcane focus"]), chooseFromList(1, ["scholar's pack", "explorer's pack"]), "spellbook"]
+    features = ["Spellcasting", "Ritual casting", "Arcane Recovery"]
+    return profDict, equipment, features
     
 def chooseFromList(amount, listOfOptions):
     #provide an amount to choose from a list options, returns list of selections
@@ -386,7 +410,10 @@ def chooseFromList(amount, listOfOptions):
     for pick in range(0, amount):
         number = rollToX(len(listOfOptions))
         selections.append(listOfOptions.pop(number - 1))
-    return selections
+    if amount == 1:
+        return selections[0]
+    else:
+        return selections
 
 def genOseCharacter():
    characterFirstName = getname("firstnames.txt") 
