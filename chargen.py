@@ -184,45 +184,72 @@ def dndRollStat(stat):
          statScoreList.sort(reverse=True)
       statScoreList.pop(-1)
       statScore = statScoreList[0] + statScoreList[1] + statScoreList[2]
-   return statScore
+   modifier = dndReturnModifier(statScore)
+   return {"score": statScore, "modifier": modifier}
+
+def dndReturnModifier(statScore):
+   #determine modifier
+   if statScore == 1:
+       modifier = -5
+   elif statScore == 2 or statScore == 3:
+       modifier = -4
+   elif statScore == 4 or statScore == 5:
+       modifier = -3
+   elif statScore == 6 or statScore == 7:
+       modifier = -2
+   elif statScore == 8 or statScore == 9:
+       modifier = -1
+   elif statScore == 10 or statScore == 11:
+       modifier = 0
+   elif statScore == 12 or statScore == 13:
+       modifier = 1
+   elif statScore == 14 or statScore == 15:
+       modifier = 2
+   elif statScore == 16 or statScore == 17:
+       modifier = 3
+   elif statScore == 18 or statScore == 19:
+       modifier = 4
+   elif statScore == 20 or statScore == 21:
+       modifier = 5
+   return modifier
 
 def dndRollRace():
 #picks a random race and increments stats
     numOfRace = rollToX(len(dndRaceList) - 1)
     characterRace = dndRaceList[numOfRace]
     if characterRace == "Dragonborn":
-        characterStatDict.update({'STR': characterStatDict['STR']+ 2})
-        characterStatDict.update({'CHA': characterStatDict['CHA']+ 1})
+        characterStatDict.update({'STR': {"score": characterStatDict['STR']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['STR']["score"]+ 2)}})
+        characterStatDict.update({'CHA': {"score": characterStatDict['CHA']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CHA']["score"]+ 1)}})
     if characterRace == "Dwarf":
-        characterStatDict.update({'CON': characterStatDict['CON']+ 2})
-        characterStatDict.update({'WIS': characterStatDict['WIS']+ 1})
+        characterStatDict.update({'CON': {"score": characterStatDict['CON']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['CON']["score"]+ 2)}})
+        characterStatDict.update({'WIS': {"score": characterStatDict['WIS']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['WIS']["score"]+ 1)}})
     if characterRace == "Elf":
-        characterStatDict.update({'DEX': characterStatDict['DEX']+ 2})
-        characterStatDict.update({'INT': characterStatDict['INT']+ 1})
+        characterStatDict.update({'DEX': {"score": characterStatDict['DEX']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['DEX']["score"]+ 2)}})
+        characterStatDict.update({'INT': {"score": characterStatDict['INT']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['INT']["score"]+ 1)}})
     if characterRace == "Gnome":
-        characterStatDict.update({'INT': characterStatDict['INT']+ 2})
-        characterStatDict.update({'CON': characterStatDict['CON']+ 1})
+        characterStatDict.update({'INT': {"score": characterStatDict['INT']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['INT']["score"]+ 2)}})
+        characterStatDict.update({'CON': {"score": characterStatDict['CON']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CON']["score"]+ 1)}})
     if characterRace == "Half-Elf":
-        characterStatDict.update({'CHA': characterStatDict['CHA']+ 2})
+        characterStatDict.update({'CHA': {"score": characterStatDict['CHA']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['CHA']["score"]+ 2)}})
         randStatNum = rollToX(5)
         randStat = statList[randStatNum]
-        characterStatDict.update({randStat: characterStatDict[randStat]+ 1})
+        characterStatDict.update({randStat: {"score": characterStatDict[randStat]["score"]+ 1, "modifier": dndReturnModifier(characterStatDict[randStat]["score"]+ 1)}})
     if characterRace == "Halfing":
-        characterStatDict.update({'DEX': characterStatDict['DEX']+ 2})
-        characterStatDict.update({'CHA': characterStatDict['CHA']+ 1})
+        characterStatDict.update({'DEX': {"score": characterStatDict['DEX']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['DEX']["score"]+ 2)}})
+        characterStatDict.update({'CHA': {"score": characterStatDict['CHA']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CHA']["score"]+ 1)}})
     if characterRace == "Half-Orc":
-        characterStatDict.update({'STR': characterStatDict['STR']+ 2})
-        characterStatDict.update({'CON': characterStatDict['CON']+ 1})
+        characterStatDict.update({'STR': {"score": characterStatDict['STR']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['STR']["score"]+ 2)}})
+        characterStatDict.update({'CON': {"score": characterStatDict['CON']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CON']["score"]+ 1)}})
     if characterRace == "Human":
-        characterStatDict.update({'STR': characterStatDict['STR']+ 1})
-        characterStatDict.update({'DEX': characterStatDict['DEX']+ 1})
-        characterStatDict.update({'CON': characterStatDict['DEX']+ 1})
-        characterStatDict.update({'INT': characterStatDict['DEX']+ 1})
-        characterStatDict.update({'WIS': characterStatDict['DEX']+ 1})
-        characterStatDict.update({'CHA': characterStatDict['DEX']+ 1})
+        characterStatDict.update({'STR': {"score": characterStatDict['STR']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['STR']["score"]+ 1)}})
+        characterStatDict.update({'DEX': {"score": characterStatDict['DEX']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['DEX']["score"]+ 1)}})
+        characterStatDict.update({'CON': {"score": characterStatDict['CON']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CON']["score"]+ 1)}})
+        characterStatDict.update({'INT': {"score": characterStatDict['INT']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['INT']["score"]+ 1)}})
+        characterStatDict.update({'WIS': {"score": characterStatDict['WIS']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['WIS']["score"]+ 1)}})
+        characterStatDict.update({'CHA': {"score": characterStatDict['CHA']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['CHA']["score"]+ 1)}})
     if characterRace == "Tiefling":
-        characterStatDict.update({'CHA': characterStatDict['CHA']+ 2})
-        characterStatDict.update({'INT': characterStatDict['INT']+ 1})
+        characterStatDict.update({'CHA': {"score": characterStatDict['CHA']["score"]+ 2, "modifier": dndReturnModifier(characterStatDict['CHA']["score"]+ 2)}})
+        characterStatDict.update({'INT': {"score": characterStatDict['INT']["score"]+ 1, "modifier": dndReturnModifier(characterStatDict['INT']["score"]+ 1)}})
     return characterRace
 
 def dndRollClass():
@@ -253,32 +280,32 @@ def dndRollClass():
         pass
     if characterClass == "Wizard":
         pass
-    characterHitPoints = dndClassHitDieDict[characterClass]
+    characterHitPoints = dndClassHitDieDict[characterClass] + characterStatDict["CON"]["modifier"]
     return characterClass, characterHitPoints
 
-def dndGenBarbarian():
+def fiveEGenBarbarian():
     pass
-def dndGenBard():
+def fiveEGenBard():
     pass
-def dndGenCleric():
+def fiveEGenCleric():
     pass
-def dndGenDruid():
+def fiveEGenDruid():
     pass
-def dndGenFighter():
+def fiveEGenFighter():
     pass
-def dndGenMonk():
+def fiveEGenMonk():
     pass
-def dndGenPaladin():
+def fiveEGenPaladin():
     pass
-def dndGenRanger():
+def fiveEGenRanger():
     pass
-def dndGenRogue():
+def fiveEGenRogue():
     pass
-def dndGenSorcerer():
+def fiveEGenSorcerer():
     pass
-def dndGenWarlock():
+def fiveEGenWarlock():
     pass
-def dndGenWizard():
+def fiveEGenWizard():
     pass
     
 def genOseCharacter():
