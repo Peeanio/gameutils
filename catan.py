@@ -85,6 +85,8 @@ for i, row in enumerate(rows):
                     print("O", end =" ")
                 elif tile["type"] == "brick":
                     print("B", end =" ")
+                elif tile["type"] == "desert":
+                    print("D", end =" ")
                 elif tile["type"] == "sheep":
                     print("S", end =" ")
                 elif tile["type"] == "any":
