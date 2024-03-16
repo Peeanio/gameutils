@@ -70,11 +70,11 @@ rows.append(([shore_placement[4][0], shore_placement[3][0], shore_placement[3][1
 # print(rows)
 for i, row in enumerate(rows):
     if i == 0 or i == 6:
-        print("   ", end="")
+        print("    ", end="")
     elif i == 1 or i == 5:
-        print("  ", end="")
+        print("   ", end="")
     elif i == 2 or i == 4:
-        print(" ", end="")
+        print("  ", end="")
     for tile in row:
         if "amount" in tile:
             if tile["amount"] == 0:
@@ -85,8 +85,6 @@ for i, row in enumerate(rows):
                     print("O", end =" ")
                 elif tile["type"] == "brick":
                     print("B", end =" ")
-                elif tile["type"] == "desert":
-                    print("D", end =" ")
                 elif tile["type"] == "sheep":
                     print("S", end =" ")
                 elif tile["type"] == "any":
@@ -100,6 +98,8 @@ for i, row in enumerate(rows):
                 print("O" + str(tile["number"]), end =" ")
             elif tile["type"] == "brick":
                 print("B"+ str(tile["number"]), end =" ")
+            elif tile["type"] == "desert":
+                print("D"+ str(tile["number"]), end =" ")
             elif tile["type"] == "sheep":
                 print("S"+ str(tile["number"]), end =" ")
             elif tile["type"] == "any":
